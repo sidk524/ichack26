@@ -1,60 +1,93 @@
 #!/usr/bin/env python3
-from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from aiohttp import web
 
 HOST = "0.0.0.0"
 PORT = 8000
 
+# Global stores for latest ingested data.
+current_phone_data = []
+current_news_data = []
 
-def _read_json(handler):
-    length = int(handler.headers.get("Content-Length", 0))
-    if length <= 0:
-        return None
+async def phone_client_ws(request):
+    ws = web.WebSocketResponse()
+    await ws.prepare(request)
+    async for msg in ws:
+        if msg.type == web.WSMsgType.TEXT:
+            try:
+                data = json.loads(msg.data)
+            except Exception:
+                data = None
+            if isinstance(data, dict):
+                # Use the nested dict directly for lookups like:
+                # data["data"]["transcript"]["is_final"]
+                _ = data
+            else:
+                # Ignore invalid JSON payloads; no response required.
+                pass
+        elif msg.type == web.WSMsgType.BINARY:
+            # Ignore binary frames; no response required.
+            pass
+        elif msg.type == web.WSMsgType.ERROR:
+            break
+    return ws
+
+async def _read_json(request):
     try:
-        raw = handler.rfile.read(length)
-        return json.loads(raw.decode("utf-8"))
+        return await request.json()
     except Exception:
         return None
 
+def process_information(payload):
+    # Placeholder for downstream processing logic.
+    return None
 
-class RequestHandler(BaseHTTPRequestHandler):
-    def _send_json(self, status, payload):
-        body = json.dumps(payload).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Content-Length", str(len(body)))
-        self.end_headers()
-        self.wfile.write(body)
 
-    def do_POST(self):
-        if self.path == "/voice_transcription_in":
-            data = _read_json(self)
-            self._send_json(200, {"ok": True, "received": data})
-            return
-        if self.path == "/sensor_information_in":
-            data = _read_json(self)
-            self._send_json(200, {"ok": True, "received": data})
-            return
-        if self.path == "/news_information_in":
-            data = _read_json(self)
-            self._send_json(200, {"ok": True, "received": data})
-            return
+async def sensor_information_in(request):
+    data = await _read_json(request)
+    return web.json_response({"ok": True, "received": data})
 
-        self._send_json(404, {"ok": False, "error": "not_found"})
 
-    def do_GET(self):
-        if self.path == "/danger_entities_out":
-            self._send_json(200, {"ok": True, "danger_entities": []})
-            return
+async def news_information_in(request):
+    data = await _read_json(request)
+    if data is not None:
+        current_news_data.append(data)
+    process_information(data)
+    title = None
+    timestamp = None
+    description = None
+    if isinstance(data, dict):
+        title = data.get("title")
+        timestamp = data.get("timestamp")
+        description = data.get("description")
+    return web.json_response(
+        {
+            "ok": True,
+            "parsed": {
+                "title": title,
+                "timestamp": timestamp,
+                "description": description,
+            },
+        }
+    )
 
-        self._send_json(404, {"ok": False, "error": "not_found"})
 
-    def log_message(self, fmt, *args):
-        # Keep logs minimal and consistent.
-        return
+async def danger_entities_out(request):
+    return web.json_response({"ok": True, "danger_entities": []})
+
+
+def create_app():
+    app = web.Application()
+
+    # WebSocket for live streaming text.
+    app.router.add_get("/phone_client_in", phone_client_ws)
+
+    app.router.add_post("/sensor_information_in", sensor_information_in)
+    app.router.add_post("/news_information_in", news_information_in)
+    app.router.add_get("/danger_entities_out", danger_entities_out)
+
+    return app
 
 
 if __name__ == "__main__":
-    server = HTTPServer((HOST, PORT), RequestHandler)
-    print(f"Central server listening on http://{HOST}:{PORT}")
-    server.serve_forever()
+    web.run_app(create_app(), host=HOST, port=PORT)
