@@ -252,14 +252,22 @@ class NERLocationExtractor:
                     'extraction_method': 'default_country'
                 }
 
-        # Geocode to get GPS coordinates (always returns coords, defaults to Turkey center)
-        coords = geocode(location)
-        item['location']['lat'] = coords['lat']
-        item['location']['lng'] = coords['lng']
+        return item
+
+
+def batch_geocode(locations: set) -> dict:
+    """Batch geocode a set of unique location names. Returns dict mapping name -> coords."""
+    print(f"\nGeocoding {len(locations)} unique locations...")
+    coords_cache = {}
+
+    for i, loc in enumerate(locations):
+        coords_cache[loc] = geocode(loc)
         # Rate limit: Nominatim allows ~1 req/sec
         time_module.sleep(1)
+        if (i + 1) % 10 == 0:
+            print(f"  Geocoded {i + 1}/{len(locations)} locations...")
 
-        return item
+    return coords_cache
 
 
 def main():
@@ -282,7 +290,8 @@ def main():
     location_count = 0
     items_to_process = data['items']
 
-    print(f"\nProcessing {len(items_to_process)} items...")
+    # === PHASE 1: Extract locations (fast, no geocoding) ===
+    print(f"\n[Phase 1] Extracting locations from {len(items_to_process)} items...")
 
     for i, item in enumerate(items_to_process):
         # Reset tags
@@ -295,13 +304,32 @@ def main():
             disaster_count += 1
         if 'location' in updated_item:
             location_count += 1
-            # Optional: Print what we found to verify
-            # print(f"  -> Found: {updated_item['location']['name']}")
 
         data['items'][i] = updated_item
 
         if (i + 1) % 10 == 0:
-            print(f"Processed {i + 1} items...")
+            print(f"  Processed {i + 1} items...")
+
+    extraction_time = time.time() - start_time
+    print(f"✓ Phase 1 complete in {extraction_time:.2f}s")
+
+    # === PHASE 2: Collect unique locations and batch geocode ===
+    print(f"\n[Phase 2] Batch geocoding...")
+    unique_locations = set()
+    for item in data['items']:
+        if 'location' in item:
+            unique_locations.add(item['location']['name'])
+
+    coords_cache = batch_geocode(unique_locations)
+
+    # === PHASE 3: Apply coordinates to all items ===
+    print(f"\n[Phase 3] Applying coordinates...")
+    for item in data['items']:
+        if 'location' in item:
+            loc_name = item['location']['name']
+            coords = coords_cache.get(loc_name, TURKEY_DEFAULT_COORDS)
+            item['location']['lat'] = coords['lat']
+            item['location']['lng'] = coords['lng']
 
     total_time = time.time() - start_time
 
@@ -312,6 +340,7 @@ def main():
     print(f"Completed in {total_time:.2f} seconds")
     print(f"- Disaster events: {disaster_count}")
     print(f"- Items with locations: {location_count}")
+    print(f"- Unique locations geocoded: {len(unique_locations)}")
 
 if __name__ == "__main__":
     main()
