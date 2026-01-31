@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Emergency Call - Disaster Response</title>
+
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="Emergency call client with AI voice assistant and live GPS tracking">
+  <meta name="theme-color" content="#dc3545">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Emergency">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Preconnect for faster connections -->
+  <link rel="preconnect" href="https://api.elevenlabs.io">
+  <link rel="dns-prefetch" href="https://api.elevenlabs.io">
+
+  <!-- Leaflet for map display -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>🆘 Emergency Report</h1>
+      <div id="connection-indicator" class="connection-indicator offline">🔴 Checking...</div>
+    </header>
+
+    <!-- Install PWA Banner -->
+    <div id="install-banner" class="install-banner hidden">
+      <span>📲 Install this app for quick access</span>
+      <button id="install-btn" class="install-btn">Install</button>
+      <button id="install-dismiss" class="install-dismiss">✕</button>
+    </div>
+
+    <!-- Status display -->
+    <div id="status" class="status status-ready">Ready</div>
+
+    <!-- Location with live tracking -->
+    <div id="location" class="location">
+      <div class="location-header">
+        <span class="location-icon">📍</span>
+        <span id="location-text">Getting location...</span>
+      </div>
+      <div id="map-container" class="map-container"></div>
+    </div>
+
+    <!-- Person ID display -->
+    <div class="person-id-container">
+      <span class="label">Your ID:</span>
+      <span id="person-id" class="person-id">Loading...</span>
+    </div>
+
+    <!-- Main call button -->
+    <button id="call-btn" class="call-btn">
+      <span class="btn-icon">📞</span>
+      <span class="btn-text">Start Emergency Call</span>
+    </button>
+
+    <!-- Volume control -->
+    <div id="volume-container" class="volume-container">
+      <label for="volume-slider">🔊 AI Voice Volume</label>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
+    </div>
+
+    <!-- Extracted info (what the system understood) -->
+    <div id="extracted-info" class="extracted-info hidden"></div>
+
+    <!-- Agent responses (AI speaking) -->
+    <div id="agent-response-container" class="transcript-container hidden">
+      <h2>🤖 Emergency Operator:</h2>
+      <div id="agent-response" class="transcript agent-transcript"></div>
+    </div>
+
+    <!-- User transcripts (what you said) -->
+    <div id="transcript-container" class="transcript-container hidden">
+      <h2>📝 What you said:</h2>
+      <div id="transcript" class="transcript"></div>
+    </div>
+
+    <!-- Disaster summary (from database) -->
+    <div id="summary-container" class="summary-container hidden">
+      <h2>📊 Situation Summary:</h2>
+      <div id="summary-content" class="summary-content"></div>
+    </div>
+
+    <!-- Error display -->
+    <div id="error-container" class="error-container hidden">
+      <p id="error-message"></p>
+      <button class="retry-btn">🔄 Retry Connection</button>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <details>
+        <summary><strong>📋 Instructions</strong></summary>
+        <ul>
+          <li>Click "Start Emergency Call" to begin</li>
+          <li>Allow microphone and location access when prompted</li>
+          <li>Speak clearly to describe your emergency</li>
+          <li>The AI operator will ask clarifying questions</li>
+          <li>You can interrupt the operator by speaking</li>
+          <li>Your location is tracked and sent automatically</li>
+          <li>All data is uploaded to the emergency database</li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- Debug info (can be hidden in production) -->
+    <details class="debug-info">
+      <summary>🔧 Debug Info</summary>
+      <div id="debug-content">
+        <p>Server: <span id="debug-server"></span></p>
+        <p>WebSocket: <span id="debug-ws">Disconnected</span></p>
+        <p>Queue: <span id="debug-queue">0</span> pending</p>
+        <p>Protocol: WebSocket (SCHEMA.md)</p>
+      </div>
+    </details>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    // Populate debug info
+    document.addEventListener('DOMContentLoaded', () => {
+      const serverUrl = 'http://localhost:8000';
+      document.getElementById('debug-server').textContent = serverUrl;
+    });
+
+    // ==================== PWA INSTALL ====================
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+    const installDismiss = document.getElementById('install-dismiss');
+
+    // Listen for beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      console.log('PWA: beforeinstallprompt fired');
+      e.preventDefault();
+      deferredPrompt = e;
+      // Show install banner
+      if (installBanner) {
+        installBanner.classList.remove('hidden');
+      }
+    });
+
+    // Install button click
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('PWA: User choice:', outcome);
+        deferredPrompt = null;
+        if (installBanner) {
+          installBanner.classList.add('hidden');
+        }
+      });
+    }
+
+    // Dismiss button
+    if (installDismiss) {
+      installDismiss.addEventListener('click', () => {
+        if (installBanner) {
+          installBanner.classList.add('hidden');
+        }
+        // Remember dismissal
+        sessionStorage.setItem('pwa-install-dismissed', 'true');
+      });
+    }
+
+    // Check if already dismissed
+    if (sessionStorage.getItem('pwa-install-dismissed')) {
+      if (installBanner) {
+        installBanner.classList.add('hidden');
+      }
+    }
+
+    // App installed
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA: App installed');
+      if (installBanner) {
+        installBanner.classList.add('hidden');
+      }
+      deferredPrompt = null;
+    });
+
+    // ==================== SERVICE WORKER ====================
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register('/service-worker.js');
+          console.log('SW: Registered with scope:', registration.scope);
+
+          // Check for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            console.log('SW: Update found, installing...');
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                console.log('SW: New version available');
+                // Could show update notification here
+              }
+            });
+          });
+        } catch (error) {
+          console.error('SW: Registration failed:', error);
+        }
+      });
+
+      // Handle messages from SW
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        console.log('SW message:', event.data);
+        if (event.data.type === 'SYNC_QUEUE') {
+          // Trigger queue sync in the app
+          if (window.emergencyApp && window.emergencyApp.serverClient) {
+            window.emergencyApp.serverClient.processQueue();
+          }
+        }
+      });
+    }
+
+    // ==================== AUTO-START FROM SHORTCUT ====================
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('action') === 'call') {
+      document.addEventListener('DOMContentLoaded', () => {
+        // Wait for app to initialize, then start call
+        setTimeout(() => {
+          if (window.emergencyApp) {
+            window.emergencyApp.startCall();
+          }
+        }, 1000);
+      });
+    }
+  </script>
+</body>
+</html>

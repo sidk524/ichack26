@@ -4,8 +4,9 @@ import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.routes import health, websocket
+from app.api.routes import health, websocket, voice_transcription
 from app.config import get_settings
 from app.dependencies import AppState
 from app.utils.logging import setup_logging, get_logger
@@ -77,9 +78,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+# Add CORS middleware for browser-based phone client
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, restrict to specific origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Include routers
 app.include_router(websocket.router)
 app.include_router(health.router)
+app.include_router(voice_transcription.router)
 
 
 @app.get("/")

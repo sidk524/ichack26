@@ -1,0 +1,664 @@
+/* Emergency Call Client - Mobile-first, accessible CSS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #dc3545;
+  --primary-hover: #c82333;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --text-color: #333;
+  --text-muted: #6c757d;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --border-color: #dee2e6;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+/* Connection indicator */
+.connection-indicator {
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.connection-indicator.online {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.connection-indicator.offline {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Status indicator */
+.status {
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.status-ready {
+  background-color: #e9ecef;
+  color: var(--text-muted);
+}
+
+.status-connecting,
+.status-reconnecting {
+  background-color: #fff3cd;
+  color: #856404;
+  animation: pulse 1.5s infinite;
+}
+
+.status-recording {
+  background-color: #f8d7da;
+  color: #721c24;
+  animation: pulse 1s infinite;
+}
+
+.status-connected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-agent-speaking {
+  background-color: #cce5ff;
+  color: #004085;
+  animation: speaking 0.8s infinite;
+}
+
+.status-disconnected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes speaking {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Location display */
+.location {
+  background-color: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.location-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location-icon {
+  font-size: 1.3rem;
+}
+
+#location-text {
+  font-size: 0.9rem;
+  word-break: break-word;
+  flex: 1;
+}
+
+#location-text.high-accuracy {
+  color: var(--success-color);
+}
+
+#location-text.low-accuracy {
+  color: var(--warning-color);
+}
+
+/* Map container */
+.map-container {
+  height: 150px;
+  margin-top: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #e9ecef;
+}
+
+/* Person ID */
+.person-id-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.person-id {
+  font-family: monospace;
+  background-color: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Call button */
+.call-btn {
+  width: 100%;
+  padding: 20px 24px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, var(--primary-color), #b02a37);
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-lg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.call-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.call-btn:active {
+  transform: translateY(0);
+}
+
+.call-btn.active {
+  background: linear-gradient(135deg, var(--success-color), #1e7e34);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.btn-icon {
+  font-size: 1.8rem;
+}
+
+/* Volume control */
+.volume-container {
+  background-color: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.volume-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+#volume-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  background: #e9ecef;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Extracted info */
+.extracted-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.info-item {
+  background-color: var(--card-bg);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  border-left: 3px solid var(--info-color);
+}
+
+/* Transcript containers */
+.transcript-container {
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.transcript {
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.transcript p {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.transcript p.user {
+  border-left: 3px solid var(--primary-color);
+  margin-right: 20px;
+}
+
+.transcript p.agent {
+  border-left: 3px solid var(--info-color);
+  margin-left: 20px;
+  background-color: #e7f3ff;
+}
+
+.transcript p.interim {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.transcript .timestamp {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.agent-transcript {
+  background-color: #e7f3ff;
+}
+
+/* Summary container */
+.summary-container {
+  background-color: var(--card-bg);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  border-top: 4px solid var(--info-color);
+}
+
+.summary-content {
+  font-size: 0.9rem;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 12px;
+}
+
+.stat {
+  text-align: center;
+  padding: 8px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.stat.severity-critical .stat-value { color: #721c24; }
+.stat.severity-high .stat-value { color: #dc3545; }
+.stat.severity-moderate .stat-value { color: #fd7e14; }
+.stat.severity-low .stat-value { color: #ffc107; }
+
+.narrative {
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.findings {
+  padding-left: 20px;
+}
+
+.findings li {
+  margin-bottom: 4px;
+}
+
+/* Error display */
+.error-container {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.retry-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #721c24;
+  border: 2px solid #721c24;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.retry-btn:hover {
+  background-color: #721c24;
+  color: white;
+}
+
+/* Instructions */
+.instructions {
+  margin-bottom: 16px;
+}
+
+.instructions details {
+  background-color: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.instructions summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.instructions summary::-webkit-details-marker {
+  display: none;
+}
+
+.instructions ul {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Debug info */
+.debug-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background-color: #e9ecef;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.debug-info summary {
+  cursor: pointer;
+}
+
+.debug-info p {
+  margin: 4px 0;
+}
+
+/* Hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  main {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .call-btn {
+    padding: 24px 32px;
+    font-size: 1.5rem;
+  }
+
+  .map-container {
+    height: 200px;
+  }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+  .call-btn,
+  .status,
+  .location,
+  .transcript-container,
+  .summary-container {
+    border: 2px solid var(--text-color);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .status-connecting,
+  .status-reconnecting,
+  .status-recording,
+  .status-agent-speaking {
+    animation: none;
+  }
+
+  .call-btn {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #f8f9fa;
+    --text-muted: #adb5bd;
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --border-color: #3a3a5c;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .status-ready {
+    background-color: #3a3a5c;
+    color: var(--text-muted);
+  }
+
+  .transcript {
+    background-color: #1a1a2e;
+  }
+
+  .transcript p {
+    background-color: #16213e;
+  }
+
+  .transcript p.agent {
+    background-color: #1a365d;
+  }
+
+  #volume-slider {
+    background: #3a3a5c;
+  }
+
+  .person-id {
+    background-color: #3a3a5c;
+  }
+}
+
+/* Leaflet map overrides */
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  font-size: 0.65rem;
+}
+
+/* PWA Install Banner */
+.install-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-lg);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.install-banner span {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.install-btn {
+  background: white;
+  color: #17a2b8;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.install-btn:hover {
+  background: #f8f9fa;
+  transform: scale(1.05);
+}
+
+.install-dismiss {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  opacity: 0.8;
+}
+
+.install-dismiss:hover {
+  opacity: 1;
+}
+
+/* PWA Standalone Mode Adjustments */
+@media (display-mode: standalone) {
+  /* Hide install banner when running as PWA */
+  .install-banner {
+    display: none !important;
+  }
+
+  /* Adjust padding for notch/safe areas */
+  main {
+    padding-top: env(safe-area-inset-top, 16px);
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+    padding-left: env(safe-area-inset-left, 16px);
+    padding-right: env(safe-area-inset-right, 16px);
+  }
+
+  /* Full height in standalone */
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  html {
+    height: -webkit-fill-available;
+  }
+}
+
+/* iOS specific PWA fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Prevent overscroll bounce */
+  body {
+    overscroll-behavior: none;
+  }
+
+  /* Fix 100vh on iOS */
+  main {
+    min-height: -webkit-fill-available;
+  }
+}
