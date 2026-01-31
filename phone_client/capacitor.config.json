@@ -1,0 +1,13 @@
+{
+  "appId": "com.emergency.call",
+  "appName": "Emergency Call",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Geolocation": {
+      "permissions": ["location", "coarseLocation"]
+    }
+  }
+}

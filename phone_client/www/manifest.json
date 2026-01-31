@@ -1,0 +1,38 @@
+{
+  "name": "Emergency Call - Disaster Response",
+  "short_name": "Emergency",
+  "description": "Emergency call client with AI voice assistant and live GPS tracking",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1a2e",
+  "theme_color": "#dc3545",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["utilities", "medical"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Emergency Call",
+      "short_name": "Call",
+      "description": "Start an emergency call immediately",
+      "url": "/?action=call",
+      "icons": [{ "src": "icons/icon.svg", "sizes": "any" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
