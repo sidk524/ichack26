@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import {
   IconDots,
   IconFolder,
@@ -25,6 +26,12 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 
+const routeLabels: Record<string, string> = {
+  "/dashboard": "First Responders",
+  "/dashboard/hospitals": "Hospitals",
+  "/dashboard/civilians": "People in Danger",
+}
+
 export function NavDocuments({
   items,
 }: {
@@ -35,10 +42,13 @@ export function NavDocuments({
   }[]
 }) {
   const { isMobile } = useSidebar()
+  const pathname = usePathname()
+
+  const label = routeLabels[pathname] || "Documents"
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Documents</SidebarGroupLabel>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
