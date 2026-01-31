@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
   IconBed,
   IconHeartRateMonitor,
@@ -7,29 +8,29 @@ import {
   IconBabyCarriage,
   IconFlame,
   IconFirstAidKit,
+  IconLoader2,
 } from "@tabler/icons-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
+import { api } from "@/lib/api"
+import type { BedCategory as ApiBedCategory } from "@/types/api"
 
-interface BedCategory {
-  id: string
-  name: string
+// Local type with icon support
+interface BedCategoryWithIcon extends ApiBedCategory {
   icon: typeof IconBed
-  total: number
-  available: number
-  pending: number
 }
 
-const bedCategories: BedCategory[] = [
-  { id: "er", name: "Emergency", icon: IconFirstAidKit, total: 40, available: 8, pending: 3 },
-  { id: "icu", name: "ICU", icon: IconHeartRateMonitor, total: 24, available: 2, pending: 2 },
-  { id: "general", name: "General", icon: IconBed, total: 120, available: 34, pending: 5 },
-  { id: "pediatric", name: "Pediatric", icon: IconBabyCarriage, total: 20, available: 12, pending: 0 },
-  { id: "burn", name: "Burn Unit", icon: IconFlame, total: 8, available: 3, pending: 1 },
-  { id: "surgical", name: "Surgical", icon: IconStethoscope, total: 16, available: 4, pending: 2 },
-]
+// Map bed category IDs to icons
+const iconMap: Record<string, typeof IconBed> = {
+  er: IconFirstAidKit,
+  icu: IconHeartRateMonitor,
+  general: IconBed,
+  pediatric: IconBabyCarriage,
+  burn: IconFlame,
+  surgical: IconStethoscope,
+}
 
 function getOccupancyColor(percentage: number) {
   if (percentage >= 90) return "text-red-500"
@@ -47,12 +48,52 @@ function getProgressColor(percentage: number) {
 
 interface HospitalCapacityProps {
   className?: string
+  hospitalId?: string
 }
 
-export function HospitalCapacity({ className }: HospitalCapacityProps) {
+/**
+ * HospitalCapacity displays bed capacity for a hospital
+ * Fetches data from api.hospitals.getCapacity()
+ */
+export function HospitalCapacity({ className, hospitalId = "H-001" }: HospitalCapacityProps) {
+  const [bedCategories, setBedCategories] = useState<BedCategoryWithIcon[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    api.hospitals
+      .getCapacity(hospitalId)
+      .then((data) => {
+        setBedCategories(
+          data.map((cat) => ({
+            ...cat,
+            icon: iconMap[cat.id] || IconBed,
+          }))
+        )
+      })
+      .catch((err) => {
+        console.error("Failed to fetch bed capacity:", err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [hospitalId])
+
   const totalBeds = bedCategories.reduce((sum, cat) => sum + cat.total, 0)
   const totalAvailable = bedCategories.reduce((sum, cat) => sum + cat.available, 0)
-  const totalOccupancy = Math.round(((totalBeds - totalAvailable) / totalBeds) * 100)
+  const totalOccupancy = totalBeds > 0 ? Math.round(((totalBeds - totalAvailable) / totalBeds) * 100) : 0
+
+  if (isLoading) {
+    return (
+      <Card className={cn("", className)}>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm font-semibold">Bed Capacity</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center justify-center py-8">
+          <IconLoader2 className="size-6 animate-spin text-muted-foreground" />
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className={cn("", className)}>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { Persona, type PersonaState } from "@/components/ai-elements/persona"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -21,6 +21,10 @@ import {
   type ConversationMode,
 } from "@/hooks/use-elevenlabs-conversation"
 import { useGeolocation } from "@/hooks/use-geolocation"
+import {
+  useServerWebSocket,
+  generateSessionId,
+} from "@/hooks/use-server-websocket"
 
 type CallStatus = "idle" | "connecting" | "connected" | "ended" | "error"
 
@@ -66,6 +70,23 @@ export function EmergencyCall() {
   const [callDuration, setCallDuration] = useState(0)
   const [currentInstruction, setCurrentInstruction] = useState<string>("")
 
+  // Generate a unique session ID for this call
+  // This persists across re-renders but changes for each new call
+  const sessionId = useMemo(() => generateSessionId(), [])
+
+  // Server WebSocket connection for location and transcript streaming
+  // Currently in mock mode - data is logged to console
+  // When server is ready: set WEBSOCKET_ENABLED=true in use-server-websocket.ts
+  const { sendLocation, sendTranscript } = useServerWebSocket({
+    clientId: sessionId,
+    onStatusChange: (status) => {
+      console.log("[EmergencyCall] WebSocket status:", status)
+    },
+    onError: (error) => {
+      console.error("[EmergencyCall] WebSocket error:", error.message)
+    },
+  })
+
   const {
     startConversation,
     endConversation,
@@ -103,16 +124,47 @@ export function EmergencyCall() {
     throttleMs: 3000, // Update every 3 seconds
     maxHistoryLength: 100,
     onPositionUpdate: (pos) => {
-      // TODO: Send position updates to your backend
-      console.log("Location update:", pos)
+      // Send position updates to server via WebSocket
+      // Currently logs to console (mock mode)
+      // When server is ready, this will stream to /phone_location_in
+      sendLocation({
+        lat: pos.latitude,
+        lon: pos.longitude,
+        timestamp: pos.timestamp,
+        accuracy: pos.accuracy,
+      })
+      console.log("[EmergencyCall] Location update:", {
+        lat: pos.latitude,
+        lon: pos.longitude,
+        accuracy: pos.accuracy,
+        sessionId,
+      })
     },
     onError: (err) => {
-      console.error("Location error:", err.message)
+      console.error("[EmergencyCall] Location error:", err.message)
     },
   })
 
   const callStatus = getCallStatus(conversationStatus, hasEnded)
   const personaState = getPersonaState(callStatus, mode)
+
+  // Send transcript updates to server when messages change
+  // Currently logs to console (mock mode)
+  // When server is ready, this will stream to /phone_transcript_in
+  useEffect(() => {
+    if (messages.length > 0 && callStatus === "connected") {
+      const lastMessage = messages[messages.length - 1]
+      sendTranscript({
+        text: lastMessage.content,
+        is_final: true, // ElevenLabs provides final transcripts
+      })
+      console.log("[EmergencyCall] Transcript update:", {
+        role: lastMessage.role,
+        text: lastMessage.content,
+        sessionId,
+      })
+    }
+  }, [messages, callStatus, sendTranscript, sessionId])
 
   // Call duration timer
   useEffect(() => {

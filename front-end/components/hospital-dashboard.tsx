@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
   IconAmbulance,
   IconBed,
@@ -9,6 +10,7 @@ import {
   IconLungs,
   IconUser,
   IconChevronRight,
+  IconLoader2,
 } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -23,23 +25,38 @@ import {
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { api } from "@/lib/api"
+import type { IncomingPatient } from "@/types/api"
 
-// Simplified incoming patient data
-const incomingPatients = [
-  { id: 1, unit: "Medic 7", eta: 3, severity: "critical", condition: "Crush injury", needs: "Surgery" },
-  { id: 2, unit: "Medic 12", eta: 7, severity: "high", condition: "Smoke inhalation", needs: "ICU" },
-  { id: 3, unit: "Rescue 3", eta: 12, severity: "high", condition: "Multiple fractures", needs: "Ortho" },
-  { id: 4, unit: "Medic 4", eta: 18, severity: "moderate", condition: "Lacerations", needs: "ER" },
-]
-
-const severityStyles = {
+const severityStyles: Record<IncomingPatient["severity"], string> = {
   critical: "bg-red-500",
   high: "bg-orange-500",
   moderate: "bg-yellow-500",
   low: "bg-green-500",
 }
 
+/**
+ * HospitalDashboard displays the main hospital overview
+ * Fetches incoming patients from api.hospitals.getIncomingPatients()
+ */
 export function HospitalDashboard() {
+  const [incomingPatients, setIncomingPatients] = useState<IncomingPatient[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    api.hospitals
+      .getIncomingPatients("H-001")
+      .then((data) => {
+        setIncomingPatients(data)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch incoming patients:", err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
+
   return (
     <div className="flex flex-col gap-6 p-4 lg:p-6 max-w-4xl mx-auto w-full">
 

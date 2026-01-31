@@ -1,3 +1,6 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import {
   IconAlertTriangle,
   IconAmbulance,
@@ -5,46 +8,68 @@ import {
   IconTrendingUp,
   IconUsers,
   IconPackage,
+  IconLoader2,
 } from "@tabler/icons-react"
 
 import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardAction,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { api } from "@/lib/api"
+import type { DashboardStats } from "@/types/api"
 
-interface ResponderStats {
-  activeIncidents: number
-  incidentsTrend: number
-  peopleInDanger: number
-  peopleTrend: number
-  respondersDeployed: number
-  respondersTrend: number
-  resourcesAvailable: number
-  resourcesTrend: number
+const defaultStats: DashboardStats = {
+  activeIncidents: 0,
+  incidentsTrend: 0,
+  peopleInDanger: 0,
+  peopleTrend: 0,
+  respondersDeployed: 0,
+  respondersTrend: 0,
+  resourcesAvailable: 0,
+  resourcesTrend: 0,
 }
 
-interface ResponderCardsProps {
-  stats?: ResponderStats
-}
+/**
+ * ResponderCards displays dashboard statistics
+ * Fetches data from api.stats.get()
+ */
+export function ResponderCards() {
+  const [stats, setStats] = useState<DashboardStats>(defaultStats)
+  const [isLoading, setIsLoading] = useState(true)
 
-// 2023 Turkey-Syria Earthquake stats (scaled for demo)
-const defaultStats: ResponderStats = {
-  activeIncidents: 47,
-  incidentsTrend: 23.5,
-  peopleInDanger: 8420,
-  peopleTrend: -8.2,
-  respondersDeployed: 312,
-  respondersTrend: 45.0,
-  resourcesAvailable: 28,
-  resourcesTrend: -32.0,
-}
+  useEffect(() => {
+    api.stats
+      .get()
+      .then((data) => {
+        setStats(data)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch stats:", err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
 
-export function ResponderCards({ stats = defaultStats }: ResponderCardsProps) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+        {[...Array(4)].map((_, i) => (
+          <Card key={i} className="@container/card">
+            <CardContent className="flex items-center justify-center py-8">
+              <IconLoader2 className="size-6 animate-spin text-muted-foreground" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    )
+  }
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       {/* Active Incidents */}
