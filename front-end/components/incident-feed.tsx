@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
   IconFlame,
   IconHeartbeat,
@@ -14,6 +15,7 @@ import {
   IconUsers,
   IconClock,
   IconTrendingUp,
+  IconLoader2,
 } from "@tabler/icons-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
@@ -69,11 +71,15 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
+import { api } from "@/lib/api"
+import type {
+  IncidentType,
+  IncidentStatus,
+  SeverityLevel,
+  Incident as ApiIncident,
+} from "@/types/api"
 
-type IncidentType = "fire" | "medical" | "rescue" | "flood" | "accident" | "other"
-type IncidentStatus = "new" | "dispatched" | "in_progress" | "resolved"
-type SeverityLevel = 1 | 2 | 3 | 4 | 5
-
+// Local display type (maps API incident to component needs)
 interface Incident {
   id: string
   type: IncidentType
@@ -85,6 +91,21 @@ interface Incident {
   description: string
 }
 
+// Transform API incident to local display format
+function toDisplayIncident(incident: ApiIncident): Incident {
+  return {
+    id: incident.id,
+    type: incident.type,
+    location: incident.location,
+    severity: incident.severity,
+    status: incident.status,
+    reportedAt: incident.reportedAt,
+    assignedUnits: incident.assignedUnits.length,
+    description: incident.description,
+  }
+}
+
+// UI configuration for incident types
 const incidentTypeConfig: Record<IncidentType, { icon: typeof IconFlame; label: string; color: string }> = {
   fire: { icon: IconFlame, label: "Fire", color: "text-orange-500" },
   medical: { icon: IconHeartbeat, label: "Medical", color: "text-red-500" },
@@ -94,6 +115,7 @@ const incidentTypeConfig: Record<IncidentType, { icon: typeof IconFlame; label: 
   other: { icon: IconCircleDot, label: "Other", color: "text-gray-500" },
 }
 
+// UI configuration for incident statuses
 const statusConfig: Record<IncidentStatus, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
   new: { label: "New", variant: "destructive" },
   dispatched: { label: "Dispatched", variant: "default" },
@@ -101,6 +123,7 @@ const statusConfig: Record<IncidentStatus, { label: string; variant: "default" |
   resolved: { label: "Resolved", variant: "outline" },
 }
 
+// UI configuration for severity levels
 const severityConfig: Record<SeverityLevel, { color: string; bgColor: string; label: string }> = {
   1: { color: "text-green-500", bgColor: "bg-green-500", label: "Low" },
   2: { color: "text-lime-500", bgColor: "bg-lime-500", label: "Minor" },
@@ -108,169 +131,6 @@ const severityConfig: Record<SeverityLevel, { color: string; bgColor: string; la
   4: { color: "text-orange-500", bgColor: "bg-orange-500", label: "High" },
   5: { color: "text-red-500", bgColor: "bg-red-500", label: "Critical" },
 }
-
-const mockIncidents: Incident[] = [
-  {
-    id: "INC-001",
-    type: "rescue",
-    location: "Antakya, Hatay",
-    severity: 5,
-    status: "new",
-    reportedAt: "2m",
-    assignedUnits: 0,
-    description: "300+ trapped in collapsed apartments",
-  },
-  {
-    id: "INC-002",
-    type: "rescue",
-    location: "Kahramanmaraş",
-    severity: 5,
-    status: "dispatched",
-    reportedAt: "4m",
-    assignedUnits: 4,
-    description: "Hospital collapse, staff trapped",
-  },
-  {
-    id: "INC-003",
-    type: "rescue",
-    location: "Pazarcık",
-    severity: 5,
-    status: "in_progress",
-    reportedAt: "6m",
-    assignedUnits: 6,
-    description: "Near epicenter, 200 trapped",
-  },
-  {
-    id: "INC-004",
-    type: "rescue",
-    location: "Elbistan",
-    severity: 5,
-    status: "new",
-    reportedAt: "8m",
-    assignedUnits: 0,
-    description: "Second epicenter, school collapsed",
-  },
-  {
-    id: "INC-005",
-    type: "medical",
-    location: "Defne, Hatay",
-    severity: 5,
-    status: "dispatched",
-    reportedAt: "10m",
-    assignedUnits: 3,
-    description: "Mass casualties, 220+ injured",
-  },
-  {
-    id: "INC-006",
-    type: "rescue",
-    location: "Gaziantep",
-    severity: 4,
-    status: "in_progress",
-    reportedAt: "15m",
-    assignedUnits: 5,
-    description: "Multi-story residential collapse",
-  },
-  {
-    id: "INC-007",
-    type: "rescue",
-    location: "Iskenderun",
-    severity: 4,
-    status: "dispatched",
-    reportedAt: "18m",
-    assignedUnits: 4,
-    description: "Port area buildings down",
-  },
-  {
-    id: "INC-008",
-    type: "rescue",
-    location: "Adıyaman",
-    severity: 4,
-    status: "in_progress",
-    reportedAt: "20m",
-    assignedUnits: 5,
-    description: "170 trapped in rubble",
-  },
-  {
-    id: "INC-009",
-    type: "medical",
-    location: "Malatya",
-    severity: 4,
-    status: "dispatched",
-    reportedAt: "25m",
-    assignedUnits: 2,
-    description: "Field hospital overwhelmed",
-  },
-  {
-    id: "INC-010",
-    type: "rescue",
-    location: "Nurdağı",
-    severity: 4,
-    status: "new",
-    reportedAt: "28m",
-    assignedUnits: 0,
-    description: "Town center devastated",
-  },
-  {
-    id: "INC-011",
-    type: "rescue",
-    location: "Onikişubat",
-    severity: 4,
-    status: "in_progress",
-    reportedAt: "32m",
-    assignedUnits: 3,
-    description: "Dense urban rubble clearing",
-  },
-  {
-    id: "INC-012",
-    type: "rescue",
-    location: "Samandağ",
-    severity: 3,
-    status: "dispatched",
-    reportedAt: "38m",
-    assignedUnits: 2,
-    description: "Coastal town damage",
-  },
-  {
-    id: "INC-013",
-    type: "rescue",
-    location: "Gölbaşı",
-    severity: 3,
-    status: "in_progress",
-    reportedAt: "42m",
-    assignedUnits: 2,
-    description: "80 reported trapped",
-  },
-  {
-    id: "INC-014",
-    type: "medical",
-    location: "Doğanşehir",
-    severity: 3,
-    status: "dispatched",
-    reportedAt: "48m",
-    assignedUnits: 1,
-    description: "Medical supplies needed",
-  },
-  {
-    id: "INC-015",
-    type: "rescue",
-    location: "Diyarbakır",
-    severity: 2,
-    status: "in_progress",
-    reportedAt: "55m",
-    assignedUnits: 2,
-    description: "Moderate building damage",
-  },
-  {
-    id: "INC-016",
-    type: "medical",
-    location: "Şanlıurfa",
-    severity: 2,
-    status: "dispatched",
-    reportedAt: "1h",
-    assignedUnits: 1,
-    description: "Minor injuries reported",
-  },
-]
 
 const chartData = [
   { time: "00:00", incidents: 2, resolved: 1 },
@@ -585,15 +445,59 @@ function IncidentTable({ incidents }: { incidents: Incident[] }) {
 }
 
 interface IncidentFeedProps {
-  incidents?: Incident[]
   className?: string
 }
 
-export function IncidentFeed({ incidents = mockIncidents, className }: IncidentFeedProps) {
+/**
+ * IncidentFeed component displays a live feed of emergency incidents
+ * Fetches data from api.incidents.list()
+ */
+export function IncidentFeed({ className }: IncidentFeedProps) {
+  const [incidents, setIncidents] = useState<Incident[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    api.incidents
+      .list()
+      .then((data) => {
+        setIncidents(data.map(toDisplayIncident))
+        setError(null)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch incidents:", err)
+        setError("Failed to load incidents")
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
+
   const newIncidents = incidents.filter(i => i.status === "new")
   const dispatchedIncidents = incidents.filter(i => i.status === "dispatched")
   const inProgressIncidents = incidents.filter(i => i.status === "in_progress")
   const criticalIncidents = incidents.filter(i => i.severity >= 4)
+
+  if (isLoading) {
+    return (
+      <Card className={cn("flex flex-col items-center justify-center", className)}>
+        <CardContent className="flex flex-col items-center gap-2 py-8">
+          <IconLoader2 className="size-6 animate-spin text-muted-foreground" />
+          <p className="text-sm text-muted-foreground">Loading incidents...</p>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className={cn("flex flex-col items-center justify-center", className)}>
+        <CardContent className="flex flex-col items-center gap-2 py-8">
+          <p className="text-sm text-destructive">{error}</p>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className={cn("flex flex-col", className)}>

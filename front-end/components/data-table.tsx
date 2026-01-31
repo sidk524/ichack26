@@ -105,7 +105,13 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { api } from "@/lib/api"
+import { IconLoader2 } from "@tabler/icons-react"
 
+/**
+ * Schema for responder unit data
+ * Matches the ResponderUnit type from @/types/api
+ */
 export const schema = z.object({
   id: z.number(),
   unitName: z.string(),
@@ -319,12 +325,13 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   )
 }
 
-export function DataTable({
-  data: initialData,
-}: {
-  data: z.infer<typeof schema>[]
-}) {
-  const [data, setData] = React.useState(() => initialData)
+/**
+ * DataTable displays responder units in a sortable table
+ * Fetches data from api.units.list()
+ */
+export function DataTable() {
+  const [data, setData] = React.useState<z.infer<typeof schema>[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -342,6 +349,20 @@ export function DataTable({
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {})
   )
+
+  React.useEffect(() => {
+    api.units
+      .list()
+      .then((units) => {
+        setData(units)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch units:", err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
     () => data?.map(({ id }) => id) || [],
@@ -382,6 +403,14 @@ export function DataTable({
         return arrayMove(data, oldIndex, newIndex)
       })
     }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <IconLoader2 className="size-8 animate-spin text-muted-foreground" />
+      </div>
+    )
   }
 
   return (

@@ -1,67 +1,20 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
   IconBuildingHospital,
   IconCircleFilled,
   IconArrowRight,
   IconPhone,
+  IconLoader2,
 } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-
-type HospitalStatus = "accepting" | "limited" | "diverting" | "closed"
-
-interface NearbyHospital {
-  id: string
-  name: string
-  distance: number // km
-  status: HospitalStatus
-  erAvailable: number
-  icuAvailable: number
-  specialties: string[]
-}
-
-const nearbyHospitals: NearbyHospital[] = [
-  {
-    id: "H-002",
-    name: "City General Hospital",
-    distance: 4.2,
-    status: "accepting",
-    erAvailable: 12,
-    icuAvailable: 3,
-    specialties: ["Trauma", "Cardiac"],
-  },
-  {
-    id: "H-003",
-    name: "St. Mary's Medical Center",
-    distance: 6.8,
-    status: "limited",
-    erAvailable: 4,
-    icuAvailable: 1,
-    specialties: ["Pediatric", "Burns"],
-  },
-  {
-    id: "H-004",
-    name: "Regional Trauma Center",
-    distance: 8.5,
-    status: "accepting",
-    erAvailable: 18,
-    icuAvailable: 6,
-    specialties: ["Trauma", "Neuro", "Ortho"],
-  },
-  {
-    id: "H-005",
-    name: "University Hospital",
-    distance: 12.3,
-    status: "diverting",
-    erAvailable: 0,
-    icuAvailable: 0,
-    specialties: ["Research", "Oncology"],
-  },
-]
+import { api } from "@/lib/api"
+import type { HospitalStatus, Hospital } from "@/types/api"
 
 const statusConfig: Record<HospitalStatus, { label: string; color: string; dotColor: string }> = {
   accepting: {
@@ -90,8 +43,43 @@ interface HospitalNetworkProps {
   className?: string
 }
 
+/**
+ * HospitalNetwork displays nearby hospitals and their status
+ * Fetches data from api.hospitals.list()
+ */
 export function HospitalNetwork({ className }: HospitalNetworkProps) {
-  const acceptingCount = nearbyHospitals.filter((h) => h.status === "accepting").length
+  const [hospitals, setHospitals] = useState<Hospital[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    api.hospitals
+      .list()
+      .then((data) => {
+        // Filter out the current hospital (H-001) to show only nearby ones
+        setHospitals(data.filter(h => h.id !== "H-001"))
+      })
+      .catch((err) => {
+        console.error("Failed to fetch hospitals:", err)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
+
+  const acceptingCount = hospitals.filter((h) => h.status === "accepting").length
+
+  if (isLoading) {
+    return (
+      <Card className={cn("flex flex-col", className)}>
+        <CardHeader className="flex-none pb-3">
+          <CardTitle className="text-sm font-semibold">Hospital Network</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center justify-center py-8">
+          <IconLoader2 className="size-6 animate-spin text-muted-foreground" />
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className={cn("flex flex-col", className)}>
@@ -104,7 +92,7 @@ export function HospitalNetwork({ className }: HospitalNetworkProps) {
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto space-y-3">
-        {nearbyHospitals.map((hospital) => {
+        {hospitals.map((hospital) => {
           const status = statusConfig[hospital.status]
           return (
             <div
