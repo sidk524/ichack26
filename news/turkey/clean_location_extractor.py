@@ -5,12 +5,14 @@ Optimized with:
 - Web Scraping (fetches article content)
 - Aggregated Location Logic (collects ALL valid locations)
 - Stricter Filtering (removes non-geographical entities)
+- Geocoding with fallback to Turkey default
 """
 
 import json
 import time
-import warnings
 import re
+import warnings
+import time as time_module
 warnings.filterwarnings("ignore")
 
 # Import required packages
@@ -23,6 +25,52 @@ except ImportError as e:
     print(f"Error importing packages: {e}")
     print("Please install with: pip install transformers torch requests beautifulsoup4")
     exit(1)
+
+# Default Turkey coordinates (center of country)
+TURKEY_DEFAULT_COORDS = {"lat": 39.0, "lng": 35.0}
+
+# Regex pattern for known Turkish locations
+TURKISH_LOCATION_PATTERN = re.compile(
+    r'\b(Istanbul|Ankara|Izmir|Bursa|Antalya|Adana|Konya|Gaziantep|Mersin|Kayseri|'
+    r'Eskisehir|Diyarbakir|Samsun|Denizli|Malatya|Kahramanmaras|Erzurum|Van|Batman|'
+    r'Elazig|Erzincan|Hatay|Antakya|Iskenderun|Adiyaman|Sanliurfa|Osmaniye|Kilis|'
+    r'Trabzon|Rize|Artvin|Giresun|Sivas|Tokat|Amasya|Corum|Kastamonu|Sinop|'
+    r'Afsin|Elbistan|Pazarcik|Nurdagi|Islahiye|Turkoglu|Golbasi|Kahta|Besni|'
+    r'Sivrice|Puturge|Doganyol|Battalgazi|Yesilyurt|Akcadag|Darende|Hekimhan|'
+    r'Turkey|Turkiye|Turkish)\b',
+    re.IGNORECASE
+)
+
+
+def geocode(location_name: str, country_hint: str = "Turkey") -> dict:
+    """Convert location name to GPS coordinates using OpenStreetMap Nominatim.
+    Falls back to Turkey default coordinates if location not found."""
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        "q": f"{location_name}, {country_hint}",
+        "format": "json",
+        "limit": 1
+    }
+    headers = {"User-Agent": "ichack-disaster-app"}
+
+    try:
+        response = requests.get(url, params=params, headers=headers, timeout=5)
+        data = response.json()
+        if data:
+            return {"lat": float(data[0]["lat"]), "lng": float(data[0]["lon"])}
+    except Exception:
+        pass
+
+    # Fallback: return Turkey default coordinates
+    return TURKEY_DEFAULT_COORDS.copy()
+
+
+def extract_location_from_text(text: str) -> str | None:
+    """Try to extract a Turkish location from text using regex pattern matching."""
+    match = TURKISH_LOCATION_PATTERN.search(text)
+    if match:
+        return match.group(1)
+    return None
 
 
 class NERLocationExtractor:
@@ -38,7 +86,7 @@ class NERLocationExtractor:
         })
 
         # 2. Hardware Acceleration
-        self.device = -1 
+        self.device = -1
         if torch.cuda.is_available():
             self.device = 0
             print("✓ GPU (CUDA) detected and enabled.")
@@ -51,12 +99,12 @@ class NERLocationExtractor:
         # 3. Load Model
         # Using a model fine-tuned for CONLL03 which is standard for NER
         model_name = "Elastic/distilbert-base-cased-finetuned-conll03-english"
-        
+
         try:
             self.ner_pipeline = pipeline(
-                "token-classification", 
-                model=model_name, 
-                aggregation_strategy="simple", 
+                "token-classification",
+                model=model_name,
+                aggregation_strategy="simple",
                 device=self.device
             )
             print("✓ Model loaded successfully.")
@@ -69,7 +117,7 @@ class NERLocationExtractor:
             'collapsed', 'collapse', 'building', 'damage', 'rescue',
             'aftershock', 'epicenter', 'fault'
         ]
-        
+
         # Blocklist: Common false positives that models often mistake for locations
         self.blocked_locations = {
             'earthquake', 'quake', 'magnitude', 'richter', 'epicenter', 'fault',
@@ -86,7 +134,7 @@ class NERLocationExtractor:
         """Visits link and extracts text."""
         if not url or not url.startswith('http'):
             return ""
-            
+
         try:
             response = self.session.get(url, timeout=3)
             if response.status_code == 200:
@@ -110,7 +158,7 @@ class NERLocationExtractor:
         Extracts ALL valid locations found in the text.
         Filters out non-geographical terms via strict tag checking and blocklists.
         """
-        
+
         # Analyze first 2500 chars (roughly 500-600 words)
         text_to_analyze = full_text[:2500]
 
@@ -122,7 +170,7 @@ class NERLocationExtractor:
 
         # Set to store unique locations found
         found_locations = set()
-        
+
         for entity in ner_results:
             # 1. Strict Filter: Only accept 'LOC' (Location) tags.
             # Reject 'MISC' (often events/nationalities), 'ORG' (Agencies), 'PER' (People)
@@ -133,11 +181,11 @@ class NERLocationExtractor:
             entity_lower = entity_text.lower()
 
             # 2. Validation Checks
-            
+
             # Skip short garbage (e.g., "A", "The")
             if len(entity_text) < 3:
                 continue
-                
+
             # Skip if it contains numbers (e.g., "7.8", "M7")
             if any(char.isdigit() for char in entity_text):
                 continue
@@ -170,7 +218,7 @@ class NERLocationExtractor:
         if link:
             fetched_text = self.fetch_article_text(link)
 
-        # 2. Concatenate 
+        # 2. Concatenate
         combined_text = f"{title}. {description} {fetched_text}"
 
         # 3. Check relevance
@@ -178,7 +226,7 @@ class NERLocationExtractor:
             return item
 
         item['disaster'] = True
-        
+
         # 4. Extract ALL locations
         location = self.extract_location_name(combined_text)
 
@@ -187,6 +235,29 @@ class NERLocationExtractor:
                 'name': location,
                 'extraction_method': 'distilbert_ner_full_text'
             }
+        else:
+            # Fallback: try regex pattern matching on title/description
+            regex_location = extract_location_from_text(f"{title} {description}")
+            if regex_location:
+                location = regex_location
+                item['location'] = {
+                    'name': location,
+                    'extraction_method': 'regex_fallback'
+                }
+            else:
+                # Last resort: default to Turkey
+                location = "Turkey"
+                item['location'] = {
+                    'name': location,
+                    'extraction_method': 'default_country'
+                }
+
+        # Geocode to get GPS coordinates (always returns coords, defaults to Turkey center)
+        coords = geocode(location)
+        item['location']['lat'] = coords['lat']
+        item['location']['lng'] = coords['lng']
+        # Rate limit: Nominatim allows ~1 req/sec
+        time_module.sleep(1)
 
         return item
 
@@ -196,7 +267,7 @@ def main():
     print("=" * 42)
 
     input_file = 'turkey.json'
-    
+
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -205,7 +276,7 @@ def main():
         return
 
     extractor = NERLocationExtractor()
-    
+
     start_time = time.time()
     disaster_count = 0
     location_count = 0
@@ -219,7 +290,7 @@ def main():
         item.pop('location', None)
 
         updated_item = extractor.process_news_item(item)
-        
+
         if updated_item.get('disaster', False):
             disaster_count += 1
         if 'location' in updated_item:
@@ -233,7 +304,7 @@ def main():
             print(f"Processed {i + 1} items...")
 
     total_time = time.time() - start_time
-    
+
     with open(input_file, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
