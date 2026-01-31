@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go mod init:*)",
+      "Bash(go run:*)",
+      "Bash(python3:*)",
+      "WebFetch(domain:news.google.com)",
+      "Bash(mkdir:*)",
+      "Bash(uv add:*)",
+      "Bash(uv run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
