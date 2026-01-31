@@ -17,10 +17,33 @@ warnings.filterwarnings("ignore")
 try:
     import torch
     from transformers import pipeline
+    import requests
 except ImportError as e:
     print(f"Error importing transformers: {e}")
-    print("Please install with: pip install transformers torch")
+    print("Please install with: pip install transformers torch requests")
     exit(1)
+
+import time as time_module
+
+
+def geocode(location_name: str, country_hint: str = "Turkey") -> dict | None:
+    """Convert location name to GPS coordinates using OpenStreetMap Nominatim."""
+    url = "https://nominatim.openstreetmap.org/search"
+    params = {
+        "q": f"{location_name}, {country_hint}",
+        "format": "json",
+        "limit": 1
+    }
+    headers = {"User-Agent": "ichack-disaster-app"}
+
+    try:
+        response = requests.get(url, params=params, headers=headers, timeout=5)
+        data = response.json()
+        if data:
+            return {"lat": float(data[0]["lat"]), "lng": float(data[0]["lon"])}
+    except Exception:
+        pass
+    return None
 
 
 class NERLocationExtractor:
@@ -161,6 +184,13 @@ class NERLocationExtractor:
                 'name': location,
                 'extraction_method': 'distilbert_ner'
             }
+            # Geocode to get GPS coordinates
+            coords = geocode(location)
+            if coords:
+                item['location']['lat'] = coords['lat']
+                item['location']['lng'] = coords['lng']
+            # Rate limit: Nominatim allows ~1 req/sec
+            time_module.sleep(1)
 
         return item
 
