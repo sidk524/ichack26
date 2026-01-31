@@ -16,7 +16,7 @@ type Location struct {
 	Name string `json:"name"`
 }
 
-// NewsItem represents a single news article
+// NewsItem represents the full data read from the file
 type NewsItem struct {
 	Title       string   `json:"title"`
 	Link        string   `json:"link"`
@@ -50,7 +50,6 @@ const targetURL = "https://ichack-server-611481283314.europe-west1.run.app/news_
 
 func main() {
 	// 1. Setup Zerolog with Nano precision timestamp
-	// CHANGED: time.RFC3339 -> time.RFC3339Nano
 	log.Logger = log.Output(zerolog.ConsoleWriter{
 		Out:        os.Stderr,
 		TimeFormat: time.RFC3339Nano,
@@ -106,12 +105,36 @@ func main() {
 
 	// 7. Process Loop
 	for {
+		// Get a copy of the item so we can modify it safely without changing the original slice
 		item := newsData.Items[currentIndex]
 		itemCount++
 
-		// Serialize Item
-		payload, err := json.Marshal(item)
-		// Kept your debug print
+		// --- DATE CONVERSION LOGIC ---
+		// Parse from RSS format (RFC1123): "Fri, 30 Jan 2026 08:28:27 GMT"
+		parsedTime, err := time.Parse(time.RFC1123, item.PubDate)
+		if err != nil {
+			log.Warn().Err(err).Str("original_date", item.PubDate).Msg("Could not parse PubDate, keeping original")
+		} else {
+			// Convert to RFC3339Nano
+			item.PubDate = parsedTime.Format(time.RFC3339Nano)
+		}
+		// -----------------------------
+
+		// Create a trimmed version of the data for the payload
+		payloadData := struct {
+			Title   string `json:"title"`
+			Link    string `json:"link"`
+			PubDate string `json:"pubDate"`
+		}{
+			Title:   item.Title,
+			Link:    item.Link,
+			PubDate: item.PubDate,
+		}
+
+		// Serialize the simplified payload
+		payload, err := json.Marshal(payloadData)
+
+		// Debug print to verify only title, link, and pubDate are present
 		println(string(payload))
 
 		if err != nil {
@@ -139,9 +162,10 @@ func main() {
 						Int("status", resp.StatusCode).
 						Str("title", item.Title).
 						Int("index", currentIndex).
+						Str("pub_date", item.PubDate).
 						Msg("Sent news item")
 
-					resp.Body.Close() // Explicit close
+					resp.Body.Close()
 				}
 			}
 		}
