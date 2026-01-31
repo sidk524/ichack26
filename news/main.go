@@ -14,6 +14,7 @@ import (
 
 type Location struct {
 	Name string `json:"name"`
+	GPS  string `json:"gps"`
 }
 
 // NewsItem represents the full data read from the file
@@ -122,13 +123,17 @@ func main() {
 
 		// Create a trimmed version of the data for the payload
 		payloadData := struct {
-			Title   string `json:"title"`
-			Link    string `json:"link"`
-			PubDate string `json:"pubDate"`
+			Title    string   `json:"title"`
+			Link     string   `json:"link"`
+			PubDate  string   `json:"pubDate"`
+			Disaster bool     `json:"disaster"`
+			Location Location `json:"location"`
 		}{
-			Title:   item.Title,
-			Link:    item.Link,
-			PubDate: item.PubDate,
+			Title:    item.Title,
+			Link:     item.Link,
+			PubDate:  item.PubDate,
+			Disaster: item.Disaster,
+			Location: item.Location,
 		}
 
 		// Serialize the simplified payload
