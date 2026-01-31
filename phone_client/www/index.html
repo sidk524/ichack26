@@ -3,246 +3,292 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Emergency Call - Disaster Response</title>
-
-  <!-- PWA Meta Tags -->
-  <meta name="description" content="Emergency call client with AI voice assistant and live GPS tracking">
-  <meta name="theme-color" content="#dc3545">
+  <title>Emergency Report</title>
+  <meta name="theme-color" content="#000">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Emergency">
-
-  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      padding: 12px;
+    }
 
-  <!-- Icons -->
-  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
-  <link rel="apple-touch-icon" href="icons/icon.svg">
+    /* Debug Panel - Big at top */
+    #debug-panel {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 11px;
+    }
+    #debug-panel h3 {
+      color: #888;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .debug-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .debug-item {
+      display: flex;
+      gap: 6px;
+    }
+    .debug-label { color: #666; }
+    .debug-value { color: #0f0; }
+    .debug-value.error { color: #f44; }
+    .debug-value.warning { color: #fa0; }
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/styles.css">
+    /* Live transcript display */
+    #live-transcript {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 10px;
+      margin-top: 8px;
+      min-height: 60px;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    #live-transcript .partial { color: #888; }
+    #live-transcript .final { color: #0f0; }
+    #live-transcript .word {
+      display: inline-block;
+      margin-right: 4px;
+      padding: 2px 4px;
+      background: #1a1a1a;
+      border-radius: 2px;
+    }
 
-  <!-- Preconnect for faster connections -->
-  <link rel="preconnect" href="https://api.elevenlabs.io">
-  <link rel="dns-prefetch" href="https://api.elevenlabs.io">
+    /* Log area */
+    #debug-log {
+      background: #050505;
+      border: 1px solid #222;
+      border-radius: 4px;
+      padding: 8px;
+      margin-top: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+      font-size: 10px;
+    }
+    .log-entry { margin-bottom: 2px; }
+    .log-info { color: #88f; }
+    .log-success { color: #0f0; }
+    .log-error { color: #f44; }
+    .log-transcript { color: #ff0; }
+    .log-ws { color: #0ff; }
+    .log-stt { color: #f0f; }
 
-  <!-- Leaflet for map display -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    /* Main controls */
+    #controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    #call-btn {
+      background: #222;
+      color: #fff;
+      border: 2px solid #444;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #call-btn:active, #call-btn.active {
+      background: #d00;
+      border-color: #f00;
+      transform: scale(0.95);
+    }
+    #call-btn .icon { font-size: 32px; display: block; }
+
+    /* Status */
+    #status {
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+    #status.recording { color: #f00; }
+    #status.connected { color: #0f0; }
+
+    /* Location */
+    #location {
+      background: #111;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    #location .label { color: #666; }
+    #location .value { color: #fff; }
+
+    /* Error */
+    #error {
+      background: #300;
+      border: 1px solid #f00;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: none;
+    }
+    #error.show { display: block; }
+
+    /* Hidden */
+    .hidden { display: none !important; }
+  </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>🆘 Emergency Report</h1>
-      <div id="connection-indicator" class="connection-indicator offline">🔴 Checking...</div>
-    </header>
-
-    <!-- Install PWA Banner -->
-    <div id="install-banner" class="install-banner hidden">
-      <span>📲 Install this app for quick access</span>
-      <button id="install-btn" class="install-btn">Install</button>
-      <button id="install-dismiss" class="install-dismiss">✕</button>
-    </div>
-
-    <!-- Status display -->
-    <div id="status" class="status status-ready">Ready</div>
-
-    <!-- Location with live tracking -->
-    <div id="location" class="location">
-      <div class="location-header">
-        <span class="location-icon">📍</span>
-        <span id="location-text">Getting location...</span>
+  <!-- Debug Panel at Top -->
+  <div id="debug-panel">
+    <h3>Debug</h3>
+    <div class="debug-row">
+      <div class="debug-item">
+        <span class="debug-label">Server:</span>
+        <span class="debug-value" id="d-server">-</span>
       </div>
-      <div id="map-container" class="map-container"></div>
+      <div class="debug-item">
+        <span class="debug-label">WS:</span>
+        <span class="debug-value" id="d-ws">off</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">STT:</span>
+        <span class="debug-value" id="d-stt">off</span>
+      </div>
+    </div>
+    <div class="debug-row">
+      <div class="debug-item">
+        <span class="debug-label">GPS:</span>
+        <span class="debug-value" id="d-gps">-</span>
+      </div>
+      <div class="debug-item">
+        <span class="debug-label">ID:</span>
+        <span class="debug-value" id="d-id">-</span>
+      </div>
     </div>
 
-    <!-- Person ID display -->
-    <div class="person-id-container">
-      <span class="label">Your ID:</span>
-      <span id="person-id" class="person-id">Loading...</span>
+    <!-- Live Transcript -->
+    <div id="live-transcript">
+      <span class="partial" id="partial-text"></span>
+      <div id="final-words"></div>
     </div>
 
-    <!-- Main call button -->
-    <button id="call-btn" class="call-btn">
+    <!-- Log -->
+    <div id="debug-log"></div>
+  </div>
+
+  <!-- Error Display -->
+  <div id="error"></div>
+
+  <!-- Status -->
+  <div id="status">Ready</div>
+
+  <!-- Location -->
+  <div id="location">
+    <span class="label">📍</span>
+    <span class="value" id="location-text">Getting location...</span>
+  </div>
+
+  <!-- Main Call Button -->
+  <div id="controls">
+    <button id="call-btn">
       <span class="btn-icon">📞</span>
-      <span class="btn-text">Start Emergency Call</span>
+      <span class="btn-text">START</span>
     </button>
+  </div>
 
-    <!-- Volume control -->
-    <div id="volume-container" class="volume-container">
-      <label for="volume-slider">🔊 AI Voice Volume</label>
-      <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="1">
-    </div>
-
-    <!-- Extracted info (what the system understood) -->
-    <div id="extracted-info" class="extracted-info hidden"></div>
-
-    <!-- Agent responses (AI speaking) -->
-    <div id="agent-response-container" class="transcript-container hidden">
-      <h2>🤖 Emergency Operator:</h2>
-      <div id="agent-response" class="transcript agent-transcript"></div>
-    </div>
-
-    <!-- User transcripts (what you said) -->
-    <div id="transcript-container" class="transcript-container hidden">
-      <h2>📝 What you said:</h2>
-      <div id="transcript" class="transcript"></div>
-    </div>
-
-    <!-- Disaster summary (from database) -->
-    <div id="summary-container" class="summary-container hidden">
-      <h2>📊 Situation Summary:</h2>
-      <div id="summary-content" class="summary-content"></div>
-    </div>
-
-    <!-- Error display -->
-    <div id="error-container" class="error-container hidden">
-      <p id="error-message"></p>
-      <button class="retry-btn">🔄 Retry Connection</button>
-    </div>
-
-    <!-- Instructions -->
-    <div class="instructions">
-      <details>
-        <summary><strong>📋 Instructions</strong></summary>
-        <ul>
-          <li>Click "Start Emergency Call" to begin</li>
-          <li>Allow microphone and location access when prompted</li>
-          <li>Speak clearly to describe your emergency</li>
-          <li>The AI operator will ask clarifying questions</li>
-          <li>You can interrupt the operator by speaking</li>
-          <li>Your location is tracked and sent automatically</li>
-          <li>All data is uploaded to the emergency database</li>
-        </ul>
-      </details>
-    </div>
-
-    <!-- Debug info (can be hidden in production) -->
-    <details class="debug-info">
-      <summary>🔧 Debug Info</summary>
-      <div id="debug-content">
-        <p>Server: <span id="debug-server"></span></p>
-        <p>WebSocket: <span id="debug-ws">Disconnected</span></p>
-        <p>Queue: <span id="debug-queue">0</span> pending</p>
-        <p>Protocol: WebSocket (SCHEMA.md)</p>
-      </div>
-    </details>
-  </main>
+  <!-- Hidden elements for compatibility -->
+  <div id="transcript-container" class="hidden"></div>
+  <div id="transcript" class="hidden"></div>
+  <div id="agent-response-container" class="hidden"></div>
+  <div id="agent-response" class="hidden"></div>
+  <div id="extracted-info" class="hidden"></div>
+  <div id="summary-container" class="hidden"></div>
+  <div id="summary-content" class="hidden"></div>
+  <div id="map-container" class="hidden"></div>
+  <div id="connection-indicator" class="hidden"></div>
+  <div id="person-id" class="hidden"></div>
+  <div id="debug-queue" class="hidden"></div>
+  <div id="debug-ws" class="hidden"></div>
+  <div id="error-container" class="hidden"></div>
+  <div id="error-message" class="hidden"></div>
 
   <script type="module" src="js/app.js"></script>
   <script>
-    // Populate debug info
+    // Initialize debug panel
     document.addEventListener('DOMContentLoaded', () => {
-      const serverUrl = 'http://localhost:8000';
-      document.getElementById('debug-server').textContent = serverUrl;
+      document.getElementById('d-server').textContent = 'ichack-server...run.app';
     });
 
-    // ==================== PWA INSTALL ====================
-    let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
-    const installBtn = document.getElementById('install-btn');
-    const installDismiss = document.getElementById('install-dismiss');
+    // Global debug log function
+    window.debugLog = function(type, msg, data) {
+      const log = document.getElementById('debug-log');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry log-' + type;
+      const time = new Date().toLocaleTimeString('en-GB', {hour12: false});
+      entry.textContent = `[${time}] ${msg}`;
+      if (data) entry.textContent += ' ' + JSON.stringify(data).substring(0, 80);
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
 
-    // Listen for beforeinstallprompt
-    window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('PWA: beforeinstallprompt fired');
-      e.preventDefault();
-      deferredPrompt = e;
-      // Show install banner
-      if (installBanner) {
-        installBanner.classList.remove('hidden');
-      }
-    });
+      // Update status indicators
+      if (type === 'ws') document.getElementById('d-ws').textContent = msg.includes('connected') ? 'on' : 'off';
+      if (type === 'stt') document.getElementById('d-stt').textContent = msg;
+    };
 
-    // Install button click
-    if (installBtn) {
-      installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log('PWA: User choice:', outcome);
-        deferredPrompt = null;
-        if (installBanner) {
-          installBanner.classList.add('hidden');
-        }
-      });
-    }
-
-    // Dismiss button
-    if (installDismiss) {
-      installDismiss.addEventListener('click', () => {
-        if (installBanner) {
-          installBanner.classList.add('hidden');
-        }
-        // Remember dismissal
-        sessionStorage.setItem('pwa-install-dismissed', 'true');
-      });
-    }
-
-    // Check if already dismissed
-    if (sessionStorage.getItem('pwa-install-dismissed')) {
-      if (installBanner) {
-        installBanner.classList.add('hidden');
-      }
-    }
-
-    // App installed
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA: App installed');
-      if (installBanner) {
-        installBanner.classList.add('hidden');
-      }
-      deferredPrompt = null;
-    });
-
-    // ==================== SERVICE WORKER ====================
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', async () => {
-        try {
-          const registration = await navigator.serviceWorker.register('/service-worker.js');
-          console.log('SW: Registered with scope:', registration.scope);
-
-          // Check for updates
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing;
-            console.log('SW: Update found, installing...');
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('SW: New version available');
-                // Could show update notification here
-              }
-            });
+    // Global transcript display
+    window.showTranscript = function(text, isFinal, words) {
+      if (isFinal) {
+        const finalDiv = document.getElementById('final-words');
+        if (words && words.length) {
+          // Show word by word
+          words.forEach(w => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.textContent = w.word;
+            span.title = `${w.start.toFixed(2)}s - ${w.end.toFixed(2)}s`;
+            finalDiv.appendChild(span);
           });
-        } catch (error) {
-          console.error('SW: Registration failed:', error);
+          finalDiv.appendChild(document.createTextNode(' '));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'final';
+          span.textContent = text + ' ';
+          finalDiv.appendChild(span);
         }
-      });
+        document.getElementById('partial-text').textContent = '';
+      } else {
+        document.getElementById('partial-text').textContent = text;
+      }
 
-      // Handle messages from SW
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        console.log('SW message:', event.data);
-        if (event.data.type === 'SYNC_QUEUE') {
-          // Trigger queue sync in the app
-          if (window.emergencyApp && window.emergencyApp.serverClient) {
-            window.emergencyApp.serverClient.processQueue();
-          }
-        }
-      });
-    }
+      // Auto-scroll
+      const container = document.getElementById('live-transcript');
+      container.scrollTop = container.scrollHeight;
+    };
 
-    // ==================== AUTO-START FROM SHORTCUT ====================
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('action') === 'call') {
-      document.addEventListener('DOMContentLoaded', () => {
-        // Wait for app to initialize, then start call
-        setTimeout(() => {
-          if (window.emergencyApp) {
-            window.emergencyApp.startCall();
-          }
-        }, 1000);
-      });
-    }
+    // Update GPS display
+    window.updateGPS = function(lat, lng) {
+      document.getElementById('d-gps').textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      document.getElementById('location-text').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    };
+
+    // Update person ID
+    window.updatePersonId = function(id) {
+      document.getElementById('d-id').textContent = id.substring(0, 8);
+    };
   </script>
 </body>
 </html>

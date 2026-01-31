@@ -91,15 +91,25 @@ class ServerClient {
 
     try {
       const serverUrl = CONFIG.SERVER_URL.replace(/^http/, 'ws');
-      const wsUrl = `${serverUrl}/ws/call/${this.personId}`;
+      const wsUrl = `${serverUrl}/phone_client_in`;
 
       console.log('Connecting to server:', wsUrl);
       this.ws = new WebSocket(wsUrl);
 
       this.ws.onopen = () => this.handleOpen(initialLocation);
-      this.ws.onmessage = () => {}; // Ignore server messages
-      this.ws.onerror = (e) => console.error('WebSocket error:', e);
-      this.ws.onclose = (event) => this.handleClose(event);
+      this.ws.onmessage = (event) => {
+        console.log('WS message from server:', event.data);
+        if (window.debugLog) window.debugLog('ws', `Server: ${event.data.substring(0, 100)}`);
+      };
+      this.ws.onerror = (e) => {
+        console.error('WebSocket error:', e);
+        if (window.debugLog) window.debugLog('error', `WS error: ${e.message || 'unknown'}`);
+      };
+      this.ws.onclose = (event) => {
+        console.log('WS closed:', event.code, event.reason);
+        if (window.debugLog) window.debugLog('ws', `Closed: ${event.code} ${event.reason}`);
+        this.handleClose(event);
+      };
 
       return true;
     } catch (error) {
@@ -165,8 +175,9 @@ class ServerClient {
     }
 
     if (this.isConnected) {
-      this.sendCallEnd(finalLocation, durationSeconds);
-      await new Promise(r => setTimeout(r, 100)); // Let message send
+      // Send final transcript with is_final=true to properly close server session
+      this.sendFinalTranscript('Call ended', finalLocation);
+      await new Promise(r => setTimeout(r, 200)); // Let message send
     }
 
     if (this.ws) {
@@ -182,10 +193,14 @@ class ServerClient {
   send(message) {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
       try {
-        this.ws.send(JSON.stringify(message));
+        const json = JSON.stringify(message);
+        console.log('WS sending:', message.type, json.substring(0, 200));
+        if (window.debugLog) window.debugLog('ws', `Send: ${message.type}`);
+        this.ws.send(json);
         return true;
       } catch (error) {
         console.error('Send error:', error);
+        if (window.debugLog) window.debugLog('error', `Send fail: ${error.message}`);
         return false;
       }
     }
@@ -220,6 +235,8 @@ class ServerClient {
   sendTranscript(transcript, location, isFinal = false, elevenLabsData = {}) {
     const chunkIndex = this.chunkIndex++;
 
+    // IMPORTANT: Never send is_final=true during call - server closes connection on is_final!
+    // Only send is_final=true when explicitly ending the call
     this.send({
       type: 'transcript_chunk',
       message_id: this.generateMessageId('msg'),
@@ -229,17 +246,33 @@ class ServerClient {
         chunk_index: chunkIndex,
         transcript: {
           text: transcript,
-          is_final: isFinal,
+          is_final: false,  // Always false during active call
           language: elevenLabsData.language || 'en',
         },
         location: this.formatLocation(location),
-        elevenlabs: {
-          conversation_id: elevenLabsData.conversationId || null,
-        },
       },
     });
 
     return chunkIndex;
+  }
+
+  // Send final transcript to close the call properly
+  sendFinalTranscript(transcript, location) {
+    this.send({
+      type: 'transcript_chunk',
+      message_id: this.generateMessageId('msg'),
+      timestamp: new Date().toISOString(),
+      data: {
+        person_id: this.personId,
+        chunk_index: this.chunkIndex++,
+        transcript: {
+          text: transcript || 'Call ended',
+          is_final: true,  // This will close the server connection
+          language: 'en',
+        },
+        location: this.formatLocation(location),
+      },
+    });
   }
 
   sendAgentResponse(agentText, location, conversationId) {
@@ -249,11 +282,8 @@ class ServerClient {
       timestamp: new Date().toISOString(),
       data: {
         person_id: this.personId,
-        chunk_index: this.chunkIndex++,
-        agent: {
-          text: agentText,
-          conversation_id: conversationId || null,
-        },
+        text: agentText,
+        conversation_id: conversationId || null,
         location: this.formatLocation(location),
       },
     });
@@ -311,12 +341,23 @@ class ServerClient {
   }
 
   async healthCheck() {
+    const url = `${CONFIG.SERVER_URL}/health`;
+    console.log('Health check URL:', url);
+    if (window.debugLog) window.debugLog('info', `Health check: ${url}`);
+
     try {
-      const response = await fetch(`${CONFIG.SERVER_URL}/health`, {
+      const response = await fetch(url, {
         signal: AbortSignal.timeout(5000),
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
       });
+      console.log('Health check response:', response.status);
+      if (window.debugLog) window.debugLog('info', `Health response: ${response.status}`);
       return response.ok;
-    } catch {
+    } catch (error) {
+      console.error('Health check error:', error);
+      if (window.debugLog) window.debugLog('error', `Health error: ${error.message}`);
       return false;
     }
   }

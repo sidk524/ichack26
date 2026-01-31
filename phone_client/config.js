@@ -1,11 +1,14 @@
 // Configuration for the Emergency Call Client
 export const CONFIG = {
-  // ElevenLabs Conversational AI Agent ID
-  // Create at: elevenlabs.io → Conversational AI → Create Agent
-  ELEVENLABS_AGENT_ID: 'your-agent-id-here',
+  // ElevenLabs API Key for Speech-to-Text
+  // Get at: elevenlabs.io → Profile → API Keys
+  ELEVENLABS_API_KEY: 'sk_76c73c53fd89cc0e0ee69a9bbdfd5fb67f7a385fc5694d48',
+
+  // ElevenLabs Agent ID (optional, for conversational AI)
+  ELEVENLABS_AGENT_ID: 'agent_1401kgap7ratex29rz4xa7fhxr4j',
 
   // Central server URL for transcript submission
-  SERVER_URL: 'http://localhost:8000',
+  SERVER_URL: 'https://ichack-server-611481283314.europe-west1.run.app',
 
   // How often to update location (milliseconds)
   LOCATION_UPDATE_INTERVAL: 5000,

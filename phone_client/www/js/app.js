@@ -1,7 +1,7 @@
 // Main application logic with WebSocket-based server integration
 import { CONFIG } from '../config.js';
 import { geoMarker } from './geomarker.js';
-import { elevenLabsClient } from './elevenlabs.js';
+import { webSpeechSTT as sttClient } from './web-speech-stt.js';  // Using Web Speech API (no auth needed)
 import { serverClient } from './server.js';
 
 /**
@@ -23,6 +23,17 @@ class EmergencyCallApp {
 
     // Initialize the app
     this.init();
+  }
+
+  /**
+   * Debug logger - logs to console and debug panel
+   */
+  debugLog(type, message, data = null) {
+    // Use global debugLog from index.html if available
+    if (window.debugLog) {
+      window.debugLog(type, message, data);
+    }
+    console.log(`[${type}]`, message, data || '');
   }
 
   /**
@@ -53,12 +64,14 @@ class EmergencyCallApp {
    * Initialize the application
    */
   async init() {
-    console.log('Initializing Emergency Call App...');
+    this.debugLog('info', 'Initializing Emergency Call App...');
+    this.debugLog('info', `Server URL: ${CONFIG.SERVER_URL}`);
 
     // Setup server callbacks
     this.setupServerCallbacks();
 
     // Check server health
+    this.debugLog('info', 'Checking server health...');
     await this.checkServerHealth();
 
     // Initialize geo tracking
@@ -68,8 +81,12 @@ class EmergencyCallApp {
     this.setupEventHandlers();
 
     // Display person ID
+    const personId = serverClient.getPersonId();
     if (this.personIdEl) {
-      this.personIdEl.textContent = serverClient.getPersonId().substring(0, 8) + '...';
+      this.personIdEl.textContent = personId.substring(0, 8) + '...';
+    }
+    if (window.updatePersonId) {
+      window.updatePersonId(personId);
     }
 
     // Update debug info
@@ -163,7 +180,7 @@ class EmergencyCallApp {
     // Volume slider
     if (this.volumeSlider) {
       this.volumeSlider.addEventListener('input', (e) => {
-        elevenLabsClient.setVolume(parseFloat(e.target.value));
+        sttClient.setVolume(parseFloat(e.target.value));
       });
     }
 
@@ -223,19 +240,17 @@ class EmergencyCallApp {
    */
   async startCall() {
     this.hideError();
+    this.debugLog('info', 'Starting call...');
 
     // Check microphone support
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      this.debugLog('error', 'Microphone not supported');
       this.showError('Microphone access is not supported in this browser.');
       return;
     }
 
-    // Check server connection
-    const serverOk = await serverClient.healthCheck();
-    if (!serverOk) {
-      this.showError('Cannot connect to server. Please check your connection.');
-      return;
-    }
+    // Skip health check - just try to connect directly
+    this.debugLog('info', 'Skipping health check, connecting directly...');
 
     this.updateStatus('connecting', 'Connecting...');
     this.callBtn?.classList.add('active');
@@ -245,37 +260,45 @@ class EmergencyCallApp {
     this.clearTranscripts();
 
     // Reset person ID for new call
-    serverClient.resetPersonId();
+    const newPersonId = serverClient.resetPersonId();
     if (this.personIdEl) {
-      this.personIdEl.textContent = serverClient.getPersonId().substring(0, 8) + '...';
+      this.personIdEl.textContent = newPersonId.substring(0, 8) + '...';
+    }
+    if (window.updatePersonId) {
+      window.updatePersonId(newPersonId);
     }
 
     // Get initial location for call_start
     const initialLocation = geoMarker.getPosition();
+    this.debugLog('info', `Location: ${initialLocation ? `${initialLocation.lat}, ${initialLocation.lng}` : 'unavailable'}`);
 
     // Connect to server WebSocket first
+    this.debugLog('ws', 'Connecting to server WebSocket...');
     const serverConnected = await serverClient.connect(initialLocation);
     if (!serverConnected) {
+      this.debugLog('error', 'Server WebSocket connection failed');
       this.showError('Failed to connect to server. Please try again.');
       this.callBtn?.classList.remove('active');
       this.updateButtonText('Start Emergency Call', '📞');
       this.updateStatus('ready', 'Ready');
       return;
     }
+    this.debugLog('success', 'Server WebSocket connected');
 
-    // Connect to ElevenLabs
-    const elevenLabsConnected = await elevenLabsClient.connect({
+    // Connect to Speech Recognition (Speech-to-Text only)
+    this.debugLog('stt', 'Connecting to Speech Recognition...');
+    const elevenLabsConnected = await sttClient.connect({
       onTranscript: (transcript, isFinal) => this.handleTranscript(transcript, isFinal),
+      onPartialTranscript: (transcript) => this.handleTranscript(transcript, false),
       onStatusChange: (status) => this.handleStatusChange(status),
       onError: (error) => this.handleError(error),
-      onAgentResponse: (response) => this.handleAgentResponse(response),
-      onAgentSpeaking: (isSpeaking) => this.handleAgentSpeaking(isSpeaking),
     });
 
     if (elevenLabsConnected) {
+      this.debugLog('success', 'Speech Recognition connected - ready to record');
       this.isCallActive = true;
       this.callStartTime = Date.now();
-      this.conversationId = elevenLabsClient.conversationId;
+      this.conversationId = sttClient.conversationId;
       this.transcriptContainer?.classList.remove('hidden');
       this.agentResponseContainer?.classList.remove('hidden');
 
@@ -310,7 +333,7 @@ class EmergencyCallApp {
       : 0;
 
     // Disconnect from ElevenLabs
-    await elevenLabsClient.disconnect();
+    await sttClient.disconnect();
 
     // Get final location
     const finalLocation = geoMarker.getPosition();
@@ -356,19 +379,24 @@ class EmergencyCallApp {
   /**
    * Handle transcript from ElevenLabs
    */
-  handleTranscript(transcript, isFinal) {
+  handleTranscript(transcript, isFinal, words = null) {
     if (!transcript || transcript.trim() === '') return;
 
-    console.log('Transcript:', transcript, 'Final:', isFinal);
+    this.debugLog('transcript', `${isFinal ? 'FINAL' : 'partial'}: "${transcript}"`);
 
-    // Display transcript
+    // Display transcript in debug panel
+    if (window.showTranscript) {
+      window.showTranscript(transcript, isFinal, words);
+    }
+
+    // Display transcript in main UI
     this.addTranscriptLine(transcript, 'user', isFinal);
 
     // Get current location (full data)
     const location = geoMarker.getPosition();
 
     // Get conversation ID from ElevenLabs
-    const conversationId = elevenLabsClient.conversationId;
+    const conversationId = sttClient.conversationId;
 
     // Send to server via WebSocket with all ElevenLabs data
     serverClient.sendTranscript(transcript, location, isFinal, {
@@ -389,7 +417,7 @@ class EmergencyCallApp {
 
     // Get current location
     const location = geoMarker.getPosition();
-    const conversationId = elevenLabsClient.conversationId;
+    const conversationId = sttClient.conversationId;
 
     // Send agent response to server for logging
     serverClient.sendAgentResponse(response, location, conversationId);
@@ -416,6 +444,12 @@ class EmergencyCallApp {
    * Handle status changes from ElevenLabs
    */
   handleStatusChange(status) {
+    this.debugLog('stt', `Status: ${status}`);
+
+    // Update STT debug display
+    const sttEl = document.getElementById('d-stt');
+    if (sttEl) sttEl.textContent = status;
+
     const statusMap = {
       connecting: ['connecting', 'Connecting...'],
       connected: ['connected', 'Connected'],
@@ -438,6 +472,11 @@ class EmergencyCallApp {
   handleLocationUpdate(position) {
     if (this.locationTextEl) {
       this.locationTextEl.textContent = geoMarker.formatForDisplay();
+    }
+
+    // Update global GPS display
+    if (window.updateGPS && position.lat && position.lng) {
+      window.updateGPS(position.lat, position.lng);
     }
 
     // Add visual indicator for accuracy
@@ -502,9 +541,14 @@ class EmergencyCallApp {
    * Handle connection state changes
    */
   handleConnectionChange(isConnected, status) {
+    this.debugLog('ws', `Server ${isConnected ? 'connected' : 'disconnected'}: ${status}`);
     this.isServerConnected = isConnected;
     this.updateConnectionIndicator(isConnected, status);
     this.updateDebugInfo();
+
+    // Update debug panel WS status
+    const wsEl = document.getElementById('d-ws');
+    if (wsEl) wsEl.textContent = isConnected ? 'on' : 'off';
 
     if (!isConnected && this.isCallActive && status === 'failed') {
       this.showError('Connection lost. Please refresh the page.');
@@ -515,7 +559,7 @@ class EmergencyCallApp {
    * Handle server errors
    */
   handleServerError(error) {
-    console.error('Server error:', error);
+    this.debugLog('error', `Server error: ${error.message || error}`);
     if (error.message) {
       this.showError(`Server error: ${error.message}`);
     }
@@ -525,7 +569,7 @@ class EmergencyCallApp {
    * Handle errors
    */
   handleError(error) {
-    console.error('Error:', error);
+    this.debugLog('error', `Error: ${error.message || error}`);
     this.showError(error.message);
 
     if (this.isCallActive) {
