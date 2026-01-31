@@ -11,6 +11,10 @@ class WebSpeechSTT {
     this.isConnected = false;
     this.conversationId = null;
 
+    // Track what we've already sent to avoid duplicates
+    this.lastSentText = '';
+    this.lastSentWords = 0;
+
     // Callbacks
     this.onTranscript = null;
     this.onPartialTranscript = null;
@@ -90,6 +94,10 @@ class WebSpeechSTT {
     this.isConnected = true;
     this.updateStatus('connected');
 
+    // Reset word tracking for new session
+    this.lastSentWords = 0;
+    this.lastSentText = '';
+
     // Brief delay then set to recording
     setTimeout(() => {
       if (this.isConnected) {
@@ -99,7 +107,7 @@ class WebSpeechSTT {
   }
 
   /**
-   * Handle recognition results
+   * Handle recognition results - send only NEW words, not the whole sentence
    */
   handleResult(event) {
     if (!event.results) return;
@@ -110,22 +118,37 @@ class WebSpeechSTT {
 
     if (!result || !result[0]) return;
 
-    const transcript = result[0].transcript;
+    const fullTranscript = result[0].transcript.trim();
     const isFinal = result.isFinal;
 
-    console.log(`Web Speech ${isFinal ? 'FINAL' : 'partial'}: "${transcript}"`);
+    // Split into words
+    const allWords = fullTranscript.split(/\s+/).filter(w => w.length > 0);
 
-    // Call appropriate callback
+    // Find new words (words we haven't sent yet)
+    const newWords = allWords.slice(this.lastSentWords);
+
+    if (newWords.length === 0) return;
+
+    const newText = newWords.join(' ');
+    console.log(`Web Speech ${isFinal ? 'FINAL' : 'partial'}: NEW="${newText}" (words ${this.lastSentWords}-${allWords.length})`);
+
+    // Update tracking
+    this.lastSentWords = allWords.length;
+
+    // Call appropriate callback with only the NEW words
     if (isFinal) {
       if (this.onTranscript) {
-        this.onTranscript(transcript, true);
+        this.onTranscript(newText, true);
       }
+      // Reset for next utterance
+      this.lastSentWords = 0;
+      this.lastSentText = '';
     } else {
       if (this.onPartialTranscript) {
-        this.onPartialTranscript(transcript, false);
+        this.onPartialTranscript(newText, false);
       }
       if (this.onTranscript) {
-        this.onTranscript(transcript, false);
+        this.onTranscript(newText, false);
       }
     }
   }
