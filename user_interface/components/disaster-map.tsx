@@ -2,10 +2,14 @@
 
 import { useEffect, useRef, useState, useCallback } from "react"
 import mapboxgl from "mapbox-gl"
+import * as THREE from "three"
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import { cn } from "@/lib/utils"
 import { backendApi } from "@/lib/backend-api"
+import { api } from "@/lib/api"
 import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent } from "@/hooks/use-dashboard-updates"
 import type { BackendNewsArticle, BackendDangerZone } from "@/types/backend"
+import type { Hospital } from "@/types/api"
 
 interface IncidentData {
   id: string
@@ -26,6 +30,10 @@ interface VehicleData {
   direction: 1 | -1  // 1 = forward, -1 = reverse
   startPoint: [number, number]
   endPoint: [number, number]
+  // Dispatch simulation fields
+  status: "idle" | "responding" | "on_scene" | "returning"
+  targetIncidentId?: string
+  basePoint: [number, number]  // Original start point for returning
 }
 
 interface DisasterMapProps {
@@ -34,6 +42,7 @@ interface DisasterMapProps {
   showVehicles?: boolean
   autoFetchNews?: boolean
   showDangerZones?: boolean
+  showHospitals?: boolean
 }
 
 // Transform news article to incident data for the map
@@ -67,78 +76,94 @@ const fallbackIncidents: IncidentData[] = [
 
 // Vehicle definitions with start and end points
 // Speed values are much slower for realistic movement
-const vehicleDefinitions: Omit<VehicleData, "marker" | "path">[] = [
+const vehicleDefinitions: Omit<VehicleData, "marker" | "path" | "targetIncidentId">[] = [
   {
     id: "ft1",
     type: "firetruck",
     startPoint: [36.10, 36.25],
     endPoint: [36.165, 36.202],
+    basePoint: [36.10, 36.25],
     progress: 0,
     speed: 0.00007,
     direction: 1,
+    status: "idle",
   },
   {
     id: "ft2",
     type: "firetruck",
     startPoint: [36.22, 36.15],
     endPoint: [36.165, 36.202],
+    basePoint: [36.22, 36.15],
     progress: 0.3,
     speed: 0.00012,
     direction: 1,
+    status: "idle",
   },
   {
     id: "amb1",
     type: "ambulance",
     startPoint: [36.85, 37.55],
     endPoint: [36.937, 37.585],
+    basePoint: [36.85, 37.55],
     progress: 0.1,
     speed: 0.00018,
     direction: 1,
+    status: "idle",
   },
   {
     id: "amb2",
     type: "ambulance",
     startPoint: [37.02, 37.62],
     endPoint: [36.937, 37.585],
+    basePoint: [37.02, 37.62],
     progress: 0.5,
     speed: 0.00014,
     direction: 1,
+    status: "idle",
   },
   {
     id: "ft3",
     type: "firetruck",
     startPoint: [37.32, 37.12],
     endPoint: [37.38, 37.07],
+    basePoint: [37.32, 37.12],
     progress: 0.2,
     speed: 0.00013,
     direction: 1,
+    status: "idle",
   },
   {
     id: "amb3",
     type: "ambulance",
     startPoint: [36.48, 36.52],
     endPoint: [36.58, 36.59],
+    basePoint: [36.48, 36.52],
     progress: 0.4,
     speed: 0.00016,
     direction: 1,
+    status: "idle",
   },
   {
     id: "ft4",
     type: "firetruck",
     startPoint: [37.08, 38.12],
     endPoint: [37.20, 38.20],
+    basePoint: [37.08, 38.12],
     progress: 0.6,
     speed: 0.00011,
     direction: 1,
+    status: "idle",
   },
   {
     id: "amb4",
     type: "ambulance",
     startPoint: [38.18, 37.82],
     endPoint: [38.28, 37.76],
+    basePoint: [38.18, 37.82],
     progress: 0.7,
     speed: 0.00015,
     direction: 1,
+    status: "idle",
   },
 ]
 
@@ -164,6 +189,177 @@ const vehicleIcons: Record<string, { icon: string; color: string; bgColor: strin
     color: "#ffffff",
     bgColor: "#f97316",
   },
+}
+
+// Hospital status colors
+const hospitalStatusColors: Record<string, { color: string; bgColor: string }> = {
+  accepting: { color: "#22c55e", bgColor: "rgba(34, 197, 94, 0.2)" },
+  limited: { color: "#eab308", bgColor: "rgba(234, 179, 8, 0.2)" },
+  diverting: { color: "#f97316", bgColor: "rgba(249, 115, 22, 0.2)" },
+  closed: { color: "#ef4444", bgColor: "rgba(239, 68, 68, 0.2)" },
+}
+
+// Custom Three.js layer for 3D hospital models on Mapbox
+class HospitalModelLayer implements mapboxgl.CustomLayerInterface {
+  id: string
+  type: "custom" = "custom"
+  renderingMode: "3d" = "3d"
+
+  private map: mapboxgl.Map | null = null
+  private camera: THREE.Camera
+  private scene: THREE.Scene
+  private renderer: THREE.WebGLRenderer | null = null
+  private hospitalModel: THREE.Group | null = null
+  private hospitals: Hospital[] = []
+  private modelLoaded = false
+
+  constructor() {
+    this.id = "hospital-3d-layer"
+    this.camera = new THREE.Camera()
+    this.scene = new THREE.Scene()
+  }
+
+  setHospitals(hospitals: Hospital[]) {
+    this.hospitals = hospitals.filter((h) => h.coordinates)
+    this.updateModelPositions()
+  }
+
+  private updateModelPositions() {
+    if (!this.map || !this.modelLoaded || !this.hospitalModel) return
+
+    // Remove existing hospital instances
+    const hospitalsToRemove = this.scene.children.filter((child) => child.userData.isHospital)
+    hospitalsToRemove.forEach((child) => this.scene.remove(child))
+
+    // Add hospital models at each location
+    this.hospitals.forEach((hospital) => {
+      if (!hospital.coordinates || !this.hospitalModel) return
+
+      const modelClone = this.hospitalModel.clone()
+      modelClone.userData.isHospital = true
+      modelClone.userData.hospitalId = hospital.id
+      this.scene.add(modelClone)
+    })
+  }
+
+  onAdd(map: mapboxgl.Map, gl: WebGLRenderingContext) {
+    this.map = map
+
+    // Create renderer
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: map.getCanvas(),
+      context: gl,
+      antialias: true,
+    })
+    this.renderer.autoClear = false
+
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+    this.scene.add(ambientLight)
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6)
+    directionalLight.position.set(0, 70, 100).normalize()
+    this.scene.add(directionalLight)
+
+    // Load hospital model
+    const loader = new GLTFLoader()
+    loader.load(
+      "/3d_models/low_poly_hospital.glb",
+      (gltf) => {
+        this.hospitalModel = gltf.scene
+        this.hospitalModel.scale.set(15, 15, 15)
+        this.hospitalModel.rotation.x = Math.PI / 2
+        this.modelLoaded = true
+        this.updateModelPositions()
+        console.log("[DisasterMap] Hospital 3D model loaded")
+      },
+      undefined,
+      (error) => {
+        console.error("[DisasterMap] Error loading hospital model:", error)
+      }
+    )
+  }
+
+  render(gl: WebGLRenderingContext, matrix: number[]) {
+    if (!this.map || !this.renderer || !this.modelLoaded) return
+
+    // Update camera with Mapbox's projection matrix
+    const m = new THREE.Matrix4().fromArray(matrix)
+    this.camera.projectionMatrix = m
+
+    // Update each hospital model position
+    let modelIndex = 0
+    this.scene.children.forEach((child) => {
+      if (!child.userData.isHospital) return
+      if (modelIndex >= this.hospitals.length) return
+
+      const hospital = this.hospitals[modelIndex]
+      if (!hospital.coordinates) return
+
+      const { lat, lon } = hospital.coordinates
+      const mercatorCoord = mapboxgl.MercatorCoordinate.fromLngLat([lon, lat], 0)
+      const scale = mercatorCoord.meterInMercatorCoordinateUnits()
+
+      child.position.set(mercatorCoord.x, mercatorCoord.y, mercatorCoord.z || 0)
+      child.scale.set(scale * 15, scale * 15, scale * 15)
+
+      modelIndex++
+    })
+
+    // Render the scene
+    this.renderer.resetState()
+    this.renderer.render(this.scene, this.camera)
+    this.map.triggerRepaint()
+  }
+
+  onRemove() {
+    this.renderer?.dispose()
+    this.renderer = null
+    this.map = null
+  }
+}
+
+// Create hospital marker element
+function createHospitalMarkerElement(hospital: Hospital): HTMLDivElement {
+  const status = hospitalStatusColors[hospital.status] || hospitalStatusColors.accepting
+
+  const container = document.createElement("div")
+  container.className = "hospital-marker"
+  container.innerHTML = `
+    <div class="hospital-marker-inner" style="
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2), 0 0 0 2px ${status.color};
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${status.color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18"/>
+        <path d="M5 21v-14l7 -4l7 4v14"/>
+        <path d="M9 9l0 .01"/>
+        <path d="M15 9l0 .01"/>
+        <path d="M9 13l0 .01"/>
+        <path d="M15 13l0 .01"/>
+        <path d="M9 17h6"/>
+      </svg>
+    </div>
+  `
+
+  container.addEventListener("mouseenter", () => {
+    const inner = container.querySelector(".hospital-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1.1)"
+  })
+  container.addEventListener("mouseleave", () => {
+    const inner = container.querySelector(".hospital-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1)"
+  })
+
+  return container
 }
 
 // Create animated marker element
@@ -261,13 +457,103 @@ function interpolatePath(path: [number, number][], progress: number): { lng: num
   return { lng: path[lastIdx][0], lat: path[lastIdx][1] }
 }
 
-export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true, showDangerZones = false }: DisasterMapProps) {
+// Select highest priority incident or danger zone for dispatch
+function selectTargetIncident(
+  incidents: IncidentData[],
+  dangerZones: BackendDangerZone[]
+): { coordinates: [number, number]; id: string; severity: number } | null {
+  // Combine incidents and active danger zones, sort by severity (highest first)
+  const targets = [
+    ...incidents.map(i => ({
+      coordinates: i.coordinates,
+      id: i.id,
+      severity: i.severity,
+    })),
+    ...dangerZones.filter(z => z.is_active).map(z => ({
+      coordinates: [z.lon, z.lat] as [number, number],
+      id: z.zone_id,
+      severity: z.severity,
+    })),
+  ].sort((a, b) => b.severity - a.severity)
+
+  return targets[0] || null
+}
+
+// Dispatch a vehicle to target coordinates
+async function dispatchVehicle(
+  vehicle: VehicleData,
+  targetCoords: [number, number],
+  targetId: string,
+  mapInstance: mapboxgl.Map,
+  accessToken: string
+): Promise<void> {
+  // Get current position as start point
+  const currentPos = interpolatePath(vehicle.path, vehicle.progress)
+  const startCoords: [number, number] = [currentPos.lng, currentPos.lat]
+
+  // Fetch new route to target
+  const newPath = await fetchRoute(startCoords, targetCoords, accessToken)
+
+  // Update vehicle state
+  vehicle.path = newPath
+  vehicle.progress = 0
+  vehicle.direction = 1
+  vehicle.status = "responding"
+  vehicle.targetIncidentId = targetId
+  vehicle.endPoint = targetCoords
+
+  // Update route line on map
+  const source = mapInstance.getSource(`route-${vehicle.id}`) as mapboxgl.GeoJSONSource
+  if (source) {
+    source.setData({
+      type: "Feature",
+      properties: {},
+      geometry: { type: "LineString", coordinates: newPath },
+    })
+  }
+
+  console.log(`[Dispatch] ${vehicle.id} dispatched to incident ${targetId} at [${targetCoords[0].toFixed(3)}, ${targetCoords[1].toFixed(3)}]`)
+}
+
+// Return vehicle to its base after responding
+async function returnVehicleToBase(
+  vehicle: VehicleData,
+  mapInstance: mapboxgl.Map,
+  accessToken: string
+): Promise<void> {
+  const currentPos = interpolatePath(vehicle.path, vehicle.progress)
+  const startCoords: [number, number] = [currentPos.lng, currentPos.lat]
+
+  const newPath = await fetchRoute(startCoords, vehicle.basePoint, accessToken)
+
+  vehicle.path = newPath
+  vehicle.progress = 0
+  vehicle.direction = 1
+  vehicle.status = "returning"
+  vehicle.endPoint = vehicle.basePoint
+
+  const source = mapInstance.getSource(`route-${vehicle.id}`) as mapboxgl.GeoJSONSource
+  if (source) {
+    source.setData({
+      type: "Feature",
+      properties: {},
+      geometry: { type: "LineString", coordinates: newPath },
+    })
+  }
+
+  console.log(`[Dispatch] ${vehicle.id} returning to base`)
+}
+
+export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true, showDangerZones = false, showHospitals = false }: DisasterMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
   const vehiclesRef = useRef<VehicleData[]>([])
   const animationRef = useRef<number | null>(null)
+  const hospitalLayerRef = useRef<HospitalModelLayer | null>(null)
+  const hospitalMarkersRef = useRef<mapboxgl.Marker[]>([])
   const [liveIncidents, setLiveIncidents] = useState<IncidentData[]>([])
   const [dangerZones, setDangerZones] = useState<BackendDangerZone[]>([])
+  const [hospitals, setHospitals] = useState<Hospital[]>([])
   const [isLoading, setIsLoading] = useState(autoFetchNews)
 
   // Fetch news articles and transform to incidents
@@ -296,6 +582,17 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
       setDangerZones(activeZones)
     } catch (error) {
       console.error("[DisasterMap] Failed to fetch danger zones:", error)
+    }
+  }, [])
+
+  // Fetch hospitals
+  const fetchHospitals = useCallback(async () => {
+    try {
+      const data = await api.hospitals.list()
+      console.log(`[DisasterMap] Loaded ${data.length} hospitals`)
+      setHospitals(data)
+    } catch (error) {
+      console.error("[DisasterMap] Failed to fetch hospitals:", error)
     }
   }, [])
 
@@ -347,6 +644,64 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
     return () => clearInterval(interval)
   }, [showDangerZones, fetchDangerZones])
 
+  // Fetch hospitals on mount
+  useEffect(() => {
+    if (!showHospitals) return
+
+    fetchHospitals()
+    const interval = setInterval(fetchHospitals, 60000) // Refresh every 60 seconds
+    return () => clearInterval(interval)
+  }, [showHospitals, fetchHospitals])
+
+  // Update hospital markers and 3D layer when hospitals change
+  useEffect(() => {
+    if (!map.current || !showHospitals) return
+
+    // Remove existing hospital markers
+    hospitalMarkersRef.current.forEach((marker) => marker.remove())
+    hospitalMarkersRef.current = []
+
+    // Update 3D layer
+    if (hospitalLayerRef.current) {
+      hospitalLayerRef.current.setHospitals(hospitals)
+    }
+
+    // Add new hospital markers
+    hospitals.forEach((hospital) => {
+      if (!hospital.coordinates || !map.current) return
+
+      const element = createHospitalMarkerElement(hospital)
+      const status = hospitalStatusColors[hospital.status] || hospitalStatusColors.accepting
+
+      const marker = new mapboxgl.Marker({ element })
+        .setLngLat([hospital.coordinates.lon, hospital.coordinates.lat])
+        .addTo(map.current)
+
+      // Add popup
+      const popup = new mapboxgl.Popup({ offset: 25, closeButton: true })
+        .setHTML(`
+          <div style="font-family: system-ui, -apple-system, sans-serif; padding: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <div style="width: 8px; height: 8px; border-radius: 50%; background: ${status.color};"></div>
+              <span style="font-weight: 600; font-size: 14px;">${hospital.name}</span>
+            </div>
+            <div style="font-size: 12px; color: #666;">
+              <div style="margin-bottom: 4px;">ER: ${hospital.erAvailable} available</div>
+              <div style="margin-bottom: 4px;">ICU: ${hospital.icuAvailable} available</div>
+              <div style="text-transform: capitalize; color: ${status.color}; font-weight: 500;">
+                Status: ${hospital.status}
+              </div>
+            </div>
+          </div>
+        `)
+
+      marker.setPopup(popup)
+      hospitalMarkersRef.current.push(marker)
+    })
+
+    console.log(`[DisasterMap] Updated map with ${hospitals.length} hospital markers`)
+  }, [hospitals, showHospitals])
+
   // Update danger zones layer when data changes
   useEffect(() => {
     if (!map.current || !showDangerZones || !map.current.getSource("danger-zones")) return
@@ -374,6 +729,50 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
     source.setData(geojsonData)
     console.log(`[DisasterMap] Updated map with ${dangerZones.length} danger zones`)
   }, [dangerZones, showDangerZones])
+
+  // Automatic ambulance dispatch to high-severity incidents
+  useEffect(() => {
+    if (!showVehicles) return
+
+    // Initial dispatch after 10 seconds, then every 45 seconds
+    const initialTimeout = setTimeout(() => {
+      triggerDispatch()
+    }, 10000)
+
+    const dispatchInterval = setInterval(() => {
+      triggerDispatch()
+    }, 45000)
+
+    function triggerDispatch() {
+      if (!map.current) return
+
+      const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+      if (!token) return
+
+      // Find available ambulance (idle status)
+      const availableAmbulance = vehiclesRef.current.find(
+        (v) => v.type === "ambulance" && v.status === "idle"
+      )
+      if (!availableAmbulance) {
+        console.log("[Dispatch] No available ambulances")
+        return
+      }
+
+      // Select target from incidents or danger zones
+      const target = selectTargetIncident(liveIncidents, dangerZones)
+
+      if (target) {
+        dispatchVehicle(availableAmbulance, target.coordinates, target.id, map.current, token)
+      } else {
+        console.log("[Dispatch] No targets available for dispatch")
+      }
+    }
+
+    return () => {
+      clearTimeout(initialTimeout)
+      clearInterval(dispatchInterval)
+    }
+  }, [showVehicles, liveIncidents, dangerZones])
 
   const incidents = propIncidents ?? (liveIncidents.length > 0 ? liveIncidents : fallbackIncidents)
 
@@ -657,6 +1056,13 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
         })
       }
 
+      // Add 3D hospital layer
+      if (showHospitals) {
+        hospitalLayerRef.current = new HospitalModelLayer()
+        map.current.addLayer(hospitalLayerRef.current)
+        console.log("[DisasterMap] Hospital 3D layer initialized")
+      }
+
       if (showVehicles) {
         // Fetch all routes from Mapbox Directions API
         console.log("[Vehicles] Fetching road routes...")
@@ -718,7 +1124,7 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
             .addTo(map.current)
         })
 
-        // Animation loop with ping-pong effect (reverse direction at path ends)
+        // Animation loop with state-based behavior
         const animate = () => {
           vehiclesRef.current.forEach((vehicle) => {
             if (!vehicle.marker || vehicle.path.length < 2) return
@@ -726,13 +1132,42 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
             // Update progress based on direction
             vehicle.progress += vehicle.speed * vehicle.direction
 
-            // Reverse direction at path ends (ping-pong effect)
-            if (vehicle.progress >= 1) {
+            if (vehicle.status === "responding") {
+              // Moving to incident - stop at destination
+              if (vehicle.progress >= 1) {
+                vehicle.progress = 1
+                vehicle.status = "on_scene"
+                console.log(`[Dispatch] ${vehicle.id} arrived at incident`)
+                // Return to base after 5 seconds on scene
+                setTimeout(() => {
+                  if (vehicle.status === "on_scene" && map.current) {
+                    const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+                    if (accessToken) {
+                      returnVehicleToBase(vehicle, map.current, accessToken)
+                    }
+                  }
+                }, 5000)
+              }
+            } else if (vehicle.status === "on_scene") {
+              // Stationary at incident - don't move
               vehicle.progress = 1
-              vehicle.direction = -1
-            } else if (vehicle.progress <= 0) {
-              vehicle.progress = 0
-              vehicle.direction = 1
+            } else if (vehicle.status === "returning") {
+              // Returning to base - become idle at end
+              if (vehicle.progress >= 1) {
+                vehicle.progress = 1
+                vehicle.status = "idle"
+                vehicle.targetIncidentId = undefined
+                console.log(`[Dispatch] ${vehicle.id} returned to base, now idle`)
+              }
+            } else {
+              // Idle vehicles: existing ping-pong behavior
+              if (vehicle.progress >= 1) {
+                vehicle.progress = 1
+                vehicle.direction = -1
+              } else if (vehicle.progress <= 0) {
+                vehicle.progress = 0
+                vehicle.direction = 1
+              }
             }
 
             const { lng, lat } = interpolatePath(vehicle.path, vehicle.progress)
@@ -755,20 +1190,22 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
       vehiclesRef.current.forEach((vehicle) => {
         if (vehicle.marker) vehicle.marker.remove()
       })
+      hospitalMarkersRef.current.forEach((marker) => marker.remove())
+      hospitalMarkersRef.current = []
       if (map.current) {
         map.current.remove()
         map.current = null
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showVehicles, showDangerZones]) // Recreate map if display options change
+  }, [showVehicles, showDangerZones, showHospitals]) // Recreate map if display options change
 
   return (
     <div className={cn("relative w-full h-full", className)}>
       <div ref={mapContainer} className="w-full h-full rounded-lg overflow-hidden" />
 
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-50 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm shadow-lg border">
+      {/* Legend - Vertical on left */}
+      <div className="absolute bottom-12 left-4 z-50 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm shadow-lg border">
         <div className="font-semibold mb-2">Live Incidents</div>
         <div className="flex items-center gap-2 mb-1">
           <div className="w-3 h-3 rounded-full bg-linear-to-r from-yellow-500 to-red-500" />
@@ -813,6 +1250,31 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
           </>
         )}
       </div>
+
+      {/* Hospitals - Horizontal bar at bottom */}
+      {showHospitals && hospitals.length > 0 && (
+        <div className="absolute bottom-2 left-4 right-4 z-50 bg-background/90 backdrop-blur-sm rounded-lg px-3 py-1.5 text-xs shadow-lg border">
+          <div className="flex items-center justify-center gap-4">
+            <span className="font-medium">Hospitals:</span>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-white border-2 border-green-500" />
+              <span>Accepting ({hospitals.filter(h => h.status === "accepting").length})</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-white border-2 border-yellow-500" />
+              <span>Limited ({hospitals.filter(h => h.status === "limited").length})</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-white border-2 border-orange-500" />
+              <span>Diverting ({hospitals.filter(h => h.status === "diverting").length})</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <div className="w-2.5 h-2.5 rounded-sm bg-white border-2 border-red-500" />
+              <span>Closed ({hospitals.filter(h => h.status === "closed").length})</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

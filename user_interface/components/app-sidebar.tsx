@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   IconAlertTriangle,
   IconBuildingHospital,
+  IconHeadset,
   IconHelp,
   IconSearch,
   IconSettings,
@@ -31,6 +32,11 @@ const data = {
     avatar: "/avatars/operator.jpg",
   },
   navMain: [
+    {
+      title: "Switch Board",
+      url: "/dashboard",
+      icon: IconHeadset,
+    },
     {
       title: "First Responders",
       url: "/dashboard",
