@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go mod init:*)",
+      "Bash(go run:*)",
+      "Bash(python3:*)",
+      "WebFetch(domain:news.google.com)",
+      "Bash(mkdir:*)",
+      "Bash(uv add:*)",
+      "Bash(uv run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+    "env": {
+    "ANTHROPIC_API_KEY": "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"
+  }
+}
