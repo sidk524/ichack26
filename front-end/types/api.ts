@@ -82,6 +82,117 @@ export interface IncomingPatient {
 }
 
 // ============================================================================
+// Hospital State Types (Extended)
+// ============================================================================
+
+export type InfrastructureStatus = "operational" | "degraded" | "critical" | "offline"
+export type StaffingLevel = "adequate" | "strained" | "critical" | "emergency"
+export type SupplyLevel = "adequate" | "low" | "critical" | "depleted"
+
+export interface HospitalResources {
+  // Capacity
+  capacity: {
+    ed: { total: number; available: number; pending: number }
+    ward: { total: number; available: number; pending: number }
+    icu: { total: number; available: number; pending: number }
+    surgical: { total: number; available: number; pending: number }
+    pediatric: { total: number; available: number; pending: number }
+  }
+  // Capabilities
+  capabilities: string[]
+  traumaLevel: 1 | 2 | 3 | 4 | 5
+  // Staffing
+  staffing: {
+    physicians: { onDuty: number; required: number }
+    nurses: { onDuty: number; required: number }
+    specialists: { onDuty: number; required: number }
+    support: { onDuty: number; required: number }
+    level: StaffingLevel
+  }
+  // Diagnostics
+  diagnostics: {
+    labTurnaround: number // minutes
+    ctAvailable: boolean
+    mriAvailable: boolean
+    xrayWait: number // minutes
+    ultrasoundWait: number // minutes
+  }
+  // Critical Equipment & Supplies
+  criticalSupplies: {
+    bloodONeg: { units: number; level: SupplyLevel }
+    bloodOPos: { units: number; level: SupplyLevel }
+    bloodANeg: { units: number; level: SupplyLevel }
+    bloodAPos: { units: number; level: SupplyLevel }
+    ventilators: { available: number; total: number }
+    monitors: { available: number; total: number }
+    criticalDrugs: { name: string; level: SupplyLevel }[]
+  }
+}
+
+export interface HospitalInfrastructure {
+  power: {
+    status: InfrastructureStatus
+    source: "grid" | "generator" | "battery"
+    backupHours?: number
+  }
+  water: {
+    status: InfrastructureStatus
+    pressure: "normal" | "low" | "critical"
+  }
+  it: {
+    status: InfrastructureStatus
+    ehrOnline: boolean
+    networkLatency?: number
+  }
+  communications: {
+    status: InfrastructureStatus
+    radioOnline: boolean
+    phoneOnline: boolean
+    pagerOnline: boolean
+  }
+  facility: {
+    status: InfrastructureStatus
+    accessRoutes: { name: string; status: "open" | "blocked" | "limited" }[]
+    elevators: { operational: number; total: number }
+    hvac: InfrastructureStatus
+  }
+}
+
+export interface AmbulanceUnit {
+  id: string
+  callSign: string
+  status: "available" | "dispatched" | "en_route_hospital" | "at_scene" | "at_hospital" | "offline"
+  currentLocation?: { lat: number; lon: number }
+  destination?: string
+  eta?: number
+  crew: number
+  patient?: {
+    severity: "critical" | "high" | "moderate" | "low"
+    condition: string
+  }
+}
+
+export interface AmbulanceFleetStatus {
+  total: number
+  available: number
+  dispatched: number
+  enRouteHospital: number
+  atScene: number
+  atHospital: number
+  offline: number
+  units: AmbulanceUnit[]
+}
+
+export interface CommunicationChannel {
+  id: string
+  name: string
+  type: "radio" | "phone" | "digital"
+  status: "active" | "standby" | "offline"
+  frequency?: string
+  lastActivity?: string
+}
+
+// ============================================================================
 // Dashboard Stats Types
 // ============================================================================
 
