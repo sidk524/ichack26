@@ -28,6 +28,7 @@ interface DisasterMapProps {
   incidents?: IncidentData[]
   className?: string
   showVehicles?: boolean
+  showLegend?: boolean
 }
 
 const defaultIncidents: IncidentData[] = [
@@ -208,7 +209,7 @@ function interpolatePath(path: [number, number][], progress: number): { lng: num
   }
 }
 
-export function DisasterMap({ incidents = defaultIncidents, className, showVehicles = true }: DisasterMapProps) {
+export function DisasterMap({ incidents = defaultIncidents, className, showVehicles = true, showLegend = true }: DisasterMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
@@ -470,7 +471,7 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
     <div className={cn("relative w-full h-full", className)}>
       <div ref={mapContainer} className="w-full h-full rounded-lg overflow-hidden" />
 
-      {showVehicles && (
+      {showVehicles && showLegend && (
         <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm shadow-lg border">
           <div className="font-semibold mb-2">Emergency Response</div>
           <div className="flex items-center gap-2 mb-1">

@@ -2,42 +2,45 @@
 
 import { useState } from "react"
 import { DisasterMap } from "@/components/disaster-map"
-import { NewsTicker } from "@/components/emergency/news-ticker"
-import { NewsPanel } from "@/components/emergency/news-panel"
+import { NewsFeed } from "@/components/emergency/news-feed"
 import { CallButton } from "@/components/emergency/call-button"
 import { CallPanel } from "@/components/emergency/call-panel"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function EmergencyPage() {
-  const [newsOpen, setNewsOpen] = useState(false)
   const [callOpen, setCallOpen] = useState(false)
 
   return (
-    <div className="h-[100dvh] relative overflow-hidden bg-black">
-      {/* Layer 1: Map (full screen background) */}
-      <DisasterMap
-        className="absolute inset-0"
-        showVehicles={true}
-      />
+    <div className="min-h-[100dvh] bg-background p-4 pb-28">
+      {/* Header */}
+      <div className="mb-4">
+        <h1 className="text-xl font-bold">Emergency</h1>
+        <p className="text-sm text-muted-foreground">Live disaster updates</p>
+      </div>
 
-      {/* Layer 2: News Ticker (top) */}
-      <NewsTicker
-        onExpand={() => setNewsOpen(true)}
-        className="absolute top-0 left-0 right-0 z-10"
-      />
+      {/* Panels */}
+      <div className="flex flex-col gap-4">
+        {/* Map Panel */}
+        <Card>
+          <CardContent className="p-0 overflow-hidden rounded-lg">
+            <DisasterMap
+              className="h-64"
+              showVehicles={true}
+              showLegend={false}
+            />
+          </CardContent>
+        </Card>
 
-      {/* Layer 3: Call Button (bottom center) */}
-      <CallButton
-        onClick={() => setCallOpen(true)}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
-      />
+        {/* News Feed Panel */}
+        <NewsFeed className="h-80" />
+      </div>
 
-      {/* Layer 4: News Panel (overlay) */}
-      <NewsPanel
-        open={newsOpen}
-        onClose={() => setNewsOpen(false)}
-      />
+      {/* Fixed Call Button */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-20">
+        <CallButton onClick={() => setCallOpen(true)} />
+      </div>
 
-      {/* Layer 5: Call Panel (drawer) */}
+      {/* Call Panel (drawer) */}
       <CallPanel
         open={callOpen}
         onClose={() => setCallOpen(false)}
