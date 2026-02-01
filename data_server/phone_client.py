@@ -13,6 +13,85 @@ from danger_extractor import extract_danger_from_call
 from status_inference import infer_civilian_status, infer_responder_status
 
 
+async def process_location_message(user_id: str, data: dict):
+    """Process a single location message."""
+    await ensure_user_exists(user_id)
+    location = LocationPoint(
+        lat=data.get("lat"),
+        lon=data.get("lon"),
+        timestamp=data.get("timestamp", time.time()),
+        accuracy=data.get("accuracy", 0.0),
+    )
+    await append_location(user_id, location)
+    print(f"Location saved for {user_id}: {location}")
+
+    # Broadcast to dashboards
+    await broadcast_new_location(user_id, {
+        "lat": location.lat,
+        "lon": location.lon,
+        "timestamp": location.timestamp,
+        "accuracy": location.accuracy,
+    })
+
+    # Trigger status inference for both roles
+    user = await get_user(user_id)
+    if user:
+        if user.role == 'civilian':
+            asyncio.create_task(infer_civilian_status(user_id))
+        elif user.role == 'first_responder':
+            asyncio.create_task(infer_responder_status(user_id))
+
+
+async def process_transcript_message(user_id: str, transcript_data: dict, call_start_time: float, partial_texts: list):
+    """
+    Process a single transcript message.
+    Returns (is_final, call) tuple - is_final indicates if call was completed.
+    """
+    text = transcript_data.get("text", "")
+    is_final = transcript_data.get("is_final", False)
+
+    if is_final is True:
+        # Save completed call to database
+        await ensure_user_exists(user_id)
+
+        # Extract tags from transcript
+        tags = extract_bilingual_tags(text, num_tags=3)
+
+        call = Call(
+            call_id=uuid.uuid4().hex,
+            transcript=text,
+            start_time=call_start_time,
+            end_time=time.time(),
+            tags=tags
+        )
+        await append_call(user_id, call)
+        print(f"Call saved for user {user_id} with tags: {tags}")
+
+        # Broadcast to dashboards
+        await broadcast_new_call(user_id, {
+            "call_id": call.call_id,
+            "transcript": call.transcript,
+            "start_time": call.start_time,
+            "end_time": call.end_time,
+            "tags": call.tags
+        })
+
+        # Extract danger zone in background (don't block response)
+        asyncio.create_task(
+            extract_danger_from_call(call.call_id, text, user_id)
+        )
+
+        # Trigger status inference (civilian only, as calls are from civilians)
+        asyncio.create_task(infer_civilian_status(user_id))
+
+        return True, call
+    else:
+        # Store partial text in case of sudden disconnect
+        partial_texts.append(text)
+        print(f"Transcript chunk received for {user_id}: {text[:50]}...")
+        return False, None
+
+
 async def print_users_table():
     users = await list_users()
     print(f"\n=== USERS TABLE ({len(users)} users) ===")
@@ -34,54 +113,44 @@ async def phone_transcript_ws(request):
                 data = json.loads(msg.data)
             except Exception:
                 data = None
-            if isinstance(data, dict):
-                user_id = data.get("user_id")
-                if not user_id:
+
+            # Handle both single messages and batch arrays
+            if isinstance(data, list):
+                messages = data
+                print(f"Processing batch of {len(messages)} transcript messages")
+            elif isinstance(data, dict):
+                messages = [data]
+            else:
+                continue
+
+            for message in messages:
+                try:
+                    if not isinstance(message, dict):
+                        continue
+
+                    msg_user_id = message.get("user_id")
+                    if not msg_user_id:
+                        continue
+
+                    # Track user_id for fallback save on disconnect
+                    user_id = msg_user_id
+
+                    # Extract from nested structure: data.transcript.text / data.transcript.is_final
+                    transcript_data = message.get("data", {}).get("transcript", {})
+
+                    is_final, call = await process_transcript_message(
+                        msg_user_id, transcript_data, call_start_time, partial_texts
+                    )
+
+                    if is_final:
+                        await print_users_table()
+                        await ws.close()
+                        return ws
+
+                except Exception as e:
+                    print(f"Error processing transcript message: {e}")
                     continue
 
-                # Extract from nested structure: data.transcript.text / data.transcript.is_final
-                transcript_data = data.get("data", {}).get("transcript", {})
-                text = transcript_data.get("text", "")
-                is_final = transcript_data.get("is_final", False)
-
-                if is_final is True:
-                    # Save completed call to database
-                    await ensure_user_exists(user_id)
-
-                    # Extract tags from transcript
-                    tags = extract_bilingual_tags(text, num_tags=3)
-
-                    call = Call(
-                        call_id=uuid.uuid4().hex,
-                        transcript=text,
-                        start_time=call_start_time,
-                        end_time=time.time(),
-                        tags=tags
-                    )
-                    await append_call(user_id, call)
-                    print(f"Call saved for user {user_id} with tags: {tags}")
-                    await print_users_table()
-                    # Broadcast to dashboards
-                    await broadcast_new_call(user_id, {
-                        "call_id": call.call_id,
-                        "transcript": call.transcript,
-                        "start_time": call.start_time,
-                        "end_time": call.end_time,
-                        "tags": call.tags
-                    })
-                    # Extract danger zone in background (don't block response)
-                    asyncio.create_task(
-                        extract_danger_from_call(call.call_id, text, user_id)
-                    )
-                    # Trigger status inference (civilian only, as calls are from civilians)
-                    asyncio.create_task(infer_civilian_status(user_id))
-                    await ws.close()
-                else:
-                    # Store partial text in case of sudden disconnect
-                    partial_texts.append(text)
-                    print(f"Transcript chunk received for {user_id}: {text[:50]}...")
-            else:
-                pass
         elif msg.type == web.WSMsgType.BINARY:
             pass
         elif msg.type == web.WSMsgType.ERROR:
@@ -126,45 +195,41 @@ async def phone_transcript_ws(request):
 async def phone_location_ws(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
-    user_id = None
- 
+
     async for msg in ws:
         if msg.type == web.WSMsgType.TEXT:
             try:
                 data = json.loads(msg.data)
             except Exception:
                 data = None
-            if isinstance(data, dict):
-                user_id = data.get("user_id")
-                if not user_id:
-                    continue
-                # Ensure user exists and append location
-                await ensure_user_exists(user_id)
-                location = LocationPoint(
-                    lat=data.get("lat"),
-                    lon=data.get("lon"),
-                    timestamp=data.get("timestamp", time.time()),
-                    accuracy=data.get("accuracy", 0.0),
-                )
-                await append_location(user_id, location)
-                print(f"Location saved for {user_id}: {location}")
-                await print_users_table()
-                # Broadcast to dashboards
-                await broadcast_new_location(user_id, {
-                    "lat": location.lat,
-                    "lon": location.lon,
-                    "timestamp": location.timestamp,
-                    "accuracy": location.accuracy,
-                })
-                # Trigger status inference for both roles (locations are tracked for all users)
-                user = await get_user(user_id)
-                if user:
-                    if user.role == 'civilian':
-                        asyncio.create_task(infer_civilian_status(user_id))
-                    elif user.role == 'first_responder':
-                        asyncio.create_task(infer_responder_status(user_id))
+
+            # Handle both single messages and batch arrays
+            if isinstance(data, list):
+                messages = data
+                print(f"Processing batch of {len(messages)} location messages")
+            elif isinstance(data, dict):
+                messages = [data]
             else:
-                pass
+                continue
+
+            for message in messages:
+                try:
+                    if not isinstance(message, dict):
+                        continue
+
+                    user_id = message.get("user_id")
+                    if not user_id:
+                        continue
+
+                    await process_location_message(user_id, message)
+
+                except Exception as e:
+                    print(f"Error processing location message: {e}")
+                    continue
+
+            # Print users table after processing batch
+            await print_users_table()
+
         elif msg.type == web.WSMsgType.BINARY:
             pass
         elif msg.type == web.WSMsgType.ERROR:
