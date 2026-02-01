@@ -8,6 +8,7 @@ from phone_client import register_phone_routes
 from sensor_client import register_sensor_routes
 from data_client import register_data_routes
 from database.postgres import init_db
+from mock_data import populate_mock_data
 
 HOST = "0.0.0.0"
 PORT = int(os.getenv("PORT", "8080"))
@@ -22,10 +23,16 @@ async def health(request):
 
 
 async def init_and_log_db():
-    """Background task to init DB."""
+    """Background task to init DB and populate mock data."""
     try:
         await init_db()
         print("Database initialized successfully")
+
+        # Populate mock data automatically
+        print("🎭 Populating database with mock data...")
+        await populate_mock_data()
+        print("✅ Mock data loaded successfully")
+
     except Exception as e:
         print(f"Error initializing database: {e}")
 

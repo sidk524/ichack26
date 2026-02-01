@@ -4,7 +4,7 @@ from pathlib import Path
 
 import aiosqlite
 
-from .db import User, Call, LocationPoint, NewsArticle, SensorReading
+from .db import User, Call, LocationPoint, NewsArticle, SensorReading, DangerZone, Hospital, ExtractedEntity
 
 class PostgresDB:
     def __init__(self, db_path: str = "data/ichack_server.db"):
@@ -19,6 +19,7 @@ class PostgresDB:
                 CREATE TABLE IF NOT EXISTS users (
                     user_id TEXT PRIMARY KEY,
                     role TEXT NOT NULL CHECK(role IN ('civilian', 'first_responder')),
+                    status TEXT DEFAULT 'normal',
                     created_at REAL DEFAULT (julianday('now'))
                 )
             """)
@@ -78,11 +79,65 @@ class PostgresDB:
                 )
             """)
 
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS danger_zones (
+                    zone_id TEXT PRIMARY KEY,
+                    category TEXT NOT NULL CHECK(category IN ('natural', 'people', 'infrastructure')),
+                    disaster_type TEXT NOT NULL,
+                    severity INTEGER NOT NULL CHECK(severity >= 1 AND severity <= 5),
+                    lat REAL NOT NULL,
+                    lon REAL NOT NULL,
+                    radius REAL NOT NULL,
+                    is_active INTEGER NOT NULL DEFAULT 1,
+                    detected_at REAL NOT NULL,
+                    expires_at REAL,
+                    description TEXT DEFAULT '',
+                    recommended_action TEXT DEFAULT ''
+                )
+            """)
+
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS hospitals (
+                    hospital_id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    lat REAL NOT NULL,
+                    lon REAL NOT NULL,
+                    total_beds INTEGER NOT NULL,
+                    available_beds INTEGER NOT NULL,
+                    icu_beds INTEGER NOT NULL,
+                    available_icu INTEGER NOT NULL,
+                    er_beds INTEGER NOT NULL,
+                    available_er INTEGER NOT NULL,
+                    pediatric_beds INTEGER NOT NULL,
+                    available_pediatric INTEGER NOT NULL,
+                    contact_phone TEXT DEFAULT '',
+                    last_updated REAL DEFAULT 0
+                )
+            """)
+
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS extracted_entities (
+                    entity_id TEXT PRIMARY KEY,
+                    source_type TEXT NOT NULL CHECK(source_type IN ('call', 'news', 'sensor')),
+                    source_id TEXT NOT NULL,
+                    entity_type TEXT NOT NULL CHECK(entity_type IN ('person_status', 'movement', 'danger_zone', 'medical')),
+                    urgency INTEGER NOT NULL CHECK(urgency >= 1 AND urgency <= 5),
+                    status TEXT NOT NULL,
+                    needs TEXT DEFAULT '',
+                    location_mentioned TEXT DEFAULT '',
+                    medical_keywords TEXT DEFAULT '',
+                    extracted_at REAL NOT NULL
+                )
+            """)
+
             await db.commit()
 
     async def wipe_db(self):
         """Clear all data from tables."""
         async with aiosqlite.connect(self.db_path) as db:
+            await db.execute("DELETE FROM extracted_entities")
+            await db.execute("DELETE FROM hospitals")
+            await db.execute("DELETE FROM danger_zones")
             await db.execute("DELETE FROM sensor_readings")
             await db.execute("DELETE FROM news_articles")
             await db.execute("DELETE FROM calls")
@@ -92,12 +147,12 @@ class PostgresDB:
 
     # --- Users ---
 
-    async def ensure_user_exists(self, user_id: str, role: str = "civilian") -> None:
+    async def ensure_user_exists(self, user_id: str, role: str = "civilian", status: str = "normal") -> None:
         """Create user if they don't exist."""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
-                "INSERT OR IGNORE INTO users (user_id, role) VALUES (?, ?)",
-                (user_id, role)
+                "INSERT OR IGNORE INTO users (user_id, role, status) VALUES (?, ?, ?)",
+                (user_id, role, status)
             )
             await db.commit()
 
@@ -106,8 +161,8 @@ class PostgresDB:
         async with aiosqlite.connect(self.db_path) as db:
             # Save or update user
             await db.execute(
-                "INSERT OR REPLACE INTO users (user_id, role) VALUES (?, ?)",
-                (user.user_id, user.role)
+                "INSERT OR REPLACE INTO users (user_id, role, status) VALUES (?, ?, ?)",
+                (user.user_id, user.role, user.status)
             )
 
             # Clear existing location history and calls
@@ -134,7 +189,7 @@ class PostgresDB:
         """Get user with their location history and calls."""
         async with aiosqlite.connect(self.db_path) as db:
             # Get user
-            async with db.execute("SELECT user_id, role FROM users WHERE user_id = ?", (user_id,)) as cursor:
+            async with db.execute("SELECT user_id, role, status FROM users WHERE user_id = ?", (user_id,)) as cursor:
                 user_row = await cursor.fetchone()
                 if not user_row:
                     return None
@@ -164,6 +219,7 @@ class PostgresDB:
             return User(
                 user_id=user_row[0],
                 role=user_row[1],
+                status=user_row[2],
                 location_history=location_history,
                 calls=calls
             )
@@ -190,13 +246,14 @@ class PostgresDB:
         """List all users as raw dicts."""
         users = []
         async with aiosqlite.connect(self.db_path) as db:
-            async with db.execute("SELECT user_id, role FROM users") as cursor:
+            async with db.execute("SELECT user_id, role, status FROM users") as cursor:
                 async for row in cursor:
                     user = await self.get_user(row[0])
                     if user:
                         users.append({
                             "user_id": user.user_id,
                             "role": user.role,
+                            "status": user.status,
                             "location_history": [
                                 {"lat": lp.lat, "lon": lp.lon, "timestamp": lp.timestamp, "accuracy": lp.accuracy}
                                 for lp in user.location_history
@@ -308,6 +365,137 @@ class PostgresDB:
                     })
         return readings
 
+    # --- Danger Zones ---
+
+    async def save_danger_zone(self, zone: DangerZone) -> None:
+        """Save danger zone."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                """INSERT OR REPLACE INTO danger_zones
+                   (zone_id, category, disaster_type, severity, lat, lon, radius,
+                    is_active, detected_at, expires_at, description, recommended_action)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (zone.zone_id, zone.category, zone.disaster_type, zone.severity,
+                 zone.lat, zone.lon, zone.radius, 1 if zone.is_active else 0,
+                 zone.detected_at, zone.expires_at, zone.description, zone.recommended_action)
+            )
+            await db.commit()
+
+    async def list_danger_zones(self) -> List[dict]:
+        """List all danger zones as raw dicts."""
+        zones = []
+        async with aiosqlite.connect(self.db_path) as db:
+            async with db.execute(
+                """SELECT zone_id, category, disaster_type, severity, lat, lon, radius,
+                          is_active, detected_at, expires_at, description, recommended_action
+                   FROM danger_zones ORDER BY detected_at DESC"""
+            ) as cursor:
+                async for row in cursor:
+                    zones.append({
+                        "zone_id": row[0],
+                        "category": row[1],
+                        "disaster_type": row[2],
+                        "severity": row[3],
+                        "lat": row[4],
+                        "lon": row[5],
+                        "radius": row[6],
+                        "is_active": bool(row[7]),
+                        "detected_at": row[8],
+                        "expires_at": row[9],
+                        "description": row[10],
+                        "recommended_action": row[11]
+                    })
+        return zones
+
+    # --- Hospitals ---
+
+    async def save_hospital(self, hospital: Hospital) -> None:
+        """Save hospital."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                """INSERT OR REPLACE INTO hospitals
+                   (hospital_id, name, lat, lon, total_beds, available_beds,
+                    icu_beds, available_icu, er_beds, available_er,
+                    pediatric_beds, available_pediatric, contact_phone, last_updated)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (hospital.hospital_id, hospital.name, hospital.lat, hospital.lon,
+                 hospital.total_beds, hospital.available_beds,
+                 hospital.icu_beds, hospital.available_icu,
+                 hospital.er_beds, hospital.available_er,
+                 hospital.pediatric_beds, hospital.available_pediatric,
+                 hospital.contact_phone, hospital.last_updated)
+            )
+            await db.commit()
+
+    async def list_hospitals(self) -> List[dict]:
+        """List all hospitals as raw dicts."""
+        hospitals = []
+        async with aiosqlite.connect(self.db_path) as db:
+            async with db.execute(
+                """SELECT hospital_id, name, lat, lon, total_beds, available_beds,
+                          icu_beds, available_icu, er_beds, available_er,
+                          pediatric_beds, available_pediatric, contact_phone, last_updated
+                   FROM hospitals ORDER BY name"""
+            ) as cursor:
+                async for row in cursor:
+                    hospitals.append({
+                        "hospital_id": row[0],
+                        "name": row[1],
+                        "lat": row[2],
+                        "lon": row[3],
+                        "total_beds": row[4],
+                        "available_beds": row[5],
+                        "icu_beds": row[6],
+                        "available_icu": row[7],
+                        "er_beds": row[8],
+                        "available_er": row[9],
+                        "pediatric_beds": row[10],
+                        "available_pediatric": row[11],
+                        "contact_phone": row[12],
+                        "last_updated": row[13]
+                    })
+        return hospitals
+
+    # --- Extracted Entities ---
+
+    async def save_extracted_entity(self, entity: ExtractedEntity) -> None:
+        """Save extracted entity."""
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                """INSERT OR REPLACE INTO extracted_entities
+                   (entity_id, source_type, source_id, entity_type, urgency, status,
+                    needs, location_mentioned, medical_keywords, extracted_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (entity.entity_id, entity.source_type, entity.source_id, entity.entity_type,
+                 entity.urgency, entity.status, ','.join(entity.needs),
+                 entity.location_mentioned, ','.join(entity.medical_keywords), entity.extracted_at)
+            )
+            await db.commit()
+
+    async def list_extracted_entities(self) -> List[dict]:
+        """List all extracted entities as raw dicts."""
+        entities = []
+        async with aiosqlite.connect(self.db_path) as db:
+            async with db.execute(
+                """SELECT entity_id, source_type, source_id, entity_type, urgency, status,
+                          needs, location_mentioned, medical_keywords, extracted_at
+                   FROM extracted_entities ORDER BY extracted_at DESC"""
+            ) as cursor:
+                async for row in cursor:
+                    entities.append({
+                        "entity_id": row[0],
+                        "source_type": row[1],
+                        "source_id": row[2],
+                        "entity_type": row[3],
+                        "urgency": row[4],
+                        "status": row[5],
+                        "needs": row[6].split(',') if row[6] else [],
+                        "location_mentioned": row[7],
+                        "medical_keywords": row[8].split(',') if row[8] else [],
+                        "extracted_at": row[9]
+                    })
+        return entities
+
 
 # Global database instance
 db = PostgresDB()
@@ -319,8 +507,8 @@ async def init_db():
     await db.wipe_db()
     print("Database initialized and wiped clean")
 
-async def ensure_user_exists(user_id: str, role: str = "civilian") -> None:
-    await db.ensure_user_exists(user_id, role)
+async def ensure_user_exists(user_id: str, role: str = "civilian", status: str = "normal") -> None:
+    await db.ensure_user_exists(user_id, role, status)
 
 async def save_user(user: User) -> None:
     await db.save_user(user)
@@ -351,3 +539,21 @@ async def save_sensor_reading(reading: SensorReading) -> None:
 
 async def list_sensor_readings() -> List[dict]:
     return await db.list_sensor_readings()
+
+async def save_danger_zone(zone: DangerZone) -> None:
+    await db.save_danger_zone(zone)
+
+async def list_danger_zones() -> List[dict]:
+    return await db.list_danger_zones()
+
+async def save_hospital(hospital: Hospital) -> None:
+    await db.save_hospital(hospital)
+
+async def list_hospitals() -> List[dict]:
+    return await db.list_hospitals()
+
+async def save_extracted_entity(entity: ExtractedEntity) -> None:
+    await db.save_extracted_entity(entity)
+
+async def list_extracted_entities() -> List[dict]:
+    return await db.list_extracted_entities()

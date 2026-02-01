@@ -8,7 +8,8 @@ from aiohttp import web
 
 from database.postgres import (
     list_users, get_user, list_news, get_news,
-    list_sensor_readings, db
+    list_sensor_readings, list_hospitals, list_danger_zones,
+    list_extracted_entities, db
 )
 
 
@@ -75,6 +76,7 @@ async def get_user_by_id(request):
         user_dict = {
             "user_id": user.user_id,
             "role": user.role,
+            "status": user.status,
             "location_history": [
                 {"lat": lp.lat, "lon": lp.lon, "timestamp": lp.timestamp, "accuracy": lp.accuracy}
                 for lp in user.location_history
@@ -352,15 +354,111 @@ async def get_all_data(request):
         users = await list_users()
         news = await list_news()
         sensors = await list_sensor_readings()
+        hospitals = await list_hospitals()
+        danger_zones = await list_danger_zones()
+        entities = await list_extracted_entities()
 
         all_data = {
             "users": users,
             "news": news,
             "sensors": sensors,
+            "hospitals": hospitals,
+            "danger_zones": danger_zones,
+            "entities": entities,
             "timestamp": time.time()
         }
 
         return web.json_response({"ok": True, "data": all_data})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+async def get_all_hospitals(request):
+    """
+    GET /api/hospitals
+    Returns all hospitals with current capacity information.
+
+    Expected output format:
+    [
+        {
+            "hospital_id": "h1a2b3c4",
+            "name": "St. Bartholomew's Hospital",
+            "lat": 51.5176,
+            "lon": -0.1009,
+            "total_beds": 500,
+            "available_beds": 120,
+            "icu_beds": 50,
+            "available_icu": 8,
+            "er_beds": 75,
+            "available_er": 15,
+            "pediatric_beds": 100,
+            "available_pediatric": 25,
+            "contact_phone": "+44 20 3765 8000",
+            "last_updated": 1234567890.123
+        }
+    ]
+    """
+    try:
+        hospitals = await list_hospitals()
+        return web.json_response({"ok": True, "hospitals": hospitals})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+async def get_all_danger_zones(request):
+    """
+    GET /api/danger-zones
+    Returns all active danger zones.
+
+    Expected output format:
+    [
+        {
+            "zone_id": "z1a2b3c4",
+            "category": "natural",
+            "disaster_type": "flood",
+            "severity": 4,
+            "lat": 51.5074,
+            "lon": -0.1278,
+            "radius": 500,
+            "is_active": true,
+            "detected_at": 1234567890.123,
+            "expires_at": 1234571490.123,
+            "description": "Thames flooding reported near London Bridge",
+            "recommended_action": "evacuate"
+        }
+    ]
+    """
+    try:
+        zones = await list_danger_zones()
+        return web.json_response({"ok": True, "danger_zones": zones})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+async def get_all_extracted_entities(request):
+    """
+    GET /api/entities
+    Returns all AI-extracted entities from calls, news, and sensors.
+
+    Expected output format:
+    [
+        {
+            "entity_id": "e1a2b3c4",
+            "source_type": "call",
+            "source_id": "call_emergency_001",
+            "entity_type": "person_status",
+            "urgency": 5,
+            "status": "needs_help",
+            "needs": ["medical", "evacuation"],
+            "location_mentioned": "45 Oak Street",
+            "medical_keywords": ["fell", "not_moving", "unconscious"],
+            "extracted_at": 1234567890.123
+        }
+    ]
+    """
+    try:
+        entities = await list_extracted_entities()
+        return web.json_response({"ok": True, "entities": entities})
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=500)
 
@@ -385,6 +483,15 @@ def register_data_routes(app):
 
     # Sensors
     app.router.add_get("/api/sensors", get_all_sensors)
+
+    # Hospitals
+    app.router.add_get("/api/hospitals", get_all_hospitals)
+
+    # Danger Zones
+    app.router.add_get("/api/danger-zones", get_all_danger_zones)
+
+    # Extracted Entities
+    app.router.add_get("/api/entities", get_all_extracted_entities)
 
     # Complete data dump
     app.router.add_get("/api/data/all", get_all_data)

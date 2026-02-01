@@ -29,6 +29,8 @@ class Call:
 class User:
     user_id: str
     role: Literal["civilian", "first_responder"]
+    status: str = "normal"  # civilian: normal, needs_help, help_coming, at_incident, in_transport, at_hospital
+                           # responder: roaming, docked, en_route_to_civ, on_scene, en_route_to_hospital
     location_history: List[LocationPoint] = field(default_factory=list)
     calls: List[Call] = field(default_factory=list)
 
@@ -61,6 +63,54 @@ class SensorReading:
     mic_amplitude: float
     mic_frequency: float
     received_at: float
+
+
+@dataclass
+class DangerZone:
+    zone_id: str
+    category: Literal["natural", "people", "infrastructure"]
+    disaster_type: str  # flood, fire, shooting, etc.
+    severity: int  # 1-5 scale
+    lat: float
+    lon: float
+    radius: float  # meters
+    is_active: bool
+    detected_at: float
+    expires_at: Optional[float] = None
+    description: str = ""
+    recommended_action: str = ""  # evacuate, shelter_in_place, avoid_area
+
+
+@dataclass
+class Hospital:
+    hospital_id: str
+    name: str
+    lat: float
+    lon: float
+    total_beds: int
+    available_beds: int
+    icu_beds: int
+    available_icu: int
+    er_beds: int
+    available_er: int
+    pediatric_beds: int
+    available_pediatric: int
+    contact_phone: str = ""
+    last_updated: float = 0.0
+
+
+@dataclass
+class ExtractedEntity:
+    entity_id: str
+    source_type: Literal["call", "news", "sensor"]
+    source_id: str  # call_id, article_id, or reading_id
+    entity_type: Literal["person_status", "movement", "danger_zone", "medical"]
+    urgency: int  # 1-5 scale
+    status: str  # extracted status (needs_help, safe, etc.)
+    needs: List[str] = field(default_factory=list)  # medical, evacuation, translation, shelter
+    location_mentioned: str = ""
+    medical_keywords: List[str] = field(default_factory=list)
+    extracted_at: float = 0.0
 
 
 class DB:
