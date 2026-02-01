@@ -24,6 +24,7 @@ dependencies = [
     "newspaper3k>=0.2.8",
     "geocoder>=1.38.1",
     "lxml-html-clean>=0.4.3",
+    "pycountry>=24.6.1",
 ]
 
 [project.optional-dependencies]
