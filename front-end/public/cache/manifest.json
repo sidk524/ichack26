@@ -1,0 +1,101 @@
+{
+  "version": "1.0.0",
+  "entries": [
+    {
+      "filename": "disaster-data.json",
+      "timestamp": "2026-02-01T00:00:00.000Z",
+      "label": "Combined Historical Data (Empty Template)",
+      "eventCount": 0
+    },
+    {
+      "filename": "earthquakes_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "USGS Earthquakes (Turkey-Syria Region, Dec 2022 - Feb 2023)",
+      "eventCount": 29
+    },
+    {
+      "filename": "storms_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "NASA EONET Severe Storms (Dec 2022 - Feb 2023)",
+      "eventCount": 50
+    },
+    {
+      "filename": "volcanoes_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "NASA EONET Volcanoes (Dec 2022 - Feb 2023)",
+      "eventCount": 20
+    },
+    {
+      "filename": "droughts_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "NASA EONET Droughts (Dec 2022 - Feb 2023)",
+      "eventCount": 10
+    },
+    {
+      "filename": "fires_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "NASA EONET Wildfires (Dec 2022 - Feb 2023)",
+      "eventCount": 0
+    },
+    {
+      "filename": "floods_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "NASA EONET Floods (Dec 2022 - Feb 2023)",
+      "eventCount": 0
+    },
+    {
+      "filename": "protests_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "GDELT Protests (Turkey-Syria Region)",
+      "eventCount": 20
+    },
+    {
+      "filename": "hospitals_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "OpenStreetMap Hospitals (Turkey-Syria Region)",
+      "eventCount": 5000
+    },
+    {
+      "filename": "schools_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "OpenStreetMap Schools (Turkey-Syria Region)",
+      "eventCount": 50000
+    },
+    {
+      "filename": "structural_damage_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "GDACS Structural Damage Events",
+      "eventCount": 30
+    },
+    {
+      "filename": "gdacs_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "GDACS Global Disaster Alerts",
+      "eventCount": 1000
+    },
+    {
+      "filename": "humanitarian_corridors_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "WFP Humanitarian Corridors",
+      "eventCount": 50
+    },
+    {
+      "filename": "internet_outages_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "RIPE Atlas Internet Outages",
+      "eventCount": 30
+    },
+    {
+      "filename": "power_outages_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "UK Power Networks Outages",
+      "eventCount": 30
+    },
+    {
+      "filename": "refugee_camps_historical.json",
+      "timestamp": "2023-02-06T00:00:00.000Z",
+      "label": "UNHCR/HDX Refugee Camps (Turkey-Syria Region)",
+      "eventCount": 26
+    }
+  ]
+}

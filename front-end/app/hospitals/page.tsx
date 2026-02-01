@@ -1,5 +1,8 @@
+"use client"
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { HospitalDashboard } from "@/components/hospital-dashboard"
+import { HospitalVoicePopup } from "@/components/hospital-voice-popup"
 import { SiteHeader } from "@/components/site-header"
 import {
   SidebarInset,
@@ -23,6 +26,9 @@ export default function HospitalsPage() {
           <HospitalDashboard />
         </div>
       </SidebarInset>
+
+      {/* Voice communication popup for field units */}
+      <HospitalVoicePopup />
     </SidebarProvider>
   )
 }

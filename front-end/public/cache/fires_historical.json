@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "source": "NASA EONET, EFFIS, Turkish Forestry Department, Perplexity Research",
+    "date_range": {
+      "start": "2022-12-01",
+      "end": "2023-02-06"
+    },
+    "description": "Fire/wildfire events in Turkey 1-2 months before the February 6, 2023 earthquake",
+    "fetched_at": "2026-02-01T06:30:00.000Z",
+    "total_events": 0,
+    "seasonal_context": {
+      "explanation": "December through February is the OFF-SEASON for wildfires in Turkey",
+      "peak_fire_season": "June to September",
+      "winter_fire_risk": "Substantially reduced due to cooler temperatures, increased precipitation, lower atmospheric aridity",
+      "fire_statistics_2023": {
+        "total_fires": 2539,
+        "hectares_burned": 15616,
+        "period": "January 1 - November 15, 2023",
+        "note": "75.3% of fires affected less than 1 hectare"
+      }
+    },
+    "notes": [
+      "Winter (Dec-Feb) is the lowest fire-risk period in Turkey's annual cycle",
+      "No major documented wildfires occurred in Turkey during this specific period",
+      "This is NOT a data gap - it reflects the seasonal reality of low fire activity",
+      "Historical 89% of Turkish fires are human-caused, but winter conditions suppress ignitions",
+      "Mediterranean and Aegean coastal regions (Hatay, Antalya, Muğla, İzmir) would be most vulnerable if fires occurred",
+      "The February 6, 2023 earthquake would later shift all emergency resources to earthquake response"
+    ],
+    "nasa_firms_api": {
+      "description": "NASA FIRMS provides satellite-detected thermal anomalies for Turkey",
+      "turkey_bounding_box": "26,35.9,45,42.1",
+      "api_endpoint": "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{MAP_KEY}/MODIS/26,35.9,45,42.1/5/{DATE}",
+      "note": "Requires free API key from https://firms.modaps.eosdis.nasa.gov/api/",
+      "data_availability": "Historical data available but winter period shows minimal thermal anomalies"
+    }
+  },
+  "events": [],
+  "vulnerable_regions": [
+    {
+      "name": "Hatay Province",
+      "coordinates": [36.23, 36.13],
+      "climate": "Mediterranean",
+      "vegetation": "Pine forests, mixed deciduous woodland",
+      "winter_fire_risk": "Low but not zero",
+      "note": "Would be devastated by February 6, 2023 earthquake"
+    },
+    {
+      "name": "Antalya Province",
+      "coordinates": [30.71, 36.88],
+      "climate": "Mediterranean",
+      "vegetation": "Pine forests, agricultural lands",
+      "winter_fire_risk": "Low",
+      "historical": "2021 Manavgat wildfire was one of largest in Turkish history (July-August)"
+    },
+    {
+      "name": "Muğla Province",
+      "coordinates": [28.36, 37.21],
+      "climate": "Mediterranean",
+      "vegetation": "Mixed forests",
+      "winter_fire_risk": "Low",
+      "historical": "Suffered substantial forest losses in 2021 summer fires"
+    },
+    {
+      "name": "İzmir Province",
+      "coordinates": [27.14, 38.42],
+      "climate": "Mediterranean (Aegean)",
+      "vegetation": "Mixed forests, agricultural",
+      "winter_fire_risk": "Low"
+    }
+  ],
+  "fire_causes_turkey": {
+    "human_caused": "89%",
+    "breakdown": {
+      "arson": "19%",
+      "negligence": "51%",
+      "natural": "2%",
+      "unknown": "28%"
+    },
+    "common_causes": ["stubble burning", "litter disposal", "hunting activities", "discarded cigarettes"],
+    "power_infrastructure": "17-27% of burned areas in 2020-2022 from electrical infrastructure fires"
+  },
+  "note": "The absence of fire events is expected and accurate for this winter period. Winter conditions in Turkey suppress fire ignition and spread."
+}

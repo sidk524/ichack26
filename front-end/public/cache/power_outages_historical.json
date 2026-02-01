@@ -1,0 +1,370 @@
+{
+  "metadata": {
+    "title": "Turkey Power Outages Historical Data - December 2022 to February 2023",
+    "description": "Historical power outage data for Turkey compiled from news archives, government sources, and international energy monitoring organizations",
+    "date_range": {
+      "start": "2022-12-01",
+      "end": "2023-02-28"
+    },
+    "country": "Turkey",
+    "iso_code": "TUR",
+    "sources": [
+      {
+        "name": "Ember Energy - Turkiye Electricity Review 2023",
+        "url": "https://ember-energy.org/latest-insights/turkiye-electricity-review-2023/",
+        "type": "research_report"
+      },
+      {
+        "name": "TEIAS - Turkish Electricity Transmission Corporation",
+        "url": "https://www.teias.gov.tr/en-US",
+        "type": "government"
+      },
+      {
+        "name": "EPDK - Energy Market Regulatory Authority",
+        "url": "https://www.epdk.gov.tr/Home/En",
+        "type": "government"
+      },
+      {
+        "name": "Anadolu Agency Energy Reports",
+        "url": "https://www.aa.com.tr/en/energy/",
+        "type": "news"
+      },
+      {
+        "name": "Daily Sabah",
+        "url": "https://www.dailysabah.com",
+        "type": "news"
+      },
+      {
+        "name": "USGS Earthquake Data",
+        "url": "https://earthquake.usgs.gov/storymap/index-turkey2023.html",
+        "type": "government"
+      },
+      {
+        "name": "World Bank Turkey Energy Data",
+        "url": "https://www.worldbank.org/en/country/turkey",
+        "type": "international_organization"
+      }
+    ],
+    "api_endpoints": {
+      "ember_energy_api": {
+        "base_url": "https://api.ember-energy.org/v1",
+        "documentation": "https://api.ember-energy.org/v1/docs",
+        "note": "Requires API key registration; provides yearly and monthly electricity data for Turkey",
+        "data_available": ["electricity_generation", "capacity", "emissions", "demand"]
+      },
+      "epias_transparency_api": {
+        "base_url": "https://seffaflik.epias.com.tr/transparency/",
+        "note": "Turkish Power Market Operator API - real-time and historical generation data",
+        "endpoints": ["/production/real-time-generation", "/production/renewable-unlicenced-generation-amount"]
+      },
+      "teias_statistics": {
+        "url": "https://www.teias.gov.tr/en-US/electricity-transmission-in-turkiye",
+        "note": "Historical generation statistics from 2000-2021; requires direct contact for detailed outage data"
+      }
+    },
+    "data_limitations": [
+      "No publicly available API provides granular power outage data for Turkey",
+      "SAIDI/SAIFI reliability indices last published in 2019 by TEDAS",
+      "Detailed outage records require direct contact with TEIAS or regional distribution companies",
+      "PowerOutage.us does not cover Turkey"
+    ],
+    "last_updated": "2026-02-01",
+    "generated_by": "Compiled from multiple sources via web research"
+  },
+  "grid_infrastructure": {
+    "transmission_network": {
+      "total_transmission_lines_km": 73732,
+      "substations": 788,
+      "interconnection_lines": 11,
+      "voltage_levels": ["400 kV", "154 kV"],
+      "operator": "TEIAS (Turkish Electricity Transmission Corporation)",
+      "ownership": "State-owned monopoly"
+    },
+    "installed_capacity_2022": {
+      "total_gw": 100,
+      "gas_percentage": 42,
+      "coal_percentage": 20,
+      "hydropower_percentage": 13,
+      "renewables_percentage": 60
+    },
+    "reliability_metrics": {
+      "saidi_2019": {
+        "value": 1308,
+        "unit": "minutes per customer per year",
+        "note": "System Average Interruption Duration Index - last published estimate",
+        "comparison": "Much higher than European neighbors"
+      },
+      "average_losses_percentage": 12,
+      "high_loss_regions": ["Dicle", "Vangolu"],
+      "high_loss_regions_losses_percentage": 20
+    }
+  },
+  "outage_events": [
+    {
+      "id": "earthquake_feb_2023",
+      "event_type": "earthquake_related",
+      "severity": "catastrophic",
+      "start_date": "2023-02-06",
+      "start_time": "04:17:00",
+      "end_date": "2023-02-13",
+      "duration_note": "Partial restoration within days, full restoration took weeks in some areas",
+      "trigger": {
+        "event": "Kahramanmaras Earthquake Sequence",
+        "magnitude_primary": 7.8,
+        "magnitude_secondary": 7.5,
+        "epicenter": "Pazarcik district, Kahramanmaras Province"
+      },
+      "affected_regions": [
+        {
+          "province": "Kahramanmaras",
+          "city_center_affected": true,
+          "infrastructure_damage": "severe"
+        },
+        {
+          "province": "Gaziantep",
+          "districts": ["Islahiye", "Nurdagi"],
+          "gas_supply_halted": true
+        },
+        {
+          "province": "Hatay",
+          "gas_supply_halted": true,
+          "infrastructure_damage": "severe",
+          "deaths": 21900
+        },
+        {
+          "province": "Malatya",
+          "districts": ["Akcadag", "Dogansehir", "Doganyol"],
+          "city_center_affected": true
+        },
+        {
+          "province": "Adiyaman",
+          "districts": ["Golbasi"],
+          "note": "Electricity not fully restored over a month after earthquake"
+        },
+        {
+          "province": "Osmaniye",
+          "districts": ["Bahce-Duziçi"]
+        },
+        {
+          "province": "Kilis",
+          "gas_supply_halted": true
+        },
+        {
+          "province": "Adana",
+          "infrastructure_damage": "moderate"
+        },
+        {
+          "province": "Diyarbakir",
+          "infrastructure_damage": "moderate"
+        },
+        {
+          "province": "Sanliurfa",
+          "infrastructure_damage": "moderate"
+        },
+        {
+          "province": "Elazig",
+          "infrastructure_damage": "moderate"
+        }
+      ],
+      "infrastructure_damage": {
+        "substations_damaged": 30,
+        "gas_pipeline_damage": {
+          "location": "Turkoglu district, Kahramanmaras",
+          "description": "Main natural gas transmission line damaged near epicenter",
+          "provinces_gas_halted": ["Gaziantep", "Hatay", "Kahramanmaras", "Kilis"]
+        },
+        "city_centers_without_power": 27
+      },
+      "population_affected": {
+        "total_earthquake_affected": 9100000,
+        "homeless": 2700000,
+        "deaths_turkey": 46000
+      },
+      "economic_impact": {
+        "total_damage_usd_billion": 104,
+        "gdp_percentage": 13
+      },
+      "response": {
+        "mobile_power_plants_deployed": true,
+        "compressed_natural_gas_transportation": true,
+        "priority_facilities": ["hospitals", "soup_kitchens", "bakeries"]
+      },
+      "sources": [
+        "https://www.dailysabah.com/business/energy/deadly-quake-damages-turkiyes-energy-infrastructure-major-port",
+        "https://www.aa.com.tr/en/energy/electricity/energy-infrastructure-damaged-in-74-magnitude-earthquake-energy-minister-/37455",
+        "https://disasterphilanthropy.org/disasters/2023-turkey-syria-earthquake/"
+      ]
+    },
+    {
+      "id": "january_2022_gas_crisis",
+      "event_type": "supply_shortage",
+      "severity": "major",
+      "start_date": "2022-01-20",
+      "end_date": "2022-01-29",
+      "duration_days": 10,
+      "trigger": {
+        "event": "Iran natural gas supply cut",
+        "cause": "Cold weather in Iran reducing export capacity",
+        "gas_supply_affected_mcm_day": 28.5
+      },
+      "affected_sectors": {
+        "industrial_zones_affected": 300,
+        "industrial_power_cut_days_per_week": 3,
+        "gas_supply_cut_to_industry_percentage": 40
+      },
+      "notable_impacts": [
+        {
+          "company": "Renault SA",
+          "location": "Bursa",
+          "action": "Production halted",
+          "duration_days": 15
+        }
+      ],
+      "grid_response": {
+        "hydropower_increase_gwh": 110,
+        "gas_generation_decrease_gwh": 130
+      },
+      "note": "First time Turkish industrial companies experienced power outages of this magnitude",
+      "sources": [
+        "https://www.bloomberg.com/news/articles/2022-01-24/largest-ever-power-cuts-hit-turkey-s-industrial-production",
+        "https://ember-energy.org/latest-insights/turkiye-electricity-review-2023/"
+      ]
+    },
+    {
+      "id": "bursa_transformer_failure_jan_2023",
+      "event_type": "equipment_failure",
+      "severity": "moderate",
+      "date": "2023-01",
+      "trigger": {
+        "event": "380 kV transformer failure",
+        "location": "Bursa Natural Gas Fueled Combined Cycle Power Plant"
+      },
+      "impact": "Voltage deviations in interconnected power grid resulting in blackout",
+      "sources": [
+        "https://www.mdpi.com/1996-1073/16/11/4419"
+      ]
+    },
+    {
+      "id": "thrace_substation_failure_jan_2023",
+      "event_type": "equipment_failure",
+      "severity": "moderate",
+      "date": "2023-01",
+      "trigger": {
+        "event": "154 kV substation failure",
+        "location": "Babaeski substation"
+      },
+      "affected_region": "Thrace region",
+      "impact": "Regional blackout",
+      "sources": [
+        "https://www.mdpi.com/1996-1073/16/11/4419"
+      ]
+    },
+    {
+      "id": "istanbul_planned_outages_march_2023",
+      "event_type": "planned_maintenance",
+      "severity": "low",
+      "date": "2023-03-12",
+      "location": "Parts of Istanbul",
+      "trigger": "Scheduled maintenance",
+      "sources": [
+        "https://crisis24.garda.com/alerts/2023/03/turkey-planned-power-outages-to-occur-in-parts-of-istanbul-march-12"
+      ]
+    }
+  ],
+  "monthly_electricity_data": {
+    "note": "Electricity consumption and generation data from TEIAS and Ember Energy",
+    "december_2022": {
+      "daily_consumption_range_mwh": [850000, 1000000],
+      "consumption_trend": "Decreased compared to 2021 due to reduced industrial activity"
+    },
+    "january_2023": {
+      "daily_consumption_example_jan_1": {
+        "value_mwh": 868571,
+        "change_from_previous_day_percentage": -12.7,
+        "note": "Holiday effect"
+      }
+    },
+    "february_2023": {
+      "typical_monthly_consumption_twh": 24,
+      "note": "Historically lowest demand month; February 2023 severely impacted by earthquake"
+    },
+    "annual_context": {
+      "total_consumption_2022_twh": 330,
+      "total_consumption_2021_twh": 333,
+      "consumption_decline_reason": "Stagnant economic activity, declining manufacturing share of GDP"
+    }
+  },
+  "vulnerability_factors": {
+    "gas_import_dependency": {
+      "electricity_from_gas_2021_percentage": 42,
+      "iran_supply_percentage": 10,
+      "iran_reliability": "Nearly every year fails to supply contracted capacity in full during winter"
+    },
+    "coal_import_dependency": {
+      "imported_coal_generation_2022_percentage": 20,
+      "coal_import_bill_2022_usd_billion": 5.3,
+      "primary_supplier": "Russia"
+    },
+    "transmission_constraints": {
+      "critical_corridor": "400 kV East-West transmission corridor",
+      "length_km": 1300,
+      "vulnerability": "Insufficient resilience during maintenance; 2015 blackout caused by 4 lines out simultaneously"
+    },
+    "distribution_network_issues": {
+      "overhead_lines_percentage": 80,
+      "underground_cables_percentage": 20,
+      "infrastructure_age": "Most transformers and many lines need replacing as of 2023"
+    }
+  },
+  "recovery_resources": {
+    "earthquake_recovery": {
+      "world_bank_support": true,
+      "undp_projects": true,
+      "enerjisa_distribution_refurbishment": {
+        "description": "Funding obtained to refurbish power distribution network in earthquake-affected regions",
+        "source": "World Bank"
+      }
+    }
+  },
+  "data_access_recommendations": {
+    "for_detailed_outage_data": [
+      {
+        "organization": "TEIAS",
+        "contact": "teias.gov.tr",
+        "data_type": "Transmission-level disturbances"
+      },
+      {
+        "organization": "Regional Distribution Companies",
+        "note": "21 regional distribution grids operated by private companies",
+        "data_type": "Distribution-level outages"
+      },
+      {
+        "organization": "EPDK",
+        "contact": "epdk.gov.tr",
+        "data_type": "Regulatory statistics and reports"
+      },
+      {
+        "organization": "EPIAS",
+        "api": "seffaflik.epias.com.tr/transparency/",
+        "data_type": "Real-time and historical generation data"
+      }
+    ],
+    "international_sources": [
+      {
+        "organization": "Ember Energy",
+        "api": "https://api.ember-energy.org/v1",
+        "data_type": "Yearly and monthly electricity generation, demand, emissions"
+      },
+      {
+        "organization": "IEA",
+        "url": "https://www.iea.org/countries/turkiye/electricity",
+        "data_type": "Annual electricity statistics"
+      },
+      {
+        "organization": "EIA (US)",
+        "url": "https://www.eia.gov/international/analysis/country/TUR",
+        "data_type": "Country energy analysis"
+      }
+    ]
+  }
+}

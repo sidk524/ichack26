@@ -1,0 +1,1181 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "generated": 1769925488000,
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-12-06&endtime=2023-02-06&minlatitude=36&maxlatitude=42&minlongitude=26&maxlongitude=45&minmagnitude=2.5&orderby=time",
+    "title": "USGS Earthquakes",
+    "status": 200,
+    "api": "1.14.1",
+    "count": 29
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "6 km W of Bahçe, Turkey",
+        "time": 1675422309361,
+        "updated": 1681422801040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jl5l",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jl5l&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 271,
+        "net": "us",
+        "code": "6000jl5l",
+        "ids": ",us6000jl5l,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 39,
+        "dmin": 0.568,
+        "rms": 0.64,
+        "gap": 137,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.2 - 6 km W of Bahçe, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.4998,
+          37.2003,
+          10
+        ]
+      },
+      "id": "us6000jl5l"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4,
+        "place": "6 km W of Khowy, Iran",
+        "time": 1675138384953,
+        "updated": 1681422792040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jkgv",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jkgv&format=geojson",
+        "felt": 2,
+        "cdi": 4.8,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 247,
+        "net": "us",
+        "code": "6000jkgv",
+        "ids": ",us6000jkgv,",
+        "sources": ",us,",
+        "types": ",dyfi,origin,phase-data,",
+        "nst": 26,
+        "dmin": 1.448,
+        "rms": 0.71,
+        "gap": 82,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.0 - 6 km W of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.8784,
+          38.5428,
+          10
+        ]
+      },
+      "id": "us6000jkgv"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "Turkey-Iran border region",
+        "time": 1675029619418,
+        "updated": 1681422789040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk7j",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk7j&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 271,
+        "net": "us",
+        "code": "6000jk7j",
+        "ids": ",us6000jk7j,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 59,
+        "dmin": 1.394,
+        "rms": 0.64,
+        "gap": 126,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.2 - Turkey-Iran border region"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.8139,
+          38.5153,
+          10
+        ]
+      },
+      "id": "us6000jk7j"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "20 km W of Khowy, Iran",
+        "time": 1675010327878,
+        "updated": 1681422788040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk6h",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk6h&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 271,
+        "net": "us",
+        "code": "6000jk6h",
+        "ids": ",us6000jk6h,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 28,
+        "dmin": 1.326,
+        "rms": 1.03,
+        "gap": 168,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.2 - 20 km W of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.717,
+          38.5594,
+          10
+        ]
+      },
+      "id": "us6000jk6h"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.5,
+        "place": "19 km WSW of Khowy, Iran",
+        "time": 1675005205532,
+        "updated": 1681422788040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk61",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk61&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 312,
+        "net": "us",
+        "code": "6000jk61",
+        "ids": ",us6000jk61,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 40,
+        "dmin": 1.34,
+        "rms": 0.88,
+        "gap": 125,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.5 - 19 km WSW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.7507,
+          38.4819,
+          10
+        ]
+      },
+      "id": "us6000jk61"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.7,
+        "place": "9 km SW of Khowy, Iran",
+        "time": 1675003274127,
+        "updated": 1681422788040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk5x",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk5x&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 340,
+        "net": "us",
+        "code": "6000jk5x",
+        "ids": ",us6000jk5x,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 41,
+        "dmin": 1.434,
+        "rms": 0.64,
+        "gap": 101,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.7 - 9 km SW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.8693,
+          38.4906,
+          10
+        ]
+      },
+      "id": "us6000jk5x"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.1,
+        "place": "15 km NW of Khowy, Iran",
+        "time": 1674964089650,
+        "updated": 1681422787040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk3l",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk3l&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 259,
+        "net": "us",
+        "code": "6000jk3l",
+        "ids": ",us6000jk3l,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 33,
+        "dmin": 1.422,
+        "rms": 0.98,
+        "gap": 124,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.1 - 15 km NW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.8223,
+          38.6392,
+          10
+        ]
+      },
+      "id": "us6000jk3l"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.5,
+        "place": "12 km WNW of Khowy, Iran",
+        "time": 1674936599211,
+        "updated": 1681239099040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk1j",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk1j&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 312,
+        "net": "us",
+        "code": "6000jk1j",
+        "ids": ",us6000jk1j,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 46,
+        "dmin": 1.419,
+        "rms": 0.73,
+        "gap": 128,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.5 - 12 km WNW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.8287,
+          38.6005,
+          10
+        ]
+      },
+      "id": "us6000jk1j"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 5.1,
+        "place": "7 km SSW of Khowy, Iran",
+        "time": 1674929816220,
+        "updated": 1681239111040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jmwl",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jmwl&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 400,
+        "net": "us",
+        "code": "6000jmwl",
+        "ids": ",us6000jmwl,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 100,
+        "dmin": 1.479,
+        "rms": 0.69,
+        "gap": 65,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 5.1 - 7 km SSW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9282,
+          38.4811,
+          10
+        ]
+      },
+      "id": "us6000jmwl"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 5.9,
+        "place": "14 km SSW of Khowy, Iran",
+        "time": 1674929685855,
+        "updated": 1681239099040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jk0t",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jk0t&format=geojson",
+        "felt": 31,
+        "cdi": 8.2,
+        "mmi": 6.946,
+        "alert": "yellow",
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 675,
+        "net": "us",
+        "code": "6000jk0t",
+        "ids": ",us6000jk0t,usauto6000jk0t,pt23028000,",
+        "sources": ",us,usauto,pt,",
+        "types": ",dyfi,ground-failure,impact-text,internal-moment-tensor,internal-origin,losspager,moment-tensor,origin,phase-data,shakemap,",
+        "nst": 239,
+        "dmin": 1.459,
+        "rms": 0.76,
+        "gap": 31,
+        "magType": "mww",
+        "type": "earthquake",
+        "title": "M 5.9 - 14 km SSW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9097,
+          38.4199,
+          16
+        ]
+      },
+      "id": "us6000jk0t"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "58 km SSW of Türkler, Turkey",
+        "time": 1674193043862,
+        "updated": 1680291939040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j5ps",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j5ps&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 271,
+        "net": "us",
+        "code": "7000j5ps",
+        "ids": ",us7000j5ps,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 43,
+        "dmin": 1.554,
+        "rms": 0.42,
+        "gap": 144,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.2 - 58 km SSW of Türkler, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          31.6537,
+          36.089,
+          87.455
+        ]
+      },
+      "id": "us7000j5ps"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.3,
+        "place": "17 km WNW of Khowy, Iran",
+        "time": 1674107722616,
+        "updated": 1680291921040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j5f2",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j5f2&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 284,
+        "net": "us",
+        "code": "7000j5f2",
+        "ids": ",us7000j5f2,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 33,
+        "dmin": 1.077,
+        "rms": 0.45,
+        "gap": 104,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.3 - 17 km WNW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.7612,
+          38.5878,
+          10
+        ]
+      },
+      "id": "us7000j5f2"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.4,
+        "place": "16 km S of Khowy, Iran",
+        "time": 1674053750392,
+        "updated": 1680291909040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j59a",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j59a&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 298,
+        "net": "us",
+        "code": "7000j59a",
+        "ids": ",us7000j59a,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 74,
+        "dmin": 1.225,
+        "rms": 0.32,
+        "gap": 101,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.4 - 16 km S of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9477,
+          38.3997,
+          10
+        ]
+      },
+      "id": "us7000j59a"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.1,
+        "place": "4 km NNW of Erzin, Turkey",
+        "time": 1674048647860,
+        "updated": 1680291810040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jjfc",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jjfc&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 259,
+        "net": "us",
+        "code": "6000jjfc",
+        "ids": ",us6000jjfc,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 15,
+        "dmin": 0.851,
+        "rms": 0.98,
+        "gap": 105,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.1 - 4 km NNW of Erzin, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.1694,
+          36.9911,
+          10
+        ]
+      },
+      "id": "us6000jjfc"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.3,
+        "place": "9 km SSW of Khowy, Iran",
+        "time": 1674038559023,
+        "updated": 1705605179077,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j574",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j574&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 284,
+        "net": "us",
+        "code": "7000j574",
+        "ids": ",us7000j574,",
+        "sources": ",us,",
+        "types": ",earthquake-name,origin,phase-data,",
+        "nst": 25,
+        "dmin": 1.158,
+        "rms": 0.9,
+        "gap": 131,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.3 - 9 km SSW of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9169,
+          38.472,
+          16.66
+        ]
+      },
+      "id": "us7000j574"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 5.7,
+        "place": "12 km S of Khowy, Iran",
+        "time": 1674036494166,
+        "updated": 1680291907040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j56z",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j56z&format=geojson",
+        "felt": 14,
+        "cdi": 8,
+        "mmi": 6.468,
+        "alert": "yellow",
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 661,
+        "net": "us",
+        "code": "7000j56z",
+        "ids": ",us7000j56z,usauto7000j56z,",
+        "sources": ",us,usauto,",
+        "types": ",dyfi,ground-failure,impact-text,internal-moment-tensor,losspager,moment-tensor,origin,phase-data,shakemap,",
+        "nst": 195,
+        "dmin": 1.192,
+        "rms": 0.64,
+        "gap": 59,
+        "magType": "mww",
+        "type": "earthquake",
+        "title": "M 5.7 - 12 km S of Khowy, Iran"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          44.9458,
+          38.4334,
+          19.102
+        ]
+      },
+      "id": "us7000j56z"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.7,
+        "place": "13 km W of Sivrice, Turkey",
+        "time": 1673753788029,
+        "updated": 1680291859040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j4gh",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j4gh&format=geojson",
+        "felt": 5,
+        "cdi": 4.8,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 342,
+        "net": "us",
+        "code": "7000j4gh",
+        "ids": ",us7000j4gh,",
+        "sources": ",us,",
+        "types": ",dyfi,origin,phase-data,",
+        "nst": 78,
+        "dmin": 0.921,
+        "rms": 1.02,
+        "gap": 51,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.7 - 13 km W of Sivrice, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          39.156,
+          38.4311,
+          10
+        ]
+      },
+      "id": "us7000j4gh"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 3.2,
+        "place": "4 km WSW of Selçuk, Turkey",
+        "time": 1673430748318,
+        "updated": 1679292205040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j3tr",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j3tr&format=geojson",
+        "felt": 4,
+        "cdi": 2,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 158,
+        "net": "us",
+        "code": "7000j3tr",
+        "ids": ",us7000j3tr,",
+        "sources": ",us,",
+        "types": ",dyfi,origin,phase-data,",
+        "nst": 13,
+        "dmin": 1.117,
+        "rms": 0.71,
+        "gap": 102,
+        "magType": "ml",
+        "type": "earthquake",
+        "title": "M 3.2 - 4 km WSW of Selçuk, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.3214,
+          37.943,
+          10
+        ]
+      },
+      "id": "us7000j3tr"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.9,
+        "place": "7 km W of Behram, Turkey",
+        "time": 1673336311557,
+        "updated": 1679292192040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j3cr",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j3cr&format=geojson",
+        "felt": 4,
+        "cdi": 2.9,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 371,
+        "net": "us",
+        "code": "7000j3cr",
+        "ids": ",us7000j3cr,",
+        "sources": ",us,",
+        "types": ",dyfi,impact-text,moment-tensor,origin,phase-data,",
+        "nst": 79,
+        "dmin": 0.909,
+        "rms": 0.8,
+        "gap": 33,
+        "magType": "mwr",
+        "type": "earthquake",
+        "title": "M 4.9 - 7 km W of Behram, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.2503,
+          39.4874,
+          10
+        ]
+      },
+      "id": "us7000j3cr"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.6,
+        "place": "Near the coast of western Turkey",
+        "time": 1673073569727,
+        "updated": 1678575104040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j2re",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j2re&format=geojson",
+        "felt": 4,
+        "cdi": 3.4,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 327,
+        "net": "us",
+        "code": "7000j2re",
+        "ids": ",us7000j2re,",
+        "sources": ",us,",
+        "types": ",dyfi,earthquake-name,moment-tensor,origin,phase-data,",
+        "nst": 94,
+        "dmin": 1.475,
+        "rms": 0.78,
+        "gap": 74,
+        "magType": "mwr",
+        "type": "earthquake",
+        "title": "M 4.6 - Near the coast of western Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.1996,
+          39.4132,
+          12.538
+        ]
+      },
+      "id": "us7000j2re"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.8,
+        "place": "2 km N of Míthymna, Greece",
+        "time": 1673056378152,
+        "updated": 1678575104040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j2pq",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j2pq&format=geojson",
+        "felt": 11,
+        "cdi": 4.8,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 360,
+        "net": "us",
+        "code": "7000j2pq",
+        "ids": ",us7000j2pq,",
+        "sources": ",us,",
+        "types": ",dyfi,moment-tensor,origin,phase-data,",
+        "nst": 82,
+        "dmin": 1.497,
+        "rms": 0.83,
+        "gap": 47,
+        "magType": "mwr",
+        "type": "earthquake",
+        "title": "M 4.8 - 2 km N of Míthymna, Greece"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          26.1735,
+          39.389,
+          10
+        ]
+      },
+      "id": "us7000j2pq"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.1,
+        "place": "21 km NNE of Tosya, Turkey",
+        "time": 1672213513227,
+        "updated": 1678215595040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j0l0",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j0l0&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 259,
+        "net": "us",
+        "code": "7000j0l0",
+        "ids": ",us7000j0l0,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 33,
+        "dmin": 0.35,
+        "rms": 0.9,
+        "gap": 45,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.1 - 21 km NNE of Tosya, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.1385,
+          41.197,
+          12.346
+        ]
+      },
+      "id": "us7000j0l0"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.4,
+        "place": "4 km SE of Horasan, Turkey",
+        "time": 1672158796993,
+        "updated": 1678215593040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000j0eh",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us7000j0eh&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 298,
+        "net": "us",
+        "code": "7000j0eh",
+        "ids": ",us7000j0eh,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 43,
+        "dmin": 1.311,
+        "rms": 0.6,
+        "gap": 63,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.4 - 4 km SE of Horasan, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          42.2048,
+          40.0075,
+          13.14
+        ]
+      },
+      "id": "us7000j0eh"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.1,
+        "place": "26 km W of Gaziantep, Turkey",
+        "time": 1671816211395,
+        "updated": 1677625608040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000jbbd",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000jbbd&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 259,
+        "net": "us",
+        "code": "6000jbbd",
+        "ids": ",us6000jbbd,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 32,
+        "dmin": 0.118,
+        "rms": 0.81,
+        "gap": 89,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.1 - 26 km W of Gaziantep, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.0917,
+          37.1006,
+          25.656
+        ]
+      },
+      "id": "us6000jbbd"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.6,
+        "place": "7 km NE of Uzunkavak, Turkey",
+        "time": 1671387189293,
+        "updated": 1677625587040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ja6e",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000ja6e&format=geojson",
+        "felt": 14,
+        "cdi": 6.7,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 335,
+        "net": "us",
+        "code": "6000ja6e",
+        "ids": ",us6000ja6e,",
+        "sources": ",us,",
+        "types": ",dyfi,impact-text,moment-tensor,origin,phase-data,",
+        "nst": 121,
+        "dmin": 0.969,
+        "rms": 0.77,
+        "gap": 29,
+        "magType": "mwr",
+        "type": "earthquake",
+        "title": "M 4.6 - 7 km NE of Uzunkavak, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          36.4912,
+          36.392,
+          10
+        ]
+      },
+      "id": "us6000ja6e"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "22 km NW of Biga, Turkey",
+        "time": 1670901677538,
+        "updated": 1676757847040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000j8xq",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000j8xq&format=geojson",
+        "felt": 1,
+        "cdi": 2.7,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 272,
+        "net": "us",
+        "code": "6000j8xq",
+        "ids": ",us6000j8xq,",
+        "sources": ",us,",
+        "types": ",dyfi,moment-tensor,origin,phase-data,",
+        "nst": 53,
+        "dmin": 0.925,
+        "rms": 0.59,
+        "gap": 52,
+        "magType": "mwr",
+        "type": "earthquake",
+        "title": "M 4.2 - 22 km NW of Biga, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.0456,
+          40.3585,
+          10
+        ]
+      },
+      "id": "us6000j8xq"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.1,
+        "place": "10 km W of Ula, Turkey",
+        "time": 1670714964889,
+        "updated": 1676757842040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000j8ht",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000j8ht&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 259,
+        "net": "us",
+        "code": "6000j8ht",
+        "ids": ",us6000j8ht,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 37,
+        "dmin": 0.89,
+        "rms": 0.7,
+        "gap": 57,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.1 - 10 km W of Ula, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          28.3024,
+          37.0933,
+          10
+        ]
+      },
+      "id": "us6000j8ht"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.2,
+        "place": "60 km S of Mandráki, Greece",
+        "time": 1670611459129,
+        "updated": 1676156602040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000j87w",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000j87w&format=geojson",
+        "felt": null,
+        "cdi": null,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 271,
+        "net": "us",
+        "code": "6000j87w",
+        "ids": ",us6000j87w,",
+        "sources": ",us,",
+        "types": ",origin,phase-data,",
+        "nst": 57,
+        "dmin": 0.908,
+        "rms": 0.89,
+        "gap": 75,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.2 - 60 km S of Mandráki, Greece"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.0127,
+          36.0737,
+          10.892
+        ]
+      },
+      "id": "us6000j87w"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 4.3,
+        "place": "8 km N of Ku?adas?, Turkey",
+        "time": 1670452546715,
+        "updated": 1676156594040,
+        "tz": null,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000j7qj",
+        "detail": "https://earthquake.usgs.gov/fdsnws/event/1/query?eventid=us6000j7qj&format=geojson",
+        "felt": 5,
+        "cdi": 3.7,
+        "mmi": null,
+        "alert": null,
+        "status": "reviewed",
+        "tsunami": 0,
+        "sig": 286,
+        "net": "us",
+        "code": "6000j7qj",
+        "ids": ",us6000j7qj,",
+        "sources": ",us,",
+        "types": ",dyfi,origin,phase-data,",
+        "nst": 22,
+        "dmin": 1.175,
+        "rms": 0.84,
+        "gap": 58,
+        "magType": "mb",
+        "type": "earthquake",
+        "title": "M 4.3 - 8 km N of Ku?adas?, Turkey"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          27.2412,
+          37.9374,
+          10
+        ]
+      },
+      "id": "us6000j7qj"
+    }
+  ],
+  "bbox": [
+    26.1735,
+    36.0737,
+    10,
+    44.9477,
+    41.197,
+    87.455
+  ]
+}

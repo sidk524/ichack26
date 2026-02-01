@@ -11,6 +11,12 @@ export type ConversationStatus =
 
 export type ConversationMode = "listening" | "speaking"
 
+export type AgentType =
+  | "civilian-dispatcher"
+  | "field-coordinator"
+  | "patient-bystander"
+  | "field-responder"
+
 export interface Message {
   role: "ai" | "user"
   content: string
@@ -25,6 +31,7 @@ interface ConversationInstance {
 }
 
 interface UseElevenLabsConversationOptions {
+  agentType?: AgentType
   onConnect?: (conversationId: string) => void
   onDisconnect?: () => void
   onError?: (message: string) => void
@@ -54,7 +61,7 @@ export function useElevenLabsConversation(
     }
   }, [])
 
-  const startConversation = useCallback(async () => {
+  const startConversation = useCallback(async (overrideAgentType?: AgentType) => {
     if (status === "connecting" || status === "connected") {
       return
     }
@@ -70,8 +77,10 @@ export function useElevenLabsConversation(
       // Dynamically import the ElevenLabs SDK (bundle-dynamic-imports)
       const { Conversation } = await import("@elevenlabs/client")
 
-      // Fetch signed URL from our API
-      const signedUrlResponse = await fetch("/api/elevenlabs/signed-url")
+      // Fetch signed URL from our API with agent type
+      // Use override if provided, otherwise fall back to options
+      const agentType = overrideAgentType || optionsRef.current.agentType || "civilian-dispatcher"
+      const signedUrlResponse = await fetch(`/api/elevenlabs/signed-url?agent=${agentType}`)
       if (!signedUrlResponse.ok) {
         throw new Error("Failed to get signed URL")
       }

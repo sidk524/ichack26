@@ -1,0 +1,656 @@
+{
+  "metadata": {
+    "title": "Turkey-Syria Earthquake Structural Damage Assessment Data",
+    "event_date": "2023-02-06",
+    "event_type": "Earthquake Doublet",
+    "magnitude_primary": 7.8,
+    "magnitude_secondary": 7.5,
+    "epicenter_primary": {
+      "latitude": 37.174,
+      "longitude": 37.032,
+      "location": "Nurdagi, Gaziantep Province",
+      "depth_km": 17.9
+    },
+    "epicenter_secondary": {
+      "latitude": 38.024,
+      "longitude": 37.203,
+      "location": "Ekinozu, Kahramanmaras Province",
+      "depth_km": 10
+    },
+    "data_sources": [
+      {
+        "name": "Copernicus EMS",
+        "activation_id": "EMSR648",
+        "activation_date": "2023-02-06T04:43:00Z",
+        "url": "https://emergency.copernicus.eu/EMSR648"
+      },
+      {
+        "name": "NASA ARIA/Earth Observatory Singapore",
+        "product": "Damage Proxy Map",
+        "url": "https://aria-share.jpl.nasa.gov/20230206_Turkey_EQ/"
+      },
+      {
+        "name": "Turkish Ministry of Environment, Urbanization and Climate Change (MoEUCC)",
+        "inspection_count": 2153835
+      },
+      {
+        "name": "Microsoft AI Research",
+        "report_date": "2023-02-16"
+      },
+      {
+        "name": "AFAD (Turkish Disaster and Emergency Management Presidency)"
+      }
+    ],
+    "collection_period": {
+      "start": "2023-02-06",
+      "end": "2023-05-06"
+    },
+    "last_updated": "2026-02-01"
+  },
+  "summary_statistics": {
+    "total_fatalities": {
+      "turkey": 53537,
+      "syria": 8476,
+      "total": 62013
+    },
+    "total_injured": {
+      "turkey": 107213,
+      "syria": 12000,
+      "total": 119213
+    },
+    "affected_population": {
+      "turkey": 15730000,
+      "syria": 8800000,
+      "total": 24530000
+    },
+    "buildings_affected": {
+      "collapsed": 37066,
+      "severely_damaged": 164000,
+      "damaged_requiring_demolition": 61722,
+      "total_buildings_inspected": 2153835,
+      "total_buildings_affected": 280000
+    },
+    "housing_units": {
+      "destroyed": 518009,
+      "apartments_destroyed": 345000,
+      "light_to_moderate_damage": 1411304
+    },
+    "infrastructure": {
+      "roads_damaged_km": 72,
+      "university_buildings_affected": 516,
+      "university_buildings_heavily_damaged": 106
+    },
+    "economic_damage": {
+      "turkey_usd_billion": 148.8,
+      "syria_usd_billion": 9.0,
+      "total_usd_billion": 157.8,
+      "turkey_gdp_percentage": 9
+    },
+    "debris_volume_tonnes_million": {
+      "min": 116,
+      "max": 210
+    }
+  },
+  "copernicus_ems_emsr648": {
+    "activation_id": "EMSR648",
+    "activation_time": "2023-02-06T04:43:00Z",
+    "areas_of_interest": 20,
+    "products_delivered": 37,
+    "initial_assessment_date": "2023-02-10",
+    "initial_findings": {
+      "buildings_damaged_destroyed": 4042,
+      "roads_damaged_km": 72,
+      "estimated_population_affected": 3950866
+    },
+    "areas_of_interest_list": [
+      {
+        "aoi_id": "AOI01",
+        "name": "Gaziantep",
+        "area_km2": 127.07,
+        "estimated_population": 1270000,
+        "affected_building_blocks": 6,
+        "affected_roads_km": 0.2,
+        "coordinates": {"latitude": 37.0662, "longitude": 37.3833}
+      },
+      {
+        "aoi_id": "AOI02",
+        "name": "Adiyaman",
+        "area_km2": 22.07,
+        "estimated_population": 220000,
+        "affected_building_blocks": 25,
+        "affected_roads_km": 2,
+        "coordinates": {"latitude": 37.7648, "longitude": 38.2786}
+      },
+      {
+        "aoi_id": "AOI03",
+        "name": "Diyarbakir",
+        "area_km2": 45.51,
+        "estimated_population": 455000,
+        "affected_building_blocks": 40,
+        "coordinates": {"latitude": 37.9144, "longitude": 40.2306}
+      },
+      {
+        "aoi_id": "AOI04",
+        "name": "Kahramanmaras",
+        "area_km2": 38.45,
+        "estimated_population": 384000,
+        "affected_building_blocks": 27,
+        "affected_roads_km": 21,
+        "coordinates": {"latitude": 37.5847, "longitude": 36.9372}
+      },
+      {
+        "aoi_id": "AOI05",
+        "name": "Malatya",
+        "area_km2": 42.13,
+        "estimated_population": 421000,
+        "affected_building_blocks": 68,
+        "coordinates": {"latitude": 38.3552, "longitude": 38.3095}
+      },
+      {
+        "aoi_id": "AOI06",
+        "name": "Osmaniye",
+        "area_km2": 23.11,
+        "estimated_population": 231000,
+        "affected_building_blocks": 22,
+        "affected_roads_km": 4,
+        "coordinates": {"latitude": 37.0742, "longitude": 36.2467}
+      },
+      {
+        "aoi_id": "AOI07",
+        "name": "Sanliurfa",
+        "area_km2": 41.08,
+        "estimated_population": 410000,
+        "affected_building_blocks": 32,
+        "affected_roads_km": 0,
+        "coordinates": {"latitude": 37.1674, "longitude": 38.7955}
+      },
+      {
+        "aoi_id": "AOI08",
+        "name": "Pazarcik",
+        "area_km2": 2.29,
+        "estimated_population": 22900,
+        "affected_building_blocks": 78,
+        "affected_roads_km": 7,
+        "coordinates": {"latitude": 37.4881, "longitude": 37.2942}
+      },
+      {
+        "aoi_id": "AOI09",
+        "name": "Cumhuriyet",
+        "area_km2": 1.66,
+        "estimated_population": 16600,
+        "affected_building_blocks": 53,
+        "affected_roads_km": 2,
+        "coordinates": {"latitude": 37.65, "longitude": 37.1}
+      },
+      {
+        "aoi_id": "AOI10",
+        "name": "Islahiye",
+        "area_km2": 1.60,
+        "estimated_population": 52622,
+        "affected_building_blocks": 36,
+        "affected_roads_km": 7,
+        "coordinates": {"latitude": 37.0256, "longitude": 36.6322}
+      },
+      {
+        "aoi_id": "AOI11",
+        "name": "Antakya",
+        "area_km2": 85,
+        "estimated_population": 400000,
+        "coordinates": {"latitude": 36.2025, "longitude": 36.1600}
+      },
+      {
+        "aoi_id": "AOI12",
+        "name": "Erdemoglu",
+        "coordinates": {"latitude": 37.55, "longitude": 37.2}
+      },
+      {
+        "aoi_id": "AOI13",
+        "name": "Golbasi",
+        "coordinates": {"latitude": 37.7833, "longitude": 37.6333}
+      },
+      {
+        "aoi_id": "AOI14",
+        "name": "Duzici",
+        "coordinates": {"latitude": 37.2522, "longitude": 36.4758}
+      },
+      {
+        "aoi_id": "AOI15",
+        "name": "Bahce",
+        "coordinates": {"latitude": 37.2000, "longitude": 36.5833}
+      },
+      {
+        "aoi_id": "AOI16",
+        "name": "Nurdagi",
+        "estimated_population": 31202,
+        "coordinates": {"latitude": 37.1750, "longitude": 36.7378}
+      },
+      {
+        "aoi_id": "AOI17",
+        "name": "Turkoglu",
+        "estimated_population": 82483,
+        "coordinates": {"latitude": 37.3833, "longitude": 36.8500}
+      },
+      {
+        "aoi_id": "AOI18",
+        "name": "Kirikhan",
+        "coordinates": {"latitude": 36.4997, "longitude": 36.3556}
+      },
+      {
+        "aoi_id": "AOI19",
+        "name": "Afsin",
+        "area_km2": 29,
+        "coordinates": {"latitude": 38.2475, "longitude": 36.9142}
+      },
+      {
+        "aoi_id": "AOI20",
+        "name": "Elbistan",
+        "coordinates": {"latitude": 38.2058, "longitude": 37.1975}
+      }
+    ]
+  },
+  "satellite_damage_assessments": {
+    "microsoft_ai": {
+      "report_date": "2023-02-16",
+      "image_dates": ["2023-02-07", "2023-02-08", "2023-02-09"],
+      "image_sources": ["Planet Labs (50cm)", "Maxar Technologies (30cm)"],
+      "cities_analyzed": [
+        {
+          "name": "Kahramanmaras (Marash)",
+          "total_buildings": 40375,
+          "damaged_buildings": 3005,
+          "damage_percentage": 7.44,
+          "estimated_people_impacted": 148388,
+          "population": 610000,
+          "coordinates": {"latitude": 37.5847, "longitude": 36.9372}
+        },
+        {
+          "name": "Turkoglu",
+          "total_buildings": 3816,
+          "damaged_buildings": 185,
+          "damage_percentage": 4.85,
+          "estimated_people_impacted": 6202,
+          "population": 82483,
+          "coordinates": {"latitude": 37.3833, "longitude": 36.8500}
+        },
+        {
+          "name": "Nurdagi",
+          "total_buildings": 4537,
+          "damaged_buildings": 331,
+          "damage_percentage": 7.30,
+          "estimated_people_impacted": 2163,
+          "population": 31202,
+          "coordinates": {"latitude": 37.1750, "longitude": 36.7378}
+        },
+        {
+          "name": "Islahiye",
+          "total_buildings": 13215,
+          "damaged_buildings": 328,
+          "damage_percentage": 2.48,
+          "estimated_people_impacted": 3658,
+          "population": 52622,
+          "coordinates": {"latitude": 37.0256, "longitude": 36.6322}
+        }
+      ],
+      "totals": {
+        "total_buildings_analyzed": 61943,
+        "total_damaged_buildings": 3849,
+        "total_people_impacted": 160411
+      }
+    },
+    "nasa_aria_damage_proxy_map": {
+      "satellite": "ALOS-2",
+      "sensor": "Synthetic Aperture Radar (SAR)",
+      "pre_event_dates": ["2021-04-07", "2022-04-06"],
+      "post_event_date": "2023-02-08",
+      "resolution_meters": 30,
+      "damage_classification": {
+        "severe": "Dark red pixels",
+        "moderate": "Orange pixels",
+        "partial": "Yellow pixels"
+      },
+      "data_url": "https://aria-share.jpl.nasa.gov/20230206_Turkey_EQ/"
+    }
+  },
+  "provincial_damage_data": {
+    "Hatay": {
+      "coordinates": {"latitude": 36.2025, "longitude": 36.1600},
+      "casualties": 1647,
+      "injured": 6200,
+      "buildings_collapsed": 13517,
+      "buildings_requiring_demolition": 8162,
+      "buildings_heavily_damaged": 67346,
+      "houses_damaged": 215255,
+      "building_stock": 449151,
+      "pre_1980_buildings_percent": 13.5,
+      "districts": {
+        "Antakya": {
+          "homes_collapsed_percent": 70,
+          "buildings_collapsed": 6369,
+          "buildings_requiring_demolition": 3734,
+          "buildings_heavily_damaged": 21830
+        },
+        "Defne": {
+          "buildings_destroyed": 982,
+          "buildings_heavily_damaged": 8894,
+          "buildings_requiring_demolition": 943
+        },
+        "Reyhanli": {
+          "buildings_collapsed": 318,
+          "buildings_severely_damaged_or_demolition": 1661
+        },
+        "Kumlu": {
+          "buildings_destroyed": 131,
+          "buildings_severely_damaged": 738,
+          "buildings_requiring_demolition": 84
+        },
+        "Payas": {
+          "buildings_collapsed": 58,
+          "buildings_heavily_damaged_or_demolition": 669
+        },
+        "Samandag": {
+          "buildings_collapsed": 670,
+          "buildings_heavily_damaged_or_demolition": 9212,
+          "fatalities": 7850
+        },
+        "Kirikhan": {
+          "buildings_collapsed": 1886,
+          "buildings_severely_damaged_or_demolition": 7190,
+          "fatalities": 3000,
+          "injured": 5000
+        },
+        "Yayladagi": {
+          "buildings_collapsed": 213,
+          "buildings_severely_damaged_or_demolition": 1453
+        },
+        "Belen": {
+          "buildings_collapsed": 139,
+          "buildings_heavily_damaged": 755,
+          "buildings_requiring_demolition": 87
+        },
+        "Dortyol": {
+          "buildings_destroyed": 115,
+          "buildings_requiring_demolition_or_severely_damaged": 2030
+        }
+      }
+    },
+    "Kahramanmaras": {
+      "coordinates": {"latitude": 37.5847, "longitude": 36.9372},
+      "casualties": 1243,
+      "injured": 5000,
+      "buildings_requiring_demolition": 10800,
+      "building_stock": 311458,
+      "pre_1980_buildings_percent": 11.7,
+      "districts": {
+        "Sakcagoz": {
+          "houses_heavily_damaged_or_destroyed_percent": 90,
+          "fatalities": 256
+        },
+        "Nurdagi": {
+          "note": "All buildings to be demolished and rebuilt",
+          "announcement_date": "2023-02-13"
+        },
+        "Islahiye": {
+          "fatalities": 1368,
+          "injured": 1500,
+          "apartments_destroyed": 200
+        }
+      }
+    },
+    "Gaziantep": {
+      "coordinates": {"latitude": 37.0662, "longitude": 37.3833},
+      "casualties": 504,
+      "injured": 4809,
+      "buildings_collapsed_severely_damaged_demolition": 12964,
+      "apartments_collapsed_severely_damaged_demolition": 31522,
+      "houses_collapsed_severely_damaged_demolition": 29155,
+      "other_structures_damaged": 486779,
+      "houses_damaged": 256748,
+      "apartments_damaged": 196199,
+      "buildings_damaged": 33832,
+      "buildings_requiring_demolition": 11900,
+      "building_stock": 522947,
+      "pre_1980_buildings_percent": 6.6,
+      "city_collapses_severely_damaged_demolition": 16211,
+      "historical_sites_damaged": ["Gaziantep Castle", "Sirvani Mosque", "Liberation Mosque"]
+    },
+    "Adiyaman": {
+      "coordinates": {"latitude": 37.7648, "longitude": 38.2786},
+      "casualties": 896,
+      "injured": 400,
+      "buildings_destroyed": 20000,
+      "houses_destroyed": 56256,
+      "districts": {
+        "Golbasi": {
+          "infrastructure_damaged_or_destroyed_percent": 71,
+          "fatalities": 695,
+          "injured": 400
+        },
+        "Harmanli_Golbasi": {
+          "destroyed_percent": "80-90"
+        }
+      }
+    },
+    "Malatya": {
+      "coordinates": {"latitude": 38.3552, "longitude": 38.3095},
+      "casualties": 201,
+      "injured": 4900,
+      "buildings_requiring_demolition": 36046,
+      "building_stock": 398367,
+      "pre_1980_buildings_percent": 7.9,
+      "districts": {
+        "Akcadag": {
+          "fatalities": 29,
+          "injured": 93,
+          "buildings_collapsed": 32,
+          "buildings_seriously_damaged": 78
+        },
+        "Dogansehir": {
+          "fatalities": 263,
+          "buildings_collapsed_or_heavily_damaged": 6000,
+          "total_buildings": 12000
+        }
+      },
+      "infrastructure_damaged": ["Malatya Erhac Airport (ceiling)", "Yeni Camii mosque", "Arslantepe Mound"]
+    },
+    "Diyarbakir": {
+      "coordinates": {"latitude": 37.9144, "longitude": 40.2306},
+      "casualties": 120,
+      "injured": 854,
+      "houses_severely_damaged_or_destroyed": 8602,
+      "houses_partially_damaged": 124432,
+      "buildings_damaged_demolition_collapsed": 8086,
+      "building_stock": 394867,
+      "pre_1980_buildings_percent": 6.5,
+      "heritage_sites_damaged": ["Diyarbakir Fortress (UNESCO)", "Hevsel Gardens (UNESCO)", "St. George's Church"],
+      "districts": {
+        "Yenisehir": {
+          "note": "Galeria complex collapsed",
+          "fatalities": 89,
+          "injured": 22
+        }
+      }
+    },
+    "Osmaniye": {
+      "coordinates": {"latitude": 37.0742, "longitude": 36.2467},
+      "casualties": 502,
+      "injured": 2173,
+      "buildings_surveyed": 22841,
+      "buildings_heavily_damaged_destroyed_demolition": 2531,
+      "houses_collapsed_or_heavily_damaged": 16111,
+      "building_stock": 156199,
+      "pre_1980_buildings_percent": 10.5,
+      "districts": {
+        "Merkez": {
+          "buildings_examined": 13667,
+          "buildings_destroyed_seriously_damaged_demolition": 1088
+        },
+        "Duzici": {
+          "buildings_destroyed_or_demolition": 192,
+          "fatalities_single_building": 41
+        },
+        "Bahce": {
+          "buildings_destroyed_or_demolition": 174
+        },
+        "Kadirli": {
+          "buildings_destroyed_or_demolition": 111
+        },
+        "Hasanbeyli": {
+          "buildings_destroyed_or_demolition": 87
+        },
+        "Toprakkale": {
+          "buildings_destroyed_or_demolition": 19
+        },
+        "Sumbas": {
+          "buildings_destroyed_or_demolition": 13
+        }
+      }
+    },
+    "Sanliurfa": {
+      "coordinates": {"latitude": 37.1674, "longitude": 38.7955},
+      "casualties": 127,
+      "injured": 2551,
+      "building_stock": 411421,
+      "pre_1980_buildings_percent": 5.5
+    },
+    "Kilis": {
+      "coordinates": {"latitude": 36.7184, "longitude": 37.1150},
+      "casualties": 22,
+      "injured": 518,
+      "buildings_destroyed": 448,
+      "buildings_heavily_damaged": 138,
+      "houses_damaged": 2514,
+      "building_stock": 40020,
+      "pre_1980_buildings_percent": 11.2
+    },
+    "Elazig": {
+      "coordinates": {"latitude": 38.6810, "longitude": 39.2264},
+      "casualties": 5,
+      "injured": 379,
+      "households_collapsed_or_severely_damaged": 10156,
+      "buildings_collapsed_or_severely_damaged": 664,
+      "homes_minor_to_moderate_damage": 32673,
+      "building_stock": 173836,
+      "pre_1980_buildings_percent": 10.0
+    },
+    "Adana": {
+      "coordinates": {"latitude": 37.0017, "longitude": 35.3289},
+      "casualties": 167,
+      "injured": 3993,
+      "buildings_collapsed_city_center": 12,
+      "buildings_heavily_damaged_city_center": 23,
+      "buildings_moderately_damaged_city_center": 120,
+      "buildings_destroyed_severely_damaged_demolition": 59,
+      "apartments_destroyed_severely_damaged_demolition": 1274,
+      "houses_destroyed_severely_damaged_demolition": 2952,
+      "notable_collapse": {
+        "name": "Alpargün Apartment",
+        "location": "Cukurova",
+        "stories": 14,
+        "fatalities": 96
+      }
+    }
+  },
+  "syria_damage_data": {
+    "total_fatalities": 8476,
+    "total_injured": 12000,
+    "affected_population": 8800000,
+    "homeless": 5370000,
+    "residential_areas_badly_damaged": 123,
+    "housing_units_destroyed": 22452,
+    "housing_units_damaged": 62878,
+    "schools_damaged": 453,
+    "economic_damage_usd_billion": 5.1,
+    "reconstruction_cost_usd_billion": 7.9,
+    "affected_areas": ["Aleppo", "Idlib", "Latakia", "Hama", "Rural Damascus"],
+    "aleppo": {
+      "buildings_damaged_needing_repair": 3500,
+      "buildings_classified_unsafe": 700
+    },
+    "northwest_syria": {
+      "buildings_completely_or_partially_destroyed": 10600
+    }
+  },
+  "damage_classification_standards": {
+    "copernicus_ems": {
+      "destroyed": "Structure totally damaged, red color",
+      "damaged": "Structure visible but with visible changes or debris, orange color",
+      "possibly_damaged": "No changes visible from above but debris present, yellow color"
+    },
+    "turkish_meucc": {
+      "grade_1": "Undamaged",
+      "grade_2": "Slightly damaged",
+      "grade_3": "Moderately damaged",
+      "grade_4": "Severely damaged",
+      "grade_5": "Collapsed"
+    },
+    "ems_98": {
+      "grade_1": "Negligible to slight damage - fine cracks in plaster",
+      "grade_2": "Moderate damage - cracks in walls, large pieces falling",
+      "grade_3": "Substantial to heavy damage - large cracks, failure of individual elements",
+      "grade_4": "Very heavy damage - serious failure of walls, partial structural failure",
+      "grade_5": "Destruction - total or near total collapse"
+    }
+  },
+  "temporal_progression": {
+    "2023-02-06": {
+      "time": "01:17 UTC",
+      "event": "M7.8 earthquake strikes",
+      "reported_collapsed_buildings": null
+    },
+    "2023-02-06T10:24": {
+      "event": "M7.5 aftershock strikes"
+    },
+    "2023-02-07": {
+      "reported_collapsed_buildings": 6444,
+      "reported_fatalities": 14351,
+      "reported_injured": 63794
+    },
+    "2023-02-09": {
+      "reported_fatalities": 17134,
+      "reported_injured": 70347
+    },
+    "2023-02-10": {
+      "copernicus_ems_products_delivered": 53,
+      "buildings_blocks_damaged_or_destroyed": 4042,
+      "roads_damaged_km": 72
+    },
+    "2023-02-20": {
+      "event": "M6.4 aftershock",
+      "fatalities": 3,
+      "injured": 213
+    },
+    "2023-02-23": {
+      "buildings_inspected": 1250000,
+      "buildings_destroyed_or_severely_damaged": 164000
+    },
+    "2023-02-27": {
+      "event": "M5.6 aftershock",
+      "fatalities": 1
+    },
+    "2023-03": {
+      "housing_units_light_to_moderate_damage": 1411304
+    },
+    "2023-05": {
+      "buildings_inspected": 2153835,
+      "final_fatality_count_turkey": 53537
+    }
+  },
+  "response_and_recovery": {
+    "search_and_rescue_personnel": 141000,
+    "international_countries_assisting": 94,
+    "tents_established": 387000,
+    "container_cities_established": 162,
+    "people_sheltered_dormitories": 890000,
+    "people_sheltered_hotels": 50000,
+    "housing_reconstruction_planned": {
+      "total_housing_units": 507000,
+      "village_homes": 143000,
+      "planned_completion_2023": 319000
+    },
+    "state_of_emergency": {
+      "declared": "2023-02-07",
+      "duration_months": 3,
+      "provinces": 10
+    }
+  }
+}

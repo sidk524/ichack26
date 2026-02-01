@@ -1,0 +1,213 @@
+{
+  "metadata": {
+    "fetchedAt": "2026-02-01T06:30:00.000Z",
+    "dateRange": {
+      "start": "2022-12-01",
+      "end": "2023-02-28"
+    },
+    "region": "Turkey",
+    "sources": [
+      {
+        "name": "European Drought Observatory (EDO)",
+        "url": "https://edo.jrc.ec.europa.eu",
+        "reportUrl": "https://edo.jrc.ec.europa.eu/documents/news/GDO-EDODroughtNews202302_Maghreb_Turkiye.pdf"
+      },
+      {
+        "name": "GDACS",
+        "url": "https://www.gdacs.org",
+        "eventUrl": "https://www.gdacs.org/report.aspx?eventid=1016679&episodeid=55&eventtype=DR"
+      },
+      {
+        "name": "NASA EONET",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events",
+        "notes": "No drought events found in EONET for this period"
+      }
+    ],
+    "totalEvents": 1,
+    "notes": [
+      "EDO report from February 2023 documents severe drought conditions in Turkey",
+      "SPI-3 values show negative precipitation anomalies across most of Turkey",
+      "December 2022 was the hottest in 52 years for Central Turkey",
+      "GDACS drought monitoring event ID 1016679 covers the ongoing Turkey drought",
+      "Drought lasted for 20+ months according to GDACS"
+    ]
+  },
+  "events": [
+    {
+      "id": "EDO-TURKIYE-2022-2023",
+      "title": "Drought in Turkiye (Turkey) - Winter 2022-2023",
+      "description": "Severe lack of precipitation affecting Turkiye with impacts on soil moisture and river flows. December 2022 was characterized as the hottest in the last 52 years for Central Turkey. Negative precipitation anomalies detected across most of the country.",
+      "link": "https://edo.jrc.ec.europa.eu/documents/news/GDO-EDODroughtNews202302_Maghreb_Turkiye.pdf",
+      "startDate": "2022-12-01T00:00:00Z",
+      "endDate": "2023-02-28T00:00:00Z",
+      "status": "closed",
+      "severity": "severe",
+      "categories": [
+        {
+          "id": "drought",
+          "title": "Drought"
+        }
+      ],
+      "sources": [
+        {
+          "id": "EDO",
+          "name": "European Drought Observatory",
+          "url": "https://edo.jrc.ec.europa.eu/documents/news/GDO-EDODroughtNews202302_Maghreb_Turkiye.pdf"
+        },
+        {
+          "id": "GDACS",
+          "name": "Global Disaster Alert and Coordination System",
+          "url": "https://www.gdacs.org/report.aspx?eventid=1016679&episodeid=55&eventtype=DR"
+        }
+      ],
+      "affectedRegions": [
+        {
+          "name": "Central Anatolia",
+          "description": "Most affected region, sowing dates delayed by approximately one month due to dry soil conditions",
+          "coordinates": {
+            "type": "Point",
+            "lat": 39.0,
+            "lon": 32.5
+          }
+        },
+        {
+          "name": "Northern Turkey",
+          "description": "Short warm spell in December 2022, less intense impacts on vegetation",
+          "coordinates": {
+            "type": "Point",
+            "lat": 41.0,
+            "lon": 33.0
+          }
+        },
+        {
+          "name": "Western Turkey",
+          "description": "SPI-24 shows less severe anomalies compared to eastern regions",
+          "coordinates": {
+            "type": "Point",
+            "lat": 39.5,
+            "lon": 28.0
+          }
+        },
+        {
+          "name": "Eastern Turkey",
+          "description": "Extremely dry SPI-24 values, severe long-term precipitation deficit",
+          "coordinates": {
+            "type": "Point",
+            "lat": 39.5,
+            "lon": 40.0
+          }
+        },
+        {
+          "name": "Southeastern Anatolia",
+          "description": "Advanced crop season hampered by winter drought, potential irrigation concerns",
+          "coordinates": {
+            "type": "Point",
+            "lat": 37.5,
+            "lon": 39.0
+          }
+        }
+      ],
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [26.0, 36.0],
+            [45.0, 36.0],
+            [45.0, 42.0],
+            [26.0, 42.0],
+            [26.0, 36.0]
+          ]
+        ]
+      },
+      "centroid": {
+        "type": "Point",
+        "coordinates": [35.0, 39.0]
+      },
+      "indicators": {
+        "spi3": {
+          "description": "Standardized Precipitation Index (3-month) ending January 2023",
+          "value": "negative",
+          "severity": "moderate to severe",
+          "notes": "Most of Turkey showed negative precipitation anomalies"
+        },
+        "spi24": {
+          "description": "Standardized Precipitation Index (24-month) showing long-term drought",
+          "value": "extremely negative",
+          "severity": "severe in eastern regions",
+          "notes": "Eastern regions have extremely dry values indicating long-duration drought"
+        },
+        "soilMoisture": {
+          "description": "Soil moisture anomaly",
+          "value": "markedly negative",
+          "severity": "moderate",
+          "notes": "Impact on soil moisture due to lack of precipitation"
+        },
+        "lowFlowIndex": {
+          "description": "Low-Flow Index as of February 2023",
+          "value": 0.5,
+          "scale": "0-1 where 1 is highest drought hazard",
+          "severity": "moderate to high",
+          "notes": "Higher risk detected in eastern Turkey"
+        },
+        "temperatureAnomaly": {
+          "description": "Temperature anomaly for December 2022",
+          "value": "positive",
+          "severity": "extreme",
+          "notes": "December 2022 was the hottest in 52 years for Central Turkey"
+        }
+      },
+      "impacts": [
+        {
+          "type": "agricultural",
+          "description": "Sowing dates delayed by approximately one month in Central Turkey due to dry soil conditions"
+        },
+        {
+          "type": "agricultural",
+          "description": "Crop season hampered in southeastern regions due to winter drought"
+        },
+        {
+          "type": "water_resources",
+          "description": "Reservoirs below 50% filling level as of mid-February 2023"
+        },
+        {
+          "type": "water_resources",
+          "description": "Reduced snow accumulation due to warm winter raising concerns for future runoff and infiltration"
+        },
+        {
+          "type": "agricultural",
+          "description": "Limited crop water demand in winter but expected increase in spring requiring irrigation"
+        }
+      ],
+      "gdacsData": {
+        "eventId": "1016679",
+        "episodeId": "55",
+        "eventType": "DR",
+        "glideNumber": "DR-2023-000267-ALB",
+        "alertLevel": "Green",
+        "coordinates": {
+          "lat": 40.621,
+          "lon": 31.849
+        },
+        "durationMonths": 20,
+        "impactArea": "118684 km2",
+        "affectedCountries": ["Bulgaria", "Turkiye"]
+      }
+    }
+  ],
+  "additionalContext": {
+    "atmosphericConditions": {
+      "description": "December 2022 atmospheric pattern",
+      "pattern": "Strong anomalous cyclonic circulation west of Iberian Peninsula combined with anomalous anticyclonic circulation over eastern Mediterranean",
+      "effect": "Induced southerly wind anomalies affecting the region"
+    },
+    "relatedEvents": {
+      "earthquakes": "The February 2023 catastrophic earthquakes in the Turkey-Syria border region caused damages to dams and river infrastructures, complicating the drought situation",
+      "warmSpell": "Mid-December 2022 experienced a prolonged warm-spell affecting the Maghreb and partially Turkey"
+    },
+    "historicalContext": {
+      "droughtHistory": "Turkey has experienced significant droughts in 1973, 1974, 1983, 1989, 1990, 1996, 2001, 2007, 2008, 2013-2014, and 2020-2021",
+      "waterStress": "Turkey is classified as a water stressed country",
+      "vulnerableRegions": "Central Anatolia (Konya Basin) is the most vulnerable region with annual precipitation below 400mm"
+    }
+  }
+}

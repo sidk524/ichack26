@@ -1,0 +1,591 @@
+{
+  "metadata": {
+    "title": "Refugee Camps and Displacement Sites - Turkey/Syria Region",
+    "description": "Historical refugee camp and displacement data for Turkey/Syria region as of January-February 2023",
+    "sources": [
+      "UNHCR Data Portal (data.unhcr.org)",
+      "Humanitarian Data Exchange (data.humdata.org)",
+      "ReliefWeb",
+      "Turkish Presidency of Migration Management"
+    ],
+    "date_range": "January-February 2023",
+    "last_updated": "2023-02-02",
+    "generated_at": "2026-02-01T00:00:00Z",
+    "notes": "Data compiled from multiple humanitarian sources. Coordinates are approximate for some sites. Turkey hosts one of the world's largest refugee populations with over 3.5 million Syrian refugees under temporary protection."
+  },
+  "summary": {
+    "total_camps_turkey": 9,
+    "total_camps_jordan": 2,
+    "total_idp_sites_syria": 15,
+    "total_syrian_refugees_turkey": 3500000,
+    "refugees_in_camps_percentage": 1.3,
+    "earthquake_affected_refugees_percentage": 50
+  },
+  "camps": [
+    {
+      "id": "tr-nizip-2",
+      "name": "Nizip 2 Temporary Accommodation Center",
+      "name_local": "Nizip 2 Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Gaziantep",
+      "district": "Nizip",
+      "coordinates": {
+        "latitude": 37.0465,
+        "longitude": 37.89531
+      },
+      "population": {
+        "estimated": 5000,
+        "date": "2023-02-01"
+      },
+      "capacity": {
+        "containers": 900
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "facilities": ["hospital", "pharmacy", "school", "social_center", "grocery_store", "mosque", "laundry", "library"],
+      "distance_to_border_km": 45
+    },
+    {
+      "id": "tr-elbeyli",
+      "name": "Kilis Elbeyli Temporary Accommodation Center",
+      "name_local": "Kilis Elbeyli Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Kilis",
+      "district": "Elbeyli",
+      "coordinates": {
+        "latitude": 36.66618,
+        "longitude": 37.36821
+      },
+      "population": {
+        "estimated": 20000,
+        "date": "2023-02-01"
+      },
+      "capacity": {
+        "containers": 3600
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "facilities": ["school", "health_center", "mosque"],
+      "distance_to_border_km": 5
+    },
+    {
+      "id": "tr-oncupinar",
+      "name": "Oncupinar Accommodation Facility",
+      "name_local": "Oncupinar Barinma Tesisi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Kilis",
+      "district": "Merkez",
+      "coordinates": {
+        "latitude": 36.64516,
+        "longitude": 37.08421
+      },
+      "population": {
+        "estimated": 0,
+        "date": "2023-02-01"
+      },
+      "capacity": {
+        "shelters": 2469
+      },
+      "status": "closed",
+      "operator": "AFAD",
+      "established": "2012",
+      "closed": "2019",
+      "notes": "Camp closed in 2019, refugees relocated to Elbeyli"
+    },
+    {
+      "id": "tr-altinözu",
+      "name": "Altinözu Refugee Camp",
+      "name_local": "Altinözu Multeci Kampi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Hatay",
+      "district": "Altinözu",
+      "coordinates": {
+        "latitude": 36.1302,
+        "longitude": 36.23879
+      },
+      "population": {
+        "estimated": 8000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "elevation_m": 366
+    },
+    {
+      "id": "tr-yayladagi",
+      "name": "Yayladagi Temporary Accommodation Center",
+      "name_local": "Yayladagi Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Hatay",
+      "district": "Yayladagi",
+      "coordinates": {
+        "latitude": 35.902955,
+        "longitude": 36.062599
+      },
+      "population": {
+        "estimated": 5000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "distance_to_border_km": 51
+    },
+    {
+      "id": "tr-apaydin",
+      "name": "Apaydin Temporary Accommodation Center",
+      "name_local": "Apaydin Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Hatay",
+      "district": "Merkez",
+      "coordinates": {
+        "latitude": 36.2845,
+        "longitude": 36.3521
+      },
+      "population": {
+        "estimated": 3500,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "notes": "Camp affected by February 2023 earthquake"
+    },
+    {
+      "id": "tr-boynuyogun",
+      "name": "Boynuyogun Temporary Accommodation Center",
+      "name_local": "Boynuyogun Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Hatay",
+      "district": "Altinözu",
+      "coordinates": {
+        "latitude": 36.186,
+        "longitude": 36.366
+      },
+      "population": {
+        "estimated": 8500,
+        "date": "2023-02-01"
+      },
+      "capacity": {
+        "houses": 2056
+      },
+      "status": "operational",
+      "operator": "Turkish Red Crescent",
+      "established": "2012",
+      "area_sqm": 140000
+    },
+    {
+      "id": "tr-saricam",
+      "name": "Saricam Temporary Accommodation Center",
+      "name_local": "Saricam Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Adana",
+      "district": "Saricam",
+      "coordinates": {
+        "latitude": 37.0542,
+        "longitude": 35.4123
+      },
+      "population": {
+        "estimated": 6000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2013"
+    },
+    {
+      "id": "tr-kahramanmaras",
+      "name": "Kahramanmaras Temporary Accommodation Center",
+      "name_local": "Kahramanmaras Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Kahramanmaras",
+      "district": "Merkez",
+      "coordinates": {
+        "latitude": 37.5847,
+        "longitude": 36.9371
+      },
+      "population": {
+        "estimated": 4500,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2014",
+      "notes": "Epicenter of February 6, 2023 earthquake; camp significantly impacted"
+    },
+    {
+      "id": "tr-cevdetiye",
+      "name": "Cevdetiye Temporary Accommodation Center",
+      "name_local": "Cevdetiye Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Osmaniye",
+      "district": "Cevdetiye",
+      "coordinates": {
+        "latitude": 37.0891,
+        "longitude": 36.2567
+      },
+      "population": {
+        "estimated": 12610,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012"
+    },
+    {
+      "id": "tr-beydagi",
+      "name": "Beydagi Temporary Accommodation Center",
+      "name_local": "Beydagi Gecici Barinma Merkezi",
+      "type": "container_camp",
+      "country": "Turkey",
+      "province": "Malatya",
+      "district": "Beydagi",
+      "coordinates": {
+        "latitude": 38.2862,
+        "longitude": 38.4579
+      },
+      "population": {
+        "estimated": 3000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2014"
+    },
+    {
+      "id": "tr-harran",
+      "name": "Harran Temporary Accommodation Center",
+      "name_local": "Harran Gecici Barinma Merkezi",
+      "type": "tent_city",
+      "country": "Turkey",
+      "province": "Sanliurfa",
+      "district": "Harran",
+      "coordinates": {
+        "latitude": 36.8671,
+        "longitude": 39.0324
+      },
+      "population": {
+        "estimated": 14000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AFAD",
+      "established": "2012",
+      "notes": "Part of 3 camps in Sanliurfa province hosting 67,682 Syrians total"
+    },
+    {
+      "id": "jo-zaatari",
+      "name": "Zaatari Refugee Camp",
+      "name_local": "Mukhayyam al-Za'tari",
+      "name_arabic": "مخيم الزعتري",
+      "type": "refugee_camp",
+      "country": "Jordan",
+      "governorate": "Mafraq",
+      "coordinates": {
+        "latitude": 32.2924,
+        "longitude": 36.3267
+      },
+      "population": {
+        "estimated": 78000,
+        "date": "2023-02-01",
+        "peak": 200000,
+        "peak_year": 2013
+      },
+      "status": "operational",
+      "operator": "UNHCR/SRAD",
+      "established": "2012-07-28",
+      "area_km2": 9,
+      "facilities": ["solar_plant", "schools", "hospitals", "markets"],
+      "distance_to_border_km": 12,
+      "notes": "World's largest Syrian refugee camp"
+    },
+    {
+      "id": "jo-azraq",
+      "name": "Azraq Refugee Camp",
+      "type": "refugee_camp",
+      "country": "Jordan",
+      "governorate": "Zarqa",
+      "coordinates": {
+        "latitude": 31.90221,
+        "longitude": 36.57847
+      },
+      "population": {
+        "estimated": 42000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "UNHCR/Government of Jordan",
+      "established": "2014",
+      "distance_to_border_km": 90
+    },
+    {
+      "id": "sy-atmeh",
+      "name": "Atmeh IDP Camp",
+      "name_local": "Mukhayyam Atma",
+      "type": "idp_camp",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "district": "Harim",
+      "coordinates": {
+        "latitude": 36.3095,
+        "longitude": 36.68839
+      },
+      "population": {
+        "estimated": 150000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "Multiple NGOs",
+      "established": "2012",
+      "elevation_m": 227,
+      "notes": "Largest concentration of IDPs in Syria, includes Olive Tree Camp"
+    },
+    {
+      "id": "sy-dana",
+      "name": "Dana IDP Sites",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "sub_district": "Dana",
+      "coordinates": {
+        "latitude": 36.4612,
+        "longitude": 36.5847
+      },
+      "population": {
+        "estimated": 211597,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "notes": "Sub-district with highest number of new IDPs"
+    },
+    {
+      "id": "sy-azaz",
+      "name": "Azaz IDP Sites",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Aleppo",
+      "sub_district": "Azaz",
+      "coordinates": {
+        "latitude": 36.5867,
+        "longitude": 37.0467
+      },
+      "population": {
+        "estimated": 107616,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "notes": "Major destination for IDPs fleeing conflict"
+    },
+    {
+      "id": "sy-maaret-tamsrin",
+      "name": "Maaret Tamsrin IDP Sites",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "sub_district": "Maaret Tamsrin",
+      "coordinates": {
+        "latitude": 35.9834,
+        "longitude": 36.6912
+      },
+      "population": {
+        "estimated": 71913,
+        "date": "2023-02-01"
+      },
+      "status": "operational"
+    },
+    {
+      "id": "sy-bab-al-hawa",
+      "name": "Bab al-Hawa Border Camp Sites",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "district": "Harim",
+      "coordinates": {
+        "latitude": 36.2389,
+        "longitude": 36.6856
+      },
+      "population": {
+        "estimated": 50000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "notes": "Near Turkish border crossing, main humanitarian aid entry point"
+    },
+    {
+      "id": "sy-afrin",
+      "name": "Afrin Region IDP Camps",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Aleppo",
+      "sub_district": "Afrin",
+      "coordinates": {
+        "latitude": 36.5125,
+        "longitude": 36.8697
+      },
+      "population": {
+        "estimated": 45000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "notes": "Established after Turkish operations in 2018"
+    },
+    {
+      "id": "sy-maram",
+      "name": "Maram Displacement Camp",
+      "type": "idp_camp",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "coordinates": {
+        "latitude": 36.2456,
+        "longitude": 36.6723
+      },
+      "population": {
+        "estimated": 5000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "notes": "Near Kafr Jalis, close to Bab al-Hawa crossing"
+    },
+    {
+      "id": "sy-sarmada",
+      "name": "Sarmada IDP Sites",
+      "type": "idp_camp_cluster",
+      "country": "Syria",
+      "governorate": "Idlib",
+      "sub_district": "Sarmada",
+      "coordinates": {
+        "latitude": 36.2712,
+        "longitude": 36.7234
+      },
+      "population": {
+        "estimated": 35000,
+        "date": "2023-02-01"
+      },
+      "status": "operational"
+    },
+    {
+      "id": "sy-al-hol",
+      "name": "Al-Hol Camp",
+      "type": "idp_camp",
+      "country": "Syria",
+      "governorate": "Al-Hasakah",
+      "coordinates": {
+        "latitude": 36.2324,
+        "longitude": 40.9567
+      },
+      "population": {
+        "estimated": 56000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AANES/Kurdish Autonomous Administration",
+      "notes": "Northeast Syria, hosts displaced from multiple areas"
+    },
+    {
+      "id": "sy-roj",
+      "name": "Roj Camp",
+      "type": "idp_camp",
+      "country": "Syria",
+      "governorate": "Al-Hasakah",
+      "coordinates": {
+        "latitude": 37.0234,
+        "longitude": 42.0123
+      },
+      "population": {
+        "estimated": 2700,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AANES"
+    },
+    {
+      "id": "sy-ain-issa",
+      "name": "Ain Issa Camp",
+      "type": "idp_camp",
+      "country": "Syria",
+      "governorate": "Raqqa",
+      "coordinates": {
+        "latitude": 36.2412,
+        "longitude": 38.9234
+      },
+      "population": {
+        "estimated": 13000,
+        "date": "2023-02-01"
+      },
+      "status": "operational",
+      "operator": "AANES"
+    }
+  ],
+  "earthquake_impact_february_2023": {
+    "date": "2023-02-06",
+    "magnitude": 7.8,
+    "epicenter": {
+      "latitude": 37.166,
+      "longitude": 37.042
+    },
+    "affected_camps": [
+      "tr-kahramanmaras",
+      "tr-apaydin",
+      "tr-altinözu",
+      "tr-yayladagi",
+      "tr-boynuyogun"
+    ],
+    "refugees_in_affected_area": 2000000,
+    "notes": "Approximately 50% of registered Syrian refugees resided in areas affected by the devastating earthquake"
+  },
+  "provincial_breakdown_turkey_feb_2023": [
+    {
+      "province": "Istanbul",
+      "refugees": 531552
+    },
+    {
+      "province": "Gaziantep",
+      "refugees": 462031
+    },
+    {
+      "province": "Sanliurfa",
+      "refugees": 474077
+    },
+    {
+      "province": "Hatay",
+      "refugees": 430672
+    },
+    {
+      "province": "Adana",
+      "refugees": 254178
+    },
+    {
+      "province": "Mersin",
+      "refugees": 237821
+    },
+    {
+      "province": "Bursa",
+      "refugees": 179246
+    },
+    {
+      "province": "Izmir",
+      "refugees": 147891
+    },
+    {
+      "province": "Konya",
+      "refugees": 121456
+    },
+    {
+      "province": "Ankara",
+      "refugees": 98234
+    }
+  ]
+}

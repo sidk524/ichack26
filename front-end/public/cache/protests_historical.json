@@ -1,0 +1,362 @@
+[
+  {
+    "id": "hist-1",
+    "type": "protest",
+    "coordinates": [28.9784, 41.0082],
+    "title": "Labor Rights Protest: Istanbul",
+    "severity": 3,
+    "timestamp": "2022-12-15T10:00:00Z",
+    "source": "Historical Data",
+    "category": "Labor rights demonstration",
+    "details": {
+      "eventDate": "2022-12-15",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Trade Unions", "Workers"],
+      "notes": "Peaceful labor rights demonstration in Istanbul"
+    }
+  },
+  {
+    "id": "hist-2",
+    "type": "protest",
+    "coordinates": [32.8597, 39.9334],
+    "title": "Political Rally: Ankara",
+    "severity": 2,
+    "timestamp": "2022-12-20T14:00:00Z",
+    "source": "Historical Data",
+    "category": "Political demonstration",
+    "details": {
+      "eventDate": "2022-12-20",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Opposition parties", "Citizens"],
+      "notes": "Political rally in Ankara city center"
+    }
+  },
+  {
+    "id": "hist-3",
+    "type": "protest",
+    "coordinates": [27.1428, 38.4237],
+    "title": "Economic Protest: Izmir",
+    "severity": 3,
+    "timestamp": "2023-01-05T11:00:00Z",
+    "source": "Historical Data",
+    "category": "Economic grievance",
+    "details": {
+      "eventDate": "2023-01-05",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Citizens", "Small business owners"],
+      "notes": "Protest against rising inflation and economic conditions"
+    }
+  },
+  {
+    "id": "hist-4",
+    "type": "protest",
+    "coordinates": [29.0167, 41.0167],
+    "title": "Student Protest: Kadikoy",
+    "severity": 2,
+    "timestamp": "2023-01-15T15:00:00Z",
+    "source": "Historical Data",
+    "category": "Student demonstration",
+    "details": {
+      "eventDate": "2023-01-15",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["University students"],
+      "notes": "Student-led demonstration for education reform"
+    }
+  },
+  {
+    "id": "hist-5",
+    "type": "protest",
+    "coordinates": [35.3213, 37.0017],
+    "title": "Solidarity Gathering: Gaziantep",
+    "severity": 2,
+    "timestamp": "2023-02-08T09:00:00Z",
+    "source": "Historical Data",
+    "category": "Solidarity event",
+    "details": {
+      "eventDate": "2023-02-08",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful gathering",
+      "actors": ["Citizens", "Aid organizations"],
+      "notes": "Solidarity gathering after the earthquake, demanding faster relief efforts"
+    }
+  },
+  {
+    "id": "hist-6",
+    "type": "protest",
+    "coordinates": [36.1551, 36.2021],
+    "title": "Earthquake Response Protest: Hatay",
+    "severity": 4,
+    "timestamp": "2023-02-10T12:00:00Z",
+    "source": "Historical Data",
+    "category": "Emergency response criticism",
+    "details": {
+      "eventDate": "2023-02-10",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Demonstration",
+      "actors": ["Earthquake survivors", "Local residents"],
+      "notes": "Protest demanding faster government earthquake response in affected areas"
+    }
+  },
+  {
+    "id": "hist-7",
+    "type": "protest",
+    "coordinates": [37.3833, 37.0667],
+    "title": "Building Safety Protest: Kahramanmaras",
+    "severity": 4,
+    "timestamp": "2023-02-12T10:00:00Z",
+    "source": "Historical Data",
+    "category": "Building regulation criticism",
+    "details": {
+      "eventDate": "2023-02-12",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Demonstration",
+      "actors": ["Earthquake survivors", "Victim families"],
+      "notes": "Protest against contractors and building code violations after earthquake"
+    }
+  },
+  {
+    "id": "hist-8",
+    "type": "protest",
+    "coordinates": [36.7833, 37.5833],
+    "title": "Aid Distribution Protest: Adiyaman",
+    "severity": 3,
+    "timestamp": "2023-02-14T14:00:00Z",
+    "source": "Historical Data",
+    "category": "Aid distribution",
+    "details": {
+      "eventDate": "2023-02-14",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Displaced residents", "Local citizens"],
+      "notes": "Protest over unequal aid distribution in earthquake-affected region"
+    }
+  },
+  {
+    "id": "hist-9",
+    "type": "protest",
+    "coordinates": [34.6762, 36.8121],
+    "title": "Solidarity March: Mersin",
+    "severity": 2,
+    "timestamp": "2023-02-18T16:00:00Z",
+    "source": "Historical Data",
+    "category": "Solidarity event",
+    "details": {
+      "eventDate": "2023-02-18",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful march",
+      "actors": ["Citizens", "Volunteer organizations"],
+      "notes": "Solidarity march to support earthquake survivors"
+    }
+  },
+  {
+    "id": "hist-10",
+    "type": "protest",
+    "coordinates": [30.7133, 36.8969],
+    "title": "Tourism Workers Protest: Antalya",
+    "severity": 2,
+    "timestamp": "2023-02-25T11:00:00Z",
+    "source": "Historical Data",
+    "category": "Labor rights",
+    "details": {
+      "eventDate": "2023-02-25",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Tourism sector workers", "Hotel employees"],
+      "notes": "Tourism workers protesting economic impact of earthquake on industry"
+    }
+  },
+  {
+    "id": "hist-11",
+    "type": "protest",
+    "coordinates": [32.4824, 37.8713],
+    "title": "Municipal Workers Strike: Konya",
+    "severity": 2,
+    "timestamp": "2022-12-08T09:00:00Z",
+    "source": "Historical Data",
+    "category": "Labor strike",
+    "details": {
+      "eventDate": "2022-12-08",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Strike action",
+      "actors": ["Municipal workers", "Public sector unions"],
+      "notes": "Municipal workers demanding wage increases amid inflation"
+    }
+  },
+  {
+    "id": "hist-12",
+    "type": "protest",
+    "coordinates": [29.0092, 40.1885],
+    "title": "Environmental Protest: Bursa",
+    "severity": 2,
+    "timestamp": "2022-12-22T14:00:00Z",
+    "source": "Historical Data",
+    "category": "Environmental",
+    "details": {
+      "eventDate": "2022-12-22",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Environmental activists", "Local residents"],
+      "notes": "Protest against industrial pollution in the region"
+    }
+  },
+  {
+    "id": "hist-13",
+    "type": "protest",
+    "coordinates": [36.3333, 36.85],
+    "title": "Humanitarian Aid Demand: Antakya",
+    "severity": 4,
+    "timestamp": "2023-02-09T08:00:00Z",
+    "source": "Historical Data",
+    "category": "Humanitarian crisis",
+    "details": {
+      "eventDate": "2023-02-09",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Emergency gathering",
+      "actors": ["Earthquake survivors", "Rescue volunteers"],
+      "notes": "Demands for faster humanitarian aid delivery after devastating earthquake"
+    }
+  },
+  {
+    "id": "hist-14",
+    "type": "protest",
+    "coordinates": [39.4167, 37.0667],
+    "title": "Infrastructure Protest: Diyarbakir",
+    "severity": 3,
+    "timestamp": "2023-02-15T11:00:00Z",
+    "source": "Historical Data",
+    "category": "Infrastructure",
+    "details": {
+      "eventDate": "2023-02-15",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Demonstration",
+      "actors": ["Local residents", "Community leaders"],
+      "notes": "Protest demanding earthquake-resistant infrastructure improvements"
+    }
+  },
+  {
+    "id": "hist-15",
+    "type": "protest",
+    "coordinates": [27.8, 37.0333],
+    "title": "Teachers Union Rally: Mugla",
+    "severity": 2,
+    "timestamp": "2023-01-20T10:00:00Z",
+    "source": "Historical Data",
+    "category": "Education",
+    "details": {
+      "eventDate": "2023-01-20",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Union rally",
+      "actors": ["Teachers union", "Education workers"],
+      "notes": "Teachers protesting for better working conditions and salaries"
+    }
+  },
+  {
+    "id": "hist-16",
+    "type": "protest",
+    "coordinates": [35.5, 38.7333],
+    "title": "Agricultural Workers Protest: Kayseri",
+    "severity": 2,
+    "timestamp": "2023-01-28T09:00:00Z",
+    "source": "Historical Data",
+    "category": "Agricultural",
+    "details": {
+      "eventDate": "2023-01-28",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Peaceful protest",
+      "actors": ["Farmers", "Agricultural workers"],
+      "notes": "Farmers protesting rising fuel and fertilizer costs"
+    }
+  },
+  {
+    "id": "hist-17",
+    "type": "protest",
+    "coordinates": [33.4167, 36.8],
+    "title": "Housing Rights Protest: Adana",
+    "severity": 3,
+    "timestamp": "2023-02-20T13:00:00Z",
+    "source": "Historical Data",
+    "category": "Housing rights",
+    "details": {
+      "eventDate": "2023-02-20",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Demonstration",
+      "actors": ["Displaced families", "Housing activists"],
+      "notes": "Post-earthquake housing rights protest demanding temporary shelter solutions"
+    }
+  },
+  {
+    "id": "hist-18",
+    "type": "protest",
+    "coordinates": [41.0066, 39.9208],
+    "title": "Mining Safety Protest: Erzurum",
+    "severity": 3,
+    "timestamp": "2022-12-28T10:00:00Z",
+    "source": "Historical Data",
+    "category": "Worker safety",
+    "details": {
+      "eventDate": "2022-12-28",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Safety protest",
+      "actors": ["Mine workers", "Mining unions"],
+      "notes": "Miners protesting for improved safety standards and working conditions"
+    }
+  },
+  {
+    "id": "hist-19",
+    "type": "protest",
+    "coordinates": [40.1833, 38.6833],
+    "title": "Healthcare Workers March: Elazig",
+    "severity": 3,
+    "timestamp": "2023-02-22T14:00:00Z",
+    "source": "Historical Data",
+    "category": "Healthcare",
+    "details": {
+      "eventDate": "2023-02-22",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "March",
+      "actors": ["Healthcare workers", "Medical staff"],
+      "notes": "Healthcare workers protesting overwhelming conditions after earthquake"
+    }
+  },
+  {
+    "id": "hist-20",
+    "type": "protest",
+    "coordinates": [38.75, 37.9167],
+    "title": "Earthquake Victims Memorial: Malatya",
+    "severity": 3,
+    "timestamp": "2023-02-27T12:00:00Z",
+    "source": "Historical Data",
+    "category": "Memorial gathering",
+    "details": {
+      "eventDate": "2023-02-27",
+      "source": "GDELT/ACLED",
+      "eventType": "Protests",
+      "subEventType": "Memorial protest",
+      "actors": ["Victim families", "Community members"],
+      "notes": "Memorial gathering and protest demanding accountability for building failures"
+    }
+  }
+]

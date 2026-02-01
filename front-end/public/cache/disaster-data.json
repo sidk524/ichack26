@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-02-01T00:00:00.000Z",
+  "version": "1.0.0",
+  "label": "Sample Historical Data",
+  "bounds": {
+    "minLat": 36,
+    "maxLat": 42,
+    "minLng": 26,
+    "maxLng": 45
+  },
+  "data": {
+    "earthquakes": [],
+    "fires": [],
+    "storms": [],
+    "floods": [],
+    "volcanoes": [],
+    "droughts": [],
+    "tsunamis": [],
+    "hospitals": [],
+    "schools": [],
+    "shelters": [],
+    "refugeeCamps": [],
+    "bunkers": [],
+    "assemblyPoints": [],
+    "protests": [],
+    "crimes": [],
+    "powerOutages": [],
+    "helicopters": [],
+    "borderCrossings": [],
+    "humanitarianCorridors": [],
+    "wfpFacilities": [],
+    "refugeePopulations": [],
+    "militaryZones": []
+  }
+}

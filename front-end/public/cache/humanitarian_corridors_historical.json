@@ -1,0 +1,344 @@
+{
+  "metadata": {
+    "title": "Turkey-Syria Humanitarian Corridors and Border Crossings",
+    "description": "Historical data on humanitarian border crossings between Turkey and Syria, with focus on January-February 2023 (pre and post earthquake)",
+    "sources": [
+      "UN OCHA",
+      "WFP (World Food Programme)",
+      "HDX (Humanitarian Data Exchange)",
+      "ReliefWeb",
+      "UN News"
+    ],
+    "date_range": {
+      "start": "2023-01-01",
+      "end": "2023-02-28"
+    },
+    "last_updated": "2023-02-28",
+    "cache_created": "2025-02-01"
+  },
+  "key_events": [
+    {
+      "date": "2023-01-09",
+      "event": "UN Security Council Resolution 2672",
+      "description": "Security Council unanimously adopted resolution extending the Syria cross-border aid mechanism for six months until July 10, 2023"
+    },
+    {
+      "date": "2023-02-06",
+      "event": "Turkey-Syria Earthquakes",
+      "description": "Magnitude 7.8 and 7.7 earthquakes struck southern Turkey and northern Syria, causing over 4,500 fatalities and 10,400 injuries in northwest Syria alone"
+    },
+    {
+      "date": "2023-02-09",
+      "event": "First UN Aid Convoy Post-Earthquake",
+      "description": "First UN aid convoy of 6 trucks crossed through Bab al-Hawa after the earthquake disaster"
+    },
+    {
+      "date": "2023-02-13",
+      "event": "Additional Crossings Opened",
+      "description": "Syrian government opened Bab al-Salam and Al-Ra'ee border crossings for humanitarian aid in response to earthquake"
+    }
+  ],
+  "border_crossings": [
+    {
+      "id": "bab-al-hawa",
+      "name": "Bab al-Hawa",
+      "name_arabic": "باب الهوى",
+      "name_meaning": "Gate of the Winds",
+      "turkey_side": {
+        "name": "Cilvegozu",
+        "name_turkish": "Cilvegözü",
+        "province": "Hatay"
+      },
+      "syria_side": {
+        "governorate": "Idlib",
+        "nearest_town": "Sarmada"
+      },
+      "coordinates": {
+        "latitude": 36.2333,
+        "longitude": 36.7167,
+        "dms": "36°14'N 36°43'E"
+      },
+      "type": "civilian_commercial_humanitarian",
+      "status_jan_2023": "operational",
+      "status_feb_2023": "operational",
+      "un_authorized": true,
+      "un_authorization_date": "2014-07-14",
+      "importance": "primary",
+      "description": "Main UN-authorized humanitarian corridor. Handles approximately 85% of cross-border aid deliveries since 2014. Connects Syrian M45 and Turkish D827 highways between Iskenderun and Idlib.",
+      "statistics": {
+        "trucks_post_earthquake_to_july_2023": 3000,
+        "percent_of_total_aid": 85,
+        "people_reached_monthly": 2700000
+      },
+      "infrastructure": {
+        "highways_connected": ["M45 (Syria)", "D827 (Turkey)"],
+        "nearest_cities": {
+          "turkey": "Reyhanli",
+          "syria": ["ad-Dana", "Atarib"]
+        },
+        "distance_to_aleppo_km": 50
+      }
+    },
+    {
+      "id": "bab-al-salam",
+      "name": "Bab al-Salam",
+      "name_variants": ["Bab al-Salameh", "Bab al-Salama"],
+      "name_arabic": "باب السلامة",
+      "name_meaning": "Gate of Peace",
+      "turkey_side": {
+        "name": "Oncupinar",
+        "name_turkish": "Öncüpınar",
+        "province": "Kilis"
+      },
+      "syria_side": {
+        "governorate": "Aleppo",
+        "nearest_town": "Azaz"
+      },
+      "coordinates": {
+        "latitude": 36.6319,
+        "longitude": 37.0833,
+        "dms": "36°37'54\"N 37°5'0\"E"
+      },
+      "type": "civilian_commercial_humanitarian",
+      "status_jan_2023": "limited",
+      "status_feb_2023": "operational_humanitarian",
+      "un_authorized": true,
+      "un_authorization_date": "2023-02-13",
+      "importance": "secondary",
+      "description": "Second most important crossing. Opened for UN humanitarian aid after February 2023 earthquake. Located 4km northeast of Azaz, 40km north of Aleppo city.",
+      "statistics": {
+        "trucks_earthquake_to_july_2024": 921
+      },
+      "infrastructure": {
+        "distance_to_azaz_km": 4,
+        "distance_to_aleppo_km": 40
+      },
+      "control": "Syrian opposition (SNA)"
+    },
+    {
+      "id": "al-rai",
+      "name": "Al-Ra'i",
+      "name_variants": ["Al-Rai", "Al-Ra'ee", "al-Rayi"],
+      "name_arabic": "الراعي",
+      "turkey_side": {
+        "name": "Cobanbey",
+        "name_turkish": "Çobanbey",
+        "province": "Kilis",
+        "district": "Elbeyli"
+      },
+      "syria_side": {
+        "governorate": "Aleppo",
+        "nearest_town": "Al-Rai"
+      },
+      "coordinates": {
+        "latitude": 36.6133,
+        "longitude": 37.4495,
+        "dms": "36°36'47.71\"N 37°26'58.07\"E"
+      },
+      "type": "civilian_commercial_humanitarian",
+      "status_jan_2023": "civilian_commercial",
+      "status_feb_2023": "operational_humanitarian",
+      "un_authorized": true,
+      "un_authorization_date": "2023-02-13",
+      "importance": "secondary",
+      "description": "Located on Istanbul-Baghdad Railway. Opened for UN humanitarian aid after February 2023 earthquake. Railway border gate reopened December 2009 after renovation of 62km Aleppo-Al-Rai line.",
+      "statistics": {
+        "daily_truck_capacity": 300
+      },
+      "infrastructure": {
+        "railway": "Istanbul-Baghdad Railway (Konya-Baghdad Railway)",
+        "distance_to_azaz_km": 35,
+        "distance_to_jarablus_km": 45,
+        "distance_to_manbij_km": 45
+      },
+      "control": "Syrian opposition (SNA/Interim Government)"
+    },
+    {
+      "id": "jarablus",
+      "name": "Jarablus",
+      "name_variants": ["Jarabulus"],
+      "name_arabic": "جرابلس",
+      "turkey_side": {
+        "name": "Karkamis",
+        "name_turkish": "Karkamış",
+        "province": "Gaziantep"
+      },
+      "syria_side": {
+        "governorate": "Aleppo",
+        "nearest_town": "Jarablus"
+      },
+      "coordinates": {
+        "latitude": 36.8175,
+        "longitude": 38.0111,
+        "dms": "36°49'3\"N 38°0'40\"E"
+      },
+      "type": "civilian_commercial",
+      "status_jan_2023": "operational_civilian",
+      "status_feb_2023": "operational_civilian",
+      "un_authorized": false,
+      "importance": "regional",
+      "description": "Commercial and civilian crossing on the Euphrates River. Reactivated after Operation Euphrates Shield (2016). Initially used for Syrian returnees, later converted to import/export crossing.",
+      "infrastructure": {
+        "river": "Euphrates",
+        "lake_nearby": "Euphrates Lake"
+      },
+      "control": "Syrian opposition (SNA)"
+    },
+    {
+      "id": "tal-abyad",
+      "name": "Tal Abyad",
+      "name_variants": ["Tell Abyad", "Tall Al Abyad"],
+      "name_arabic": "تل أبيض",
+      "turkey_side": {
+        "name": "Akcakale",
+        "name_turkish": "Akçakale",
+        "province": "Sanliurfa"
+      },
+      "syria_side": {
+        "governorate": "Raqqa",
+        "nearest_town": "Tal Abyad"
+      },
+      "coordinates": {
+        "latitude": 36.6833,
+        "longitude": 38.9500,
+        "turkey_coordinates": {
+          "latitude": 36.7072,
+          "longitude": 38.9491
+        }
+      },
+      "type": "civilian_potential_humanitarian",
+      "status_jan_2023": "limited",
+      "status_feb_2023": "limited",
+      "un_authorized": false,
+      "importance": "potential",
+      "description": "Divided border city on Balikh River. Was considered as alternative to Al-Yarubiyah crossing (closed January 2020). Turkey indicated willingness to prepare for humanitarian operations.",
+      "infrastructure": {
+        "river": "Balikh River"
+      }
+    },
+    {
+      "id": "qamishli",
+      "name": "Qamishli",
+      "name_arabic": "القامشلي",
+      "turkey_side": {
+        "name": "Nusaybin",
+        "province": "Mardin"
+      },
+      "syria_side": {
+        "governorate": "Al-Hasakah",
+        "nearest_town": "Qamishli"
+      },
+      "coordinates": {
+        "latitude": 37.0500,
+        "longitude": 41.2167
+      },
+      "type": "civilian_limited",
+      "status_jan_2023": "closed",
+      "status_feb_2023": "closed",
+      "un_authorized": false,
+      "importance": "inactive",
+      "description": "Controlled by Syrian regime. Turkish side (Nusaybin) closed since 2011. Formerly facilitated commercial and civilian passage, now limited to rare humanitarian cases.",
+      "control": "Syrian Government"
+    }
+  ],
+  "humanitarian_statistics_feb_2023": {
+    "earthquake_response": {
+      "first_convoy_date": "2023-02-09",
+      "first_convoy_trucks": 6,
+      "first_convoy_contents": ["shelter items", "non-food items (NFI)"],
+      "wfp_trucks_by_feb_28": 231,
+      "un_trucks_two_weeks_post_quake": 282,
+      "crossings_used": ["Bab al-Hawa", "Bab al-Salam", "Al-Ra'i"]
+    },
+    "wfp_reach_feb_2023": {
+      "people_assisted": 5100000,
+      "governorates_covered": 14,
+      "activities": [
+        "general food assistance",
+        "school meals",
+        "nutrition",
+        "livelihoods",
+        "resilience",
+        "social safety nets"
+      ]
+    },
+    "overall_needs_2023": {
+      "syrians_needing_assistance": 15300000,
+      "percent_of_population": 69,
+      "northwest_syria_population": 4500000,
+      "northwest_syria_relying_on_aid": 4100000
+    },
+    "fund_allocation_post_earthquake": {
+      "schf_total_usd": 105900000,
+      "purpose": "urgent life-saving assistance in northwest Syria"
+    }
+  },
+  "humanitarian_corridors": [
+    {
+      "id": "turkey-northwest-syria",
+      "name": "Turkey to Northwest Syria Corridor",
+      "description": "Primary UN-authorized humanitarian corridor for delivering aid to opposition-held areas in Idlib and northern Aleppo governorates",
+      "origin_country": "Turkey",
+      "destination_region": "Northwest Syria (Idlib, northern Aleppo)",
+      "border_crossings": ["bab-al-hawa", "bab-al-salam", "al-rai"],
+      "authorization": "UN Security Council Resolution 2672 (January 2023)",
+      "status_jan_2023": "active",
+      "status_feb_2023": "expanded_emergency",
+      "population_served": 4100000,
+      "monthly_reach": 2700000,
+      "primary_agencies": ["WFP", "OCHA", "UNICEF", "WHO"],
+      "coordinates": {
+        "corridor_center": {
+          "latitude": 36.4,
+          "longitude": 37.0
+        },
+        "bounding_box": {
+          "north": 36.85,
+          "south": 35.7,
+          "east": 38.5,
+          "west": 36.0
+        }
+      }
+    }
+  ],
+  "geographic_context": {
+    "border_length_km": 909,
+    "eastern_section": {
+      "description": "From Al-Rai to Nusaybin/Qamishli follows the Konya-Baghdad Railway tracks",
+      "approximate_latitude": 37
+    },
+    "key_infrastructure": {
+      "railways": ["Istanbul-Baghdad Railway", "Konya-Baghdad Railway"],
+      "highways": {
+        "turkey": ["D827"],
+        "syria": ["M45"]
+      },
+      "rivers": ["Euphrates", "Balikh"]
+    }
+  },
+  "data_sources": {
+    "hdx": {
+      "dataset_name": "Syria Border Crossings",
+      "url": "https://data.humdata.org/dataset/syria-border-crossings",
+      "provider": "U.S. Department of State, Humanitarian Information Unit",
+      "format": ["GeoJSON", "KML"],
+      "note": "Locations accurate to city level"
+    },
+    "ocha": {
+      "reports": [
+        "Syria Cross-Border Humanitarian Fund Annual Report 2023",
+        "Syrian Arab Republic Annual Report 2023 Humanitarian Response"
+      ],
+      "hub_url": "https://www.ocha-sy.org/"
+    },
+    "wfp": {
+      "reports": [
+        "WFP Syria Country Brief February 2023",
+        "Syria Annual Cross-Border Operations Infographic 2023"
+      ]
+    },
+    "reliefweb": {
+      "response_page": "https://response.reliefweb.int/turkiye-cross-border"
+    }
+  }
+}

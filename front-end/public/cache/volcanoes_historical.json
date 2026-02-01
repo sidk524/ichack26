@@ -1,0 +1,437 @@
+{
+  "metadata": {
+    "title": "Historical Volcano Activity - Turkey/Mediterranean Region",
+    "description": "Volcano activity data for Turkey and Mediterranean region from December 2022 to February 2023",
+    "dateRange": {
+      "start": "2022-12-01",
+      "end": "2023-02-28"
+    },
+    "sources": [
+      {
+        "name": "NASA EONET",
+        "url": "https://eonet.gsfc.nasa.gov/api/v3/events",
+        "description": "Earth Observatory Natural Event Tracker"
+      },
+      {
+        "name": "Smithsonian GVP",
+        "url": "https://volcano.si.edu",
+        "description": "Global Volcanism Program - Smithsonian Institution"
+      }
+    ],
+    "generatedAt": "2026-02-01T00:00:00Z",
+    "region": {
+      "name": "Turkey/Mediterranean",
+      "bounds": {
+        "north": 50,
+        "south": 30,
+        "east": 50,
+        "west": 5
+      }
+    }
+  },
+  "mediterraneanVolcanoes": {
+    "activeInPeriod": [
+      {
+        "id": "EONET_6175",
+        "name": "Stromboli Volcano",
+        "country": "Italy",
+        "region": "Mediterranean/Aeolian Islands",
+        "coordinates": {
+          "latitude": 38.789,
+          "longitude": 15.213
+        },
+        "elevation": 926,
+        "volcanoNumber": "211040",
+        "status": "continuously_active",
+        "activityType": "Strombolian",
+        "dateRange": {
+          "start": "2022-08-07T00:00:00Z",
+          "end": null,
+          "ongoing": true
+        },
+        "activity": [
+          {
+            "period": "2022-12-02 to 2022-12-08",
+            "description": "Strombolian activity from four vents in Area N and three vents in Area C-S",
+            "intensity": "medium"
+          },
+          {
+            "period": "2022-12-04",
+            "description": "Lava flow observed in upper Sciara del Fuoco at 14:10 UTC, followed by additional flow at 14:28 UTC",
+            "intensity": "high",
+            "type": "lava_flow"
+          },
+          {
+            "period": "2022-12-08 to 2022-12-14",
+            "description": "Continued Strombolian activity with lava flows on 4-8 December, intense spattering on December 14",
+            "intensity": "high"
+          },
+          {
+            "period": "2022-12-16",
+            "description": "Lava flow began at 12:08 UTC after intense spattering in N crater area",
+            "intensity": "high",
+            "type": "lava_flow"
+          },
+          {
+            "period": "2022-12-19",
+            "description": "Lava flow at 08:42 UTC from N crater area vents",
+            "intensity": "medium",
+            "type": "lava_flow"
+          },
+          {
+            "period": "2022-12-21",
+            "description": "Lava flow at 14:47 UTC spreading along central Sciara del Fuoco",
+            "intensity": "medium",
+            "type": "lava_flow"
+          },
+          {
+            "period": "2022-12-23 to 2022-12-29",
+            "description": "Continued Strombolian activity from four vents in Area N and at least three vents in Area C-S",
+            "intensity": "medium"
+          },
+          {
+            "period": "2022-12-24 to 2022-12-26",
+            "description": "Three phases of intense spattering and lava overflows at vent N2",
+            "intensity": "high",
+            "type": "lava_overflow"
+          },
+          {
+            "period": "2022-12-26 to 2022-12-28",
+            "description": "Major lava flow traveled to 400m elevation, fed mainly by N1 vent, ended 08:30 UTC Dec 28",
+            "intensity": "high",
+            "type": "lava_flow"
+          },
+          {
+            "period": "2023-01-24",
+            "description": "Lava overflow from vents in northern crater area at 14:19 UTC, preceded by intense spattering",
+            "intensity": "high",
+            "type": "lava_overflow"
+          },
+          {
+            "period": "2023-01-27 to 2023-02-02",
+            "description": "Continued Strombolian activity from four vents in Area N and two vents in Area C-S",
+            "intensity": "medium"
+          },
+          {
+            "period": "2023-02-02 to 2023-02-11",
+            "description": "Strombolian activity from two vents in Area N and one vent at S2 in Area C-S",
+            "intensity": "low-medium"
+          },
+          {
+            "period": "2023-02-16",
+            "description": "Explosive sequence at 17:17:29 UTC with lava fountaining from S2 and C sectors, products exceeded 300m height",
+            "intensity": "high",
+            "type": "explosive_sequence"
+          },
+          {
+            "period": "2023-02-17 to 2023-02-23",
+            "description": "Normal Strombolian activity with spattering, total hourly frequency 8-13 events/h",
+            "intensity": "medium"
+          }
+        ],
+        "alertLevel": "Yellow",
+        "source": {
+          "primary": "INGV - Sezione di Catania/Osservatorio Etneo",
+          "secondary": "Smithsonian GVP"
+        }
+      },
+      {
+        "id": "EONET_6305",
+        "name": "Etna Volcano",
+        "country": "Italy",
+        "region": "Mediterranean/Sicily",
+        "coordinates": {
+          "latitude": 37.748,
+          "longitude": 14.999
+        },
+        "elevation": 3357,
+        "volcanoNumber": "211060",
+        "status": "active",
+        "activityType": "Strombolian/Effusive",
+        "dateRange": {
+          "start": "2022-11-27T00:00:00Z",
+          "end": "2023-02-11T00:00:00Z",
+          "ongoing": false
+        },
+        "activity": [
+          {
+            "period": "2022-11-27 to 2023-02-11",
+            "description": "Activity at Southeast Crater (SEC) with Strombolian activity and occasional ash emissions",
+            "intensity": "medium"
+          },
+          {
+            "period": "2022-12-21 to 2022-12-27",
+            "description": "Emissions at Bocca Nuova Crater consisting mainly of gas with occasional minor ash",
+            "intensity": "low"
+          },
+          {
+            "period": "2023-02-24",
+            "description": "Forceful ash emission from Northeast Crater drifted SSE at 13:38, diffuse ash emission at 16:42",
+            "intensity": "medium",
+            "type": "ash_emission"
+          }
+        ],
+        "alertLevel": "Normal",
+        "source": {
+          "primary": "INGV - Sezione di Catania/Osservatorio Etneo",
+          "secondary": "NASA EONET"
+        }
+      }
+    ],
+    "dormantVolcanoes": [
+      {
+        "name": "Nemrut Dagi",
+        "country": "Turkey",
+        "region": "Eastern Turkey",
+        "coordinates": {
+          "latitude": 38.65,
+          "longitude": 42.23
+        },
+        "elevation": 2948,
+        "volcanoNumber": "213020",
+        "status": "dormant",
+        "lastEruption": "1692",
+        "activityDuringPeriod": {
+          "seismic": "normal background levels",
+          "fumarolic": "ongoing fumarolic activity and hot springs in caldera",
+          "monitoring": "seismic network installed in 2003"
+        },
+        "notes": "Located near Lake Van, largest caldera in Turkey. No reported activity during Dec 2022 - Feb 2023.",
+        "source": "Smithsonian GVP"
+      },
+      {
+        "name": "Mount Ararat",
+        "country": "Turkey",
+        "region": "Eastern Turkey",
+        "coordinates": {
+          "latitude": 39.70,
+          "longitude": 44.28
+        },
+        "elevation": 5137,
+        "volcanoNumber": "213040",
+        "status": "dormant",
+        "lastEruption": "1840",
+        "activityDuringPeriod": {
+          "seismic": "normal background levels",
+          "status": "no reported activity"
+        },
+        "notes": "Turkey's highest peak. No reported volcanic activity during Dec 2022 - Feb 2023.",
+        "source": "Smithsonian GVP"
+      },
+      {
+        "name": "Erciyes Dagi",
+        "country": "Turkey",
+        "region": "Central Turkey",
+        "coordinates": {
+          "latitude": 38.52,
+          "longitude": 35.38
+        },
+        "elevation": 3916,
+        "volcanoNumber": "213010",
+        "status": "dormant",
+        "lastEruption": "253 BCE",
+        "activityDuringPeriod": {
+          "seismic": "normal background levels",
+          "status": "no reported activity"
+        },
+        "notes": "Major stratovolcano in central Anatolia. No volcanic activity during period.",
+        "source": "Smithsonian GVP"
+      },
+      {
+        "name": "Suphan Dagi",
+        "country": "Turkey",
+        "region": "Eastern Turkey",
+        "coordinates": {
+          "latitude": 38.92,
+          "longitude": 42.82
+        },
+        "elevation": 4158,
+        "volcanoNumber": "213030",
+        "status": "dormant",
+        "lastEruption": "Holocene",
+        "activityDuringPeriod": {
+          "status": "no reported activity"
+        },
+        "source": "Smithsonian GVP"
+      },
+      {
+        "name": "Tendurek Dagi",
+        "country": "Turkey",
+        "region": "Eastern Turkey",
+        "coordinates": {
+          "latitude": 39.33,
+          "longitude": 43.83
+        },
+        "elevation": 3584,
+        "volcanoNumber": "213050",
+        "status": "dormant",
+        "lastEruption": "1855",
+        "activityDuringPeriod": {
+          "status": "no reported activity"
+        },
+        "source": "Smithsonian GVP"
+      }
+    ]
+  },
+  "globalVolcanoEvents": {
+    "description": "Worldwide volcano events tracked by NASA EONET during December 2022 - February 2023",
+    "events": [
+      {
+        "id": "EONET_6331",
+        "name": "Ambae Volcano",
+        "country": "Vanuatu",
+        "coordinates": {
+          "latitude": -15.389,
+          "longitude": 167.835
+        },
+        "date": "2023-02-23T00:00:00Z",
+        "closed": "2023-05-04T00:00:00Z",
+        "volcanoNumber": "257030",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6325",
+        "name": "Epi Volcano",
+        "country": "Vanuatu",
+        "coordinates": {
+          "latitude": -16.68,
+          "longitude": 168.37
+        },
+        "date": "2023-01-31T00:00:00Z",
+        "closed": "2023-02-20T00:00:00Z",
+        "volcanoNumber": "257060",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6326",
+        "name": "Karangetang Volcano",
+        "country": "Indonesia",
+        "coordinates": {
+          "latitude": 2.781,
+          "longitude": 125.407
+        },
+        "date": "2023-01-31T00:00:00Z",
+        "closed": "2023-11-03T00:00:00Z",
+        "volcanoNumber": "267020",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6324",
+        "name": "Chikurachki Volcano",
+        "country": "Russia",
+        "coordinates": {
+          "latitude": 50.324,
+          "longitude": 155.461
+        },
+        "date": "2023-01-29T00:00:00Z",
+        "closed": "2023-02-20T00:00:00Z",
+        "volcanoNumber": "290360",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6319",
+        "name": "Lewotolok Volcano",
+        "country": "Indonesia",
+        "coordinates": {
+          "latitude": -8.272,
+          "longitude": 123.505
+        },
+        "date": "2023-01-14T00:00:00Z",
+        "closed": "2024-08-20T00:00:00Z",
+        "volcanoNumber": "264230",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6318",
+        "name": "Marapi Volcano",
+        "country": "Indonesia",
+        "coordinates": {
+          "latitude": -0.38,
+          "longitude": 100.474
+        },
+        "date": "2023-01-10T00:00:00Z",
+        "closed": "2023-02-27T00:00:00Z",
+        "volcanoNumber": "261140",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6314",
+        "name": "Barren Island Volcano",
+        "country": "India",
+        "coordinates": {
+          "latitude": 12.278,
+          "longitude": 93.858
+        },
+        "date": "2022-12-30T00:00:00Z",
+        "closed": "2023-02-13T00:00:00Z",
+        "volcanoNumber": "260010",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6315",
+        "name": "Semisopochnoi Volcano",
+        "country": "USA (Alaska)",
+        "coordinates": {
+          "latitude": 51.93,
+          "longitude": 179.58
+        },
+        "date": "2022-12-27T00:00:00Z",
+        "closed": "2023-01-12T00:00:00Z",
+        "volcanoNumber": "311060",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6312",
+        "name": "Lascar Volcano",
+        "country": "Chile",
+        "coordinates": {
+          "latitude": -23.37,
+          "longitude": -67.73
+        },
+        "date": "2022-12-10T00:00:00Z",
+        "closed": "2022-12-26T00:00:00Z",
+        "volcanoNumber": "355100",
+        "source": "NASA EONET"
+      },
+      {
+        "id": "EONET_6309",
+        "name": "Nevado del Ruiz Volcano",
+        "country": "Colombia",
+        "coordinates": {
+          "latitude": 4.892,
+          "longitude": -75.324
+        },
+        "date": "2022-12-03T13:02:00Z",
+        "closed": "2025-06-14T00:00:00Z",
+        "volcanoNumber": "351020",
+        "source": "NASA EONET"
+      }
+    ]
+  },
+  "summary": {
+    "totalVolcanoesInRegion": 7,
+    "activeVolcanoes": 2,
+    "dormantVolcanoes": 5,
+    "mediterraneanEvents": {
+      "stromboli": {
+        "lavaFlows": 8,
+        "explosiveEvents": 1,
+        "overflows": 3,
+        "activityLevel": "High - Continuous Strombolian activity with frequent lava flows"
+      },
+      "etna": {
+        "ashEmissions": 3,
+        "strombolianEvents": "intermittent",
+        "activityLevel": "Medium - Periodic activity at summit craters"
+      }
+    },
+    "turkeyStatus": "No volcanic eruptions in Turkey during this period. All Turkish volcanoes remained dormant.",
+    "globalEventsCount": 10,
+    "notes": [
+      "Stromboli maintained continuous activity throughout Dec 2022 - Feb 2023 with multiple lava flows",
+      "Etna showed intermittent activity at summit craters with ash emissions",
+      "Turkish volcanoes (Nemrut, Ararat, Erciyes, Suphan, Tendurek) showed no significant activity",
+      "February 2023 Turkey-Syria earthquakes occurred in the region but were tectonic, not volcanic"
+    ]
+  }
+}

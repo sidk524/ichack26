@@ -70,7 +70,7 @@ export default function EmergencyPage() {
         </Card>
 
         {/* Call Button - on top of the map */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
           <CallButton onClick={() => setCallOpen(true)} />
         </div>
       </div>

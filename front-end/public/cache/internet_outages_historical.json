@@ -1,0 +1,385 @@
+{
+  "metadata": {
+    "country": "Turkey",
+    "country_code": "TR",
+    "period": {
+      "start": "2022-12-01",
+      "end": "2023-02-28"
+    },
+    "data_sources": [
+      {
+        "name": "RIPE Atlas",
+        "description": "RIPE NCC internet measurement network with distributed probes",
+        "url": "https://atlas.ripe.net"
+      },
+      {
+        "name": "IODA",
+        "description": "Internet Outage Detection and Analysis by Georgia Tech",
+        "url": "https://ioda.inetintel.cc.gatech.edu"
+      },
+      {
+        "name": "Cloudflare Radar",
+        "description": "Global internet traffic and outage monitoring",
+        "url": "https://radar.cloudflare.com"
+      },
+      {
+        "name": "NetBlocks",
+        "description": "Network probe analytics and real-time connectivity monitoring",
+        "url": "https://netblocks.org"
+      }
+    ],
+    "generated_at": "2026-02-01T00:00:00Z"
+  },
+  "infrastructure_baseline": {
+    "major_operators": [
+      {
+        "name": "Turk Telekom",
+        "asn": "AS9121",
+        "type": "incumbent",
+        "market_share": "largest"
+      },
+      {
+        "name": "Turkcell Superonline",
+        "asn": "AS34984",
+        "type": "mobile_operator",
+        "market_share": "major"
+      },
+      {
+        "name": "Vodafone Net",
+        "asn": "AS15924",
+        "type": "mobile_operator",
+        "market_share": "major"
+      }
+    ],
+    "network_statistics": {
+      "ipv4_utilization_percent": 93.8,
+      "ipv6_utilization_percent": 21.3,
+      "single_homed_networks_percent": 64,
+      "comparison_notes": "Single-homed rate higher than European peers (Czechia: 40%, Poland: 24%)"
+    }
+  },
+  "outages": [
+    {
+      "id": "TR-2022-11-13-TAKSIM",
+      "type": "government_restriction",
+      "event_name": "Taksim Explosion Social Media Restriction",
+      "trigger_event": "Istiklal Street bombing in Taksim district",
+      "start_time": "2022-11-13T17:00:00+03:00",
+      "end_time": "2022-11-14T03:00:00+03:00",
+      "duration_hours": 10,
+      "severity": "moderate",
+      "affected_services": [
+        "Twitter",
+        "Instagram",
+        "YouTube",
+        "Facebook",
+        "Telegram"
+      ],
+      "affected_providers": [
+        "Turk Telekom",
+        "Other major ISPs"
+      ],
+      "geographic_scope": "nationwide",
+      "restriction_method": "bandwidth_throttling",
+      "legal_basis": "Article 60 of Electronic Communications Act",
+      "authority": "BTK (Information and Communication Technologies Authority)",
+      "notes": "Restrictions implemented following deadly explosion that killed 6 and injured 80+"
+    },
+    {
+      "id": "TR-2022-12-BASELINE",
+      "type": "baseline_period",
+      "event_name": "December 2022 Baseline",
+      "start_time": "2022-12-01T00:00:00+03:00",
+      "end_time": "2022-12-31T23:59:59+03:00",
+      "severity": "none",
+      "notes": "Relatively stable period with normal seasonal traffic variations. No significant outages recorded. This baseline data proved invaluable for measuring February 2023 earthquake impacts."
+    },
+    {
+      "id": "TR-2023-02-06-EQ1",
+      "type": "infrastructure_failure",
+      "event_name": "Kahramanmaras Earthquake - First Event",
+      "trigger_event": "Magnitude 7.8 earthquake",
+      "epicenter": {
+        "location": "Gaziantep, Kahramanmaras Province",
+        "latitude": 37.174,
+        "longitude": 37.032
+      },
+      "start_time": "2023-02-06T04:17:00+03:00",
+      "severity": "catastrophic",
+      "affected_provinces": [
+        {
+          "name": "Kahramanmaras",
+          "traffic_drop_percent": 94,
+          "notes": "Near-total connectivity collapse"
+        },
+        {
+          "name": "Gaziantep",
+          "traffic_drop_percent": 57,
+          "notes": "Epicenter of first earthquake"
+        },
+        {
+          "name": "Osmaniye",
+          "traffic_drop_percent": 88
+        },
+        {
+          "name": "Hatay",
+          "traffic_drop_percent": 76,
+          "notes": "Particularly difficult road access delayed restoration"
+        },
+        {
+          "name": "Kilis",
+          "traffic_drop_percent": 63
+        },
+        {
+          "name": "Sanliurfa",
+          "traffic_drop_percent": 50
+        },
+        {
+          "name": "Adiyaman",
+          "traffic_drop_percent": 50
+        },
+        {
+          "name": "Diyarbakir",
+          "traffic_drop_percent": 50
+        },
+        {
+          "name": "Malatya",
+          "traffic_drop_percent": 50
+        },
+        {
+          "name": "Adana",
+          "traffic_drop_percent": 50
+        }
+      ],
+      "infrastructure_damage": {
+        "base_stations_destroyed": true,
+        "fiber_optic_cables_severed": true,
+        "power_outages": true,
+        "turkcell_base_stations_affected_percent": 50,
+        "road_damage_impeded_repairs": true
+      },
+      "recovery_timeline": {
+        "day_1": "Standard communications non-functional",
+        "day_2_3": "Limited functionality returning in some cities",
+        "day_3_4": "Mobile communication vans reaching affected areas",
+        "week_1": "Hatay Province still experiencing communication problems",
+        "month_1": "Traffic largely recovered in most regions",
+        "notes": "Some areas never fully recovered due to population displacement"
+      },
+      "operator_response": {
+        "turkcell": {
+          "portable_base_stations_deployed": 250,
+          "satellite_vehicles_deployed": true,
+          "teams_mobilized": true
+        },
+        "turk_telekom": {
+          "base_stations_dispatched": true,
+          "search_rescue_team_size": 105
+        }
+      },
+      "notes": "Strongest earthquake to hit Turkey since 1939. Combined death toll exceeded 50,000."
+    },
+    {
+      "id": "TR-2023-02-06-EQ2",
+      "type": "infrastructure_failure",
+      "event_name": "Kahramanmaras Earthquake - Second Event",
+      "trigger_event": "Magnitude 7.5 earthquake",
+      "epicenter": {
+        "location": "Elbistan",
+        "latitude": 38.089,
+        "longitude": 37.239,
+        "distance_from_first_km": 100
+      },
+      "start_time": "2023-02-06T13:24:00+03:00",
+      "severity": "catastrophic",
+      "notes": "Occurred approximately 9 hours after first earthquake, compounding infrastructure damage"
+    },
+    {
+      "id": "TR-2023-02-08-TWITTER",
+      "type": "government_restriction",
+      "event_name": "Post-Earthquake Twitter/TikTok Restriction",
+      "start_time": "2023-02-08T16:37:00+03:00",
+      "end_time": "2023-02-09T03:44:00+03:00",
+      "duration_hours": 11.12,
+      "duration_minutes": 667,
+      "severity": "moderate",
+      "affected_services": [
+        "Twitter",
+        "TikTok"
+      ],
+      "restriction_method": "bandwidth_throttling",
+      "legal_basis": "Article 60(17) of Electronic Communications Law",
+      "authority": "BTK (Information and Communication Technologies Authority)",
+      "stated_justification": "Concerns about disinformation and press ethics violations",
+      "criticism": [
+        "Implemented during critical 72-hour rescue window",
+        "Disrupted emergency coordination efforts",
+        "Prevented families from locating loved ones",
+        "Volunteer software developers unable to coordinate aid",
+        "Human rights organizations condemned as arbitrary censorship"
+      ],
+      "notes": "Restrictions occurred 2 days after earthquakes during active rescue operations"
+    }
+  ],
+  "aftershocks": {
+    "count": 33591,
+    "period": "3 months following main earthquakes",
+    "affected_area": {
+      "width_km": 450,
+      "height_km": 300
+    }
+  },
+  "population_impact": {
+    "affected_population_millions": 13.5,
+    "death_toll": 50000,
+    "injured": 193000,
+    "provinces_directly_affected": 10
+  },
+  "data_points": {
+    "ripe_atlas": {
+      "measurement_types": [
+        "latency",
+        "packet_loss",
+        "routing_patterns",
+        "round_trip_time"
+      ],
+      "probe_distribution": "Various locations throughout Turkey",
+      "report_url": "https://labs.ripe.net/media/documents/RIPE_NCC_Country_Report_2023_Turkiye.pdf"
+    },
+    "ioda": {
+      "measurement_types": [
+        "BGP_routing_withdrawals",
+        "network_telescope_observations"
+      ],
+      "url": "https://ioda.inetintel.cc.gatech.edu/country/TR"
+    },
+    "cloudflare_radar": {
+      "measurement_types": [
+        "traffic_volume",
+        "traffic_drops",
+        "outage_detection"
+      ],
+      "reports": [
+        "https://blog.cloudflare.com/q1-2023-internet-disruption-summary/",
+        "https://blog.cloudflare.com/radar-2023-year-in-review/"
+      ]
+    },
+    "netblocks": {
+      "measurement_types": [
+        "real_time_connectivity",
+        "ISP_filtering_detection",
+        "latency_round_trip_time"
+      ],
+      "reports": [
+        "https://netblocks.org/reports/twitter-restricted-in-turkey-in-aftermath-of-earthquake-oy9LJ9B3",
+        "https://netblocks.org/reports/eastern-turkey-earthquake-knocks-out-telecommunication-networks-gBLRMp84"
+      ]
+    }
+  },
+  "traffic_timeline": [
+    {
+      "date": "2022-12-01",
+      "status": "normal",
+      "notes": "Baseline period"
+    },
+    {
+      "date": "2022-12-31",
+      "status": "normal",
+      "notes": "End of baseline period"
+    },
+    {
+      "date": "2023-02-06",
+      "time": "04:17",
+      "status": "catastrophic_outage",
+      "event": "First earthquake M7.8",
+      "traffic_impact": "Immediate drops across affected provinces"
+    },
+    {
+      "date": "2023-02-06",
+      "time": "13:24",
+      "status": "compounded_outage",
+      "event": "Second earthquake M7.5",
+      "traffic_impact": "Further degradation, Kahramanmaras at 94% drop"
+    },
+    {
+      "date": "2023-02-07",
+      "status": "severe_outage",
+      "notes": "27 city centers without power"
+    },
+    {
+      "date": "2023-02-08",
+      "time": "16:37",
+      "status": "government_restriction_added",
+      "event": "Twitter/TikTok throttling begins"
+    },
+    {
+      "date": "2023-02-09",
+      "time": "03:44",
+      "status": "restriction_lifted",
+      "event": "Twitter/TikTok throttling ends"
+    },
+    {
+      "date": "2023-02-09",
+      "status": "partial_recovery",
+      "notes": "Mobile communications vans reaching some areas"
+    },
+    {
+      "date": "2023-02-13",
+      "status": "ongoing_recovery",
+      "notes": "Hatay Province still experiencing issues"
+    },
+    {
+      "date": "2023-03-06",
+      "status": "mostly_recovered",
+      "notes": "One month post-earthquake, most regions recovered but some areas still below baseline"
+    }
+  ],
+  "legal_framework": {
+    "primary_law": "Law No. 5809 - Electronic Communications Act (ECA)",
+    "restriction_provisions": [
+      {
+        "article": "60(10)",
+        "added_by": "Decree Law No. KHK/671 (post-2016 coup attempt)",
+        "description": "President determines precautions in exigent circumstances",
+        "oversight": "None specified"
+      },
+      {
+        "article": "60(16)",
+        "added_by": "Law No. 7418 (October 18, 2022)",
+        "description": "Administrative fines for non-compliance: 1-30 million TRY"
+      },
+      {
+        "article": "60(17)",
+        "added_by": "Law No. 7418 (October 18, 2022)",
+        "description": "Bandwidth reduction up to 95% for continued non-compliance"
+      }
+    ],
+    "internet_law": {
+      "name": "Law No. 5651",
+      "additional_provision": "4(5)(b)",
+      "description": "Traffic limitation up to 90% for non-compliance with government access requests"
+    }
+  },
+  "vulnerabilities_identified": [
+    {
+      "type": "market_concentration",
+      "description": "Three operators control majority of infrastructure",
+      "risk": "Single point of failure affects entire nation"
+    },
+    {
+      "type": "lack_of_redundancy",
+      "description": "64% of networks single-homed with no backup connections",
+      "risk": "No alternative paths when primary provider fails"
+    },
+    {
+      "type": "physical_infrastructure_concentration",
+      "description": "Telecommunications equipment concentrated at specific physical locations",
+      "risk": "Damage to individual facilities eliminates service across wide areas"
+    },
+    {
+      "type": "broad_government_authority",
+      "description": "Legal framework provides extraordinarily broad discretionary power for restrictions",
+      "risk": "Internet shutdowns can be imposed with minimal oversight"
+    }
+  ]
+}

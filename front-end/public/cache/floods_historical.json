@@ -1,0 +1,129 @@
+{
+  "metadata": {
+    "source": "FloodList, GDACS, Turkish Government Reports",
+    "date_range": {
+      "start": "2022-12-01",
+      "end": "2023-02-06"
+    },
+    "description": "Flood events in Turkey 1-2 months before the February 6, 2023 earthquake",
+    "fetched_at": "2026-02-01T06:30:00.000Z",
+    "total_events": 3,
+    "notes": [
+      "Data sourced from FloodList archives and Turkish government reports",
+      "NASA EONET had data gap for 2019-2024, so alternative sources used",
+      "December 2022 Antalya floods were the most significant events in this period"
+    ]
+  },
+  "events": [
+    {
+      "id": "flood-antalya-dec-2022-1",
+      "type": "flood",
+      "title": "Severe Flooding in Finike District, Antalya Province",
+      "coordinates": [30.144497, 36.300827],
+      "severity": 4,
+      "timestamp": "2022-12-12T00:00:00.000Z",
+      "source": "FloodList / Turkish Government",
+      "category": "flash_flood",
+      "details": {
+        "province": "Antalya",
+        "district": "Finike",
+        "country": "Turkey",
+        "precipitation_mm": 253.8,
+        "precipitation_period": "24 hours",
+        "date_start": "2022-12-11",
+        "date_end": "2022-12-12",
+        "damage": {
+          "vehicles_damaged": 497,
+          "houses_damaged": 100,
+          "commercial_premises_damaged": 920,
+          "agricultural_land_hectares": 1200,
+          "emergency_calls": 440
+        },
+        "infrastructure": {
+          "schools_closed": true,
+          "bridge_collapsed": false
+        },
+        "description": "Extreme rainfall caused severe flash flooding in Finike district. 253.8mm of rain fell in 24 hours, the worst flooding in the region in decades.",
+        "news_url": "https://floodlist.com/asia/turkey-floods-antalya-december-2022"
+      }
+    },
+    {
+      "id": "flood-antalya-dec-2022-2",
+      "type": "flood",
+      "title": "Severe Flooding in Kumluca District, Antalya Province",
+      "coordinates": [30.286616, 36.371025],
+      "severity": 4,
+      "timestamp": "2022-12-12T00:00:00.000Z",
+      "source": "FloodList / Turkish Government",
+      "category": "flash_flood",
+      "details": {
+        "province": "Antalya",
+        "district": "Kumluca",
+        "country": "Turkey",
+        "precipitation_mm": 207.8,
+        "precipitation_period": "24 hours",
+        "date_start": "2022-12-11",
+        "date_end": "2022-12-12",
+        "damage": {
+          "vehicles_swept_away": true,
+          "bridge_collapsed": true,
+          "bridge_location": "Between Ortaköy and Toptaş villages"
+        },
+        "infrastructure": {
+          "transport_disrupted": true
+        },
+        "historical_context": "Worst flooding in Kumluca in 50 years",
+        "description": "Severe flash flooding with bridge collapse. Multiple vehicles swept away by floodwaters. 207.8mm of rain in 24 hours.",
+        "news_url": "https://floodlist.com/asia/turkey-floods-antalya-december-2022"
+      }
+    },
+    {
+      "id": "flood-antalya-nov-2022",
+      "type": "flood",
+      "title": "Heavy Rainfall Flooding in Finike and Kaş Districts",
+      "coordinates": [29.640, 36.200],
+      "severity": 3,
+      "timestamp": "2022-11-29T00:00:00.000Z",
+      "source": "FloodList / Turkish State Meteorological Service",
+      "category": "flash_flood",
+      "details": {
+        "province": "Antalya",
+        "districts": ["Finike", "Kaş"],
+        "country": "Turkey",
+        "precipitation": {
+          "finike_mm": 116.5,
+          "kas_mm": 117.4
+        },
+        "precipitation_period": "24 hours",
+        "date_start": "2022-11-29",
+        "date_end": "2022-11-30",
+        "description": "Precursor flooding event that saturated soils before the December 11-12 major flooding. This compound precipitation elevated flood hazards.",
+        "related_event": "flood-antalya-dec-2022-1"
+      }
+    }
+  ],
+  "affected_areas": [
+    {
+      "name": "Finike",
+      "province": "Antalya",
+      "coordinates": [30.144497, 36.300827],
+      "population_estimate": 45000,
+      "economy": "Agriculture (citrus, vegetables), Tourism"
+    },
+    {
+      "name": "Kumluca",
+      "province": "Antalya",
+      "coordinates": [30.286616, 36.371025],
+      "population_estimate": 65000,
+      "economy": "Agriculture, Tourism"
+    },
+    {
+      "name": "Kaş",
+      "province": "Antalya",
+      "coordinates": [29.640, 36.200],
+      "population_estimate": 55000,
+      "economy": "Tourism, Agriculture"
+    }
+  ],
+  "note": "No significant flooding documented in Turkey between January 1, 2023 and February 5, 2023. The major post-earthquake flooding occurred March 15, 2023 in Şanlıurfa and Adıyaman provinces (outside this date range)."
+}
