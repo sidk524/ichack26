@@ -55,6 +55,7 @@ def register_data_routes(app: web.Application):
 
     # Hospitals
     app.router.add_get("/api/hospitals", get_hospitals_handler)
+    app.router.add_post("/api/hospitals/nearest", find_nearest_hospital_handler)
 
     # Danger Zones
     app.router.add_get("/api/danger-zones", get_danger_zones_handler)
@@ -177,6 +178,32 @@ async def get_sensors_handler(request: web.Request) -> web.Response:
 
 # === Hospital Endpoints ===
 
+def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """
+    Calculate the distance between two points using Haversine formula.
+    Returns distance in kilometers.
+    """
+    import math
+
+    # Convert to radians
+    lat1_rad = math.radians(lat1)
+    lat2_rad = math.radians(lat2)
+    delta_lat = math.radians(lat2 - lat1)
+    delta_lon = math.radians(lon2 - lon1)
+
+    # Haversine formula
+    a = (math.sin(delta_lat / 2) ** 2 +
+         math.cos(lat1_rad) * math.cos(lat2_rad) *
+         math.sin(delta_lon / 2) ** 2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # Earth's radius in kilometers
+    R = 6371.0
+    distance = R * c
+
+    return distance
+
+
 async def get_hospitals_handler(request: web.Request) -> web.Response:
     """GET /api/hospitals - Retrieve all hospitals with capacity info."""
     try:
@@ -184,6 +211,78 @@ async def get_hospitals_handler(request: web.Request) -> web.Response:
         return web.json_response({"ok": True, "hospitals": hospitals})
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+async def find_nearest_hospital_handler(request: web.Request) -> web.Response:
+    """
+    POST /api/hospitals/nearest - Find the nearest hospital to a given location.
+
+    Request body:
+    {
+        "lat": 37.0662,
+        "lon": 37.3833
+    }
+    """
+    try:
+        data = await request.json()
+
+        # Validate required fields
+        if 'lat' not in data or 'lon' not in data:
+            return web.json_response({
+                "ok": False,
+                "error": "Missing required fields: lat, lon"
+            }, status=400)
+
+        user_lat = float(data['lat'])
+        user_lon = float(data['lon'])
+
+        # Get all hospitals
+        hospitals = await list_hospitals()
+
+        if not hospitals:
+            return web.json_response({
+                "ok": False,
+                "error": "No hospitals found in database"
+            }, status=404)
+
+        # Find nearest hospital
+        nearest_hospital = None
+        min_distance = float('inf')
+
+        for hospital in hospitals:
+            distance = calculate_distance(
+                user_lat, user_lon,
+                hospital['lat'], hospital['lon']
+            )
+            if distance < min_distance:
+                min_distance = distance
+                nearest_hospital = hospital
+
+        # Add distance to the response
+        if nearest_hospital:
+            nearest_hospital['distance_km'] = round(min_distance, 2)
+
+            return web.json_response({
+                "ok": True,
+                "hospital": nearest_hospital,
+                "distance_km": round(min_distance, 2)
+            })
+        else:
+            return web.json_response({
+                "ok": False,
+                "error": "Unable to find nearest hospital"
+            }, status=500)
+
+    except ValueError as e:
+        return web.json_response({
+            "ok": False,
+            "error": f"Invalid input: {str(e)}"
+        }, status=400)
+    except Exception as e:
+        return web.json_response({
+            "ok": False,
+            "error": str(e)
+        }, status=500)
 
 
 # === Danger Zone Endpoints ===

@@ -417,6 +417,89 @@ curl http://localhost:8080/api/hospitals
 
 ---
 
+### Find Nearest Hospital
+**Endpoint:** `POST /api/hospitals/nearest`
+
+**Description:** Finds the nearest hospital to a given location using Haversine distance calculation. Returns the hospital details along with the distance from the specified location.
+
+**Usage:**
+```bash
+curl -X POST http://localhost:8080/api/hospitals/nearest \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "lat": 37.0662,
+    "lon": 37.3833
+  }'
+```
+
+**Request Body:**
+```json
+{
+  "lat": 37.0662,
+  "lon": 37.3833
+}
+```
+
+**Field Descriptions:**
+- `lat`: Latitude of the location to search from (required)
+- `lon`: Longitude of the location to search from (required)
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "hospital": {
+    "hospital_id": "h1a2b3c4",
+    "name": "Gaziantep Üniversitesi Hastanesi",
+    "lat": 37.0662,
+    "lon": 37.3833,
+    "total_beds": 663,
+    "available_beds": 88,
+    "icu_beds": 66,
+    "available_icu": 12,
+    "er_beds": 99,
+    "available_er": 20,
+    "pediatric_beds": 132,
+    "available_pediatric": 28,
+    "contact_phone": "+90 342 360 6060",
+    "last_updated": 1234567890.123,
+    "distance_km": 0.0
+  },
+  "distance_km": 0.0
+}
+```
+
+**Additional Response Fields:**
+- `distance_km`: Distance from the requested location to the hospital in kilometers (calculated using Haversine formula)
+
+**Error Responses:**
+
+Missing required fields:
+```json
+{
+  "ok": false,
+  "error": "Missing required fields: lat, lon"
+}
+```
+
+No hospitals in database:
+```json
+{
+  "ok": false,
+  "error": "No hospitals found in database"
+}
+```
+
+Invalid coordinates:
+```json
+{
+  "ok": false,
+  "error": "Invalid input: could not convert string to float: 'invalid'"
+}
+```
+
+---
+
 ## Danger Zone Endpoints
 
 ### Get All Danger Zones

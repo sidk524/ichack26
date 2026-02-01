@@ -46,6 +46,12 @@ REAL_HOSPITALS = [
 
     # Gaziantep (earthquake region)
     {"name": "Gaziantep Üniversitesi Hastanesi", "lat": 37.0662, "lon": 37.3833, "phone": "+90 342 360 6060"},
+
+    # London - Near Imperial College (South Kensington)
+    {"name": "Chelsea and Westminster Hospital", "lat": 51.4843, "lon": -0.1819, "phone": "+44 20 3315 8000"},
+    {"name": "St Mary's Hospital Paddington", "lat": 51.5174, "lon": -0.1744, "phone": "+44 20 3312 6666"},
+    {"name": "Royal Brompton Hospital", "lat": 51.4899, "lon": -0.1707, "phone": "+44 20 7352 8121"},
+    {"name": "Charing Cross Hospital", "lat": 51.4867, "lon": -0.2194, "phone": "+44 20 3311 1234"},
 ]
 
 # Sample danger zones for Turkey
