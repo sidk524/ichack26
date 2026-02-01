@@ -1,0 +1,47 @@
+# Schema
+
+## Database Tables
+
+```
+user = {
+  user_id: string
+  role: "civilian" | "first_responder"
+
+  location_history: [{lat, lon, timestamp, accuracy}]
+
+  calls: [{
+    call_id: string
+    transcript: string
+    start_time: timestamp
+    end_time: timestamp
+  }]
+}
+
+news_article = {
+  article_id: string
+  link: string
+  title: string
+  pub_date: string
+  disaster: boolean
+  location_name: string
+  lat: float | null
+  lon: float | null
+  received_at: timestamp
+}
+
+sensor_reading = {
+  reading_id: string
+  status: int
+  temperature: float
+  humidity: float
+  accel_x: float
+  accel_y: float
+  accel_z: float
+  gyro_x: float
+  gyro_y: float
+  gyro_z: float
+  mic_amplitude: float
+  mic_frequency: float
+  received_at: timestamp
+}
+```

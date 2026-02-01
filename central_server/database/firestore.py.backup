@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+from google.cloud import firestore
+from .db import User, Call, LocationPoint, NewsArticle
+
+db = firestore.AsyncClient(project="ichack-server-1")
+ 
+COLLECTIONS = ["users", "news_articles"]
+
+ 
+async def wipe_collection(collection_name: str):
+    """Delete all documents in a collection."""
+    docs = db.collection(collection_name).stream()
+    async for doc in docs:
+        await doc.reference.delete()
+
+
+async def init_db():
+    """Wipe database clean on server start and create fresh collections."""
+    for collection in COLLECTIONS:
+        await wipe_collection(collection)
+
+    # Create collections with a _schema doc (Firestore collections only exist with documents)
+    await db.collection("users").document("_schema").set({
+        "_type": "schema",
+        "fields": ["user_id", "role", "location_history", "calls"]
+    })
+    await db.collection("news_articles").document("_schema").set({
+        "_type": "schema",
+        "fields": ["article_id", "link", "title", "description", "lat", "lon", "received_at"]
+    })
+
+    print("Database wiped and collections created")
+
+
+# --- Users ---
+
+async def ensure_user_exists(user_id: str, role: str = "civilian") -> None:
+    """Create user if they don't exist."""
+    doc = await db.collection("users").document(user_id).get()
+    if not doc.exists:
+        await db.collection("users").document(user_id).set({
+            "user_id": user_id,
+            "role": role,
+            "location_history": [],
+            "calls": [],
+        })
+
+
+async def save_user(user: User) -> None:
+    await db.collection("users").document(user.user_id).set({
+        "user_id": user.user_id,
+        "role": user.role,
+        "location_history": [{"lat": lp.lat, "lon": lp.lon, "timestamp": lp.timestamp, "accuracy": lp.accuracy} for lp in user.location_history],
+        "calls": [{"call_id": c.call_id, "transcript": c.transcript, "start_time": c.start_time, "end_time": c.end_time} for c in user.calls],
+    })
+
+
+async def get_user(user_id: str) -> User | None:
+    doc = await db.collection("users").document(user_id).get()
+    if not doc.exists:
+        return None
+    data = doc.to_dict()
+    return User(
+        user_id=data["user_id"],
+        role=data["role"],
+        location_history=[LocationPoint(**lp) for lp in data["location_history"]],
+        calls=[Call(**c) for c in data["calls"]],
+    )
+
+
+async def append_location(user_id: str, location: LocationPoint) -> None:
+    await db.collection("users").document(user_id).update({
+        "location_history": firestore.ArrayUnion([{"lat": location.lat, "lon": location.lon, "timestamp": location.timestamp, "accuracy": location.accuracy}])
+    })
+
+
+async def append_call(user_id: str, call: Call) -> None:
+    await db.collection("users").document(user_id).update({
+        "calls": firestore.ArrayUnion([{"call_id": call.call_id, "transcript": call.transcript, "start_time": call.start_time, "end_time": call.end_time}])
+    })
+
+
+async def list_users() -> list[dict]:
+    """List all users directly from Firestore as raw dicts."""
+    users = []
+    docs = db.collection("users").stream()
+    async for doc in docs:
+        if doc.id != "_schema":
+            users.append(doc.to_dict())
+    return users
+
+
+# --- News ---
+
+async def save_news(article: NewsArticle) -> None:
+    await db.collection("news_articles").document(article.article_id).set({
+        "article_id": article.article_id,
+        "link": article.link,
+        "title": article.title,
+        "description": article.description,
+        "lat": article.lat,
+        "lon": article.lon,
+        "received_at": article.received_at,
+    })
+
+
+async def get_news(article_id: str) -> NewsArticle | None:
+    doc = await db.collection("news_articles").document(article_id).get()
+    if not doc.exists:
+        return None
+    return NewsArticle(**doc.to_dict())
+
+
+async def list_news() -> list[dict]:
+    """List all news articles directly from Firestore as raw dicts."""
+    articles = []
+    docs = db.collection("news_articles").stream()
+    async for doc in docs:
+        if doc.id != "_schema":
+            articles.append(doc.to_dict())
+    return articles  
