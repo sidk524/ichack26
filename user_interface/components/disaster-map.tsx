@@ -1,15 +1,16 @@
 "use client"
 
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState, useCallback, useImperativeHandle, forwardRef } from "react"
 import mapboxgl from "mapbox-gl"
 import * as THREE from "three"
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
-import { cn } from "@/lib/utils"
+import { cn, findNearestHospital } from "@/lib/utils"
 import { backendApi } from "@/lib/backend-api"
 import { api } from "@/lib/api"
 import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent } from "@/hooks/use-dashboard-updates"
 import type { BackendNewsArticle, BackendDangerZone } from "@/types/backend"
 import type { Hospital } from "@/types/api"
+import type { PendingCallData } from "@/components/incident-feed"
 
 interface IncidentData {
   id: string
@@ -43,6 +44,10 @@ interface DisasterMapProps {
   autoFetchNews?: boolean
   showDangerZones?: boolean
   showHospitals?: boolean
+}
+
+export interface DisasterMapHandle {
+  dispatchToCall: (callData: PendingCallData) => Promise<void>
 }
 
 // Transform news article to incident data for the map
@@ -544,7 +549,10 @@ async function returnVehicleToBase(
   console.log(`[Dispatch] ${vehicle.id} returning to base`)
 }
 
-export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true, showDangerZones = false, showHospitals = false }: DisasterMapProps) {
+export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(function DisasterMap(
+  { incidents: propIncidents, className, showVehicles = true, autoFetchNews = true, showDangerZones = false, showHospitals = false },
+  ref
+) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
   const vehiclesRef = useRef<VehicleData[]>([])
@@ -555,6 +563,198 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
   const [dangerZones, setDangerZones] = useState<BackendDangerZone[]>([])
   const [hospitals, setHospitals] = useState<Hospital[]>([])
   const [isLoading, setIsLoading] = useState(autoFetchNews)
+
+  // Dispatch ambulance from nearest hospital to caller location
+  const dispatchToCall = useCallback(
+    async (callData: PendingCallData): Promise<void> => {
+      if (!map.current) {
+        console.error("[Dispatch] Map not initialized")
+        return
+      }
+
+      const callerCoords: [number, number] = [
+        callData.coordinates.lon,
+        callData.coordinates.lat,
+      ]
+
+      // Find nearest hospital using backend API, fallback to frontend calculation
+      let hospitalCoords: [number, number]
+      let hospitalName: string
+
+      try {
+        // Try backend API first
+        const nearestResponse = await backendApi.hospitals.findNearest(
+          callData.coordinates.lat,
+          callData.coordinates.lon
+        )
+        hospitalCoords = [nearestResponse.hospital.lon, nearestResponse.hospital.lat]
+        hospitalName = nearestResponse.hospital.name
+        console.log(
+          `[Dispatch] Backend found nearest hospital: ${hospitalName} (${nearestResponse.distance_km.toFixed(2)} km)`
+        )
+      } catch (error) {
+        console.warn("[Dispatch] Backend API failed, using frontend calculation:", error)
+        // Fallback to frontend calculation
+        const nearestHospital = findNearestHospital(
+          callData.coordinates.lat,
+          callData.coordinates.lon,
+          hospitals
+        )
+
+        if (!nearestHospital?.coordinates) {
+          console.error("[Dispatch] No available hospital found")
+          return
+        }
+
+        hospitalCoords = [nearestHospital.coordinates.lon, nearestHospital.coordinates.lat]
+        hospitalName = nearestHospital.name
+      }
+
+      console.log(
+        `[Dispatch] Dispatching ambulance from ${hospitalName} to call ${callData.callId}`
+      )
+
+      // Calculate route using backend API (with danger zone avoidance), fallback to Mapbox
+      let routePath: [number, number][]
+
+      try {
+        // Try backend route calculation (avoids danger zones)
+        const routeResponse = await backendApi.routes.calculate({
+          start_lat: hospitalCoords[1],
+          start_lon: hospitalCoords[0],
+          end_lat: callerCoords[1],
+          end_lon: callerCoords[0],
+          profile: "driving-car",
+          avoid_polygons: true, // Avoid danger zones for safety
+        })
+
+        if (routeResponse.route.features.length > 0) {
+          routePath = routeResponse.route.features[0].geometry.coordinates
+          console.log(
+            `[Dispatch] Backend route calculated, avoided ${routeResponse.avoided_zones_count} danger zones`
+          )
+        } else {
+          throw new Error("No route features returned")
+        }
+      } catch (error) {
+        console.warn("[Dispatch] Backend route API failed, using Mapbox:", error)
+        // Fallback to Mapbox Directions API
+        const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+        if (!accessToken) {
+          console.error("[Dispatch] Mapbox token not found")
+          return
+        }
+        routePath = await fetchRoute(hospitalCoords, callerCoords, accessToken)
+      }
+
+      // Find available ambulance or create one at hospital
+      let ambulance = vehiclesRef.current.find(
+        (v) => v.type === "ambulance" && v.status === "idle"
+      )
+
+      if (ambulance) {
+        // Dispatch existing ambulance to caller
+        ambulance.path = routePath
+        ambulance.progress = 0
+        ambulance.direction = 1
+        ambulance.status = "responding"
+        ambulance.targetIncidentId = callData.callId
+        ambulance.endPoint = callerCoords
+        ambulance.basePoint = hospitalCoords // Return to hospital after
+
+        // Update route line on map
+        const source = map.current.getSource(`route-${ambulance.id}`) as mapboxgl.GeoJSONSource
+        if (source) {
+          source.setData({
+            type: "Feature",
+            properties: {},
+            geometry: { type: "LineString", coordinates: routePath },
+          })
+        }
+
+        // Move marker to hospital position first
+        ambulance.marker?.setLngLat(hospitalCoords)
+
+        console.log(
+          `[Dispatch] Ambulance ${ambulance.id} dispatched from ${hospitalName}`
+        )
+      } else {
+        // Create a new ambulance at the hospital and dispatch it
+        const newAmbulanceId = `amb_dispatch_${Date.now()}`
+
+        const newAmbulance: VehicleData = {
+          id: newAmbulanceId,
+          type: "ambulance",
+          marker: null,
+          path: routePath,
+          progress: 0,
+          speed: 0.0002, // Faster for dispatch
+          direction: 1,
+          startPoint: hospitalCoords,
+          endPoint: callerCoords,
+          status: "responding",
+          targetIncidentId: callData.callId,
+          basePoint: hospitalCoords,
+        }
+
+        // Create marker for the new ambulance
+        if (map.current) {
+          const element = createVehicleMarkerElement("ambulance")
+          newAmbulance.marker = new mapboxgl.Marker({ element })
+            .setLngLat(hospitalCoords)
+            .addTo(map.current)
+
+          // Add route line to map
+          map.current.addSource(`route-${newAmbulanceId}`, {
+            type: "geojson",
+            data: {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "LineString",
+                coordinates: routePath,
+              },
+            },
+          })
+
+          map.current.addLayer({
+            id: `route-line-${newAmbulanceId}`,
+            type: "line",
+            source: `route-${newAmbulanceId}`,
+            layout: {
+              "line-join": "round",
+              "line-cap": "round",
+            },
+            paint: {
+              "line-color": "#3b82f6", // Blue for ambulance
+              "line-width": 3,
+              "line-opacity": 0.7,
+              "line-dasharray": [2, 2],
+            },
+          })
+        }
+
+        vehiclesRef.current.push(newAmbulance)
+        console.log(
+          `[Dispatch] New ambulance ${newAmbulanceId} created and dispatched from ${hospitalName}`
+        )
+      }
+
+      // Center map on the route
+      if (map.current) {
+        const bounds = new mapboxgl.LngLatBounds()
+        bounds.extend(hospitalCoords)
+        bounds.extend(callerCoords)
+        map.current.fitBounds(bounds, { padding: 100, duration: 1000 })
+      }
+    },
+    [hospitals]
+  )
+
+  // Expose dispatchToCall method via ref
+  useImperativeHandle(ref, () => ({
+    dispatchToCall,
+  }), [dispatchToCall])
 
   // Fetch news articles and transform to incidents
   const fetchNewsIncidents = useCallback(async () => {
@@ -873,8 +1073,8 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/khonguyenpham/cm476m37000cp01r1aerh8dud",
-      center: [37.0, 37.2],
-      zoom: 6.5,
+      center: [-0.1749, 51.4988], // South Kensington, London
+      zoom: 13,
       pitch: 50,
       bearing: -15,
       antialias: true,
@@ -1279,4 +1479,4 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
       )}
     </div>
   )
-}
+})

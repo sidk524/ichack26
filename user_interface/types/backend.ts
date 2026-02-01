@@ -15,6 +15,7 @@ export interface BackendCall {
   transcript: string
   start_time: number // Unix timestamp
   end_time: number // Unix timestamp
+  tags?: string[] // Top 3 meaningful words extracted from transcript using NLP
 }
 
 // === User Status ===
@@ -27,6 +28,7 @@ export interface BackendUser {
   user_id: string
   role: "civilian" | "first_responder"
   status: UserStatus
+  preferred_language?: "en" | "tr" // User's preferred language
   location_history: BackendLocationPoint[]
   calls: BackendCall[]
 }
@@ -172,5 +174,61 @@ export interface AllDataResponse {
     danger_zones: BackendDangerZone[]
     timestamp: number
   }
+  error?: string
+}
+
+// === Nearest Hospital Response ===
+export interface NearestHospitalResponse {
+  ok: boolean
+  hospital: BackendHospital & { distance_km: number }
+  distance_km: number
+  error?: string
+}
+
+// === Route Calculation Types ===
+export type RouteProfile =
+  | "driving-car"
+  | "driving-hgv"
+  | "foot-walking"
+  | "foot-hiking"
+  | "cycling-regular"
+  | "cycling-road"
+  | "cycling-mountain"
+  | "cycling-electric"
+
+export interface RouteCalculateRequest {
+  start_lat: number
+  start_lon: number
+  end_lat: number
+  end_lon: number
+  profile?: RouteProfile
+  avoid_polygons?: boolean // Whether to avoid danger zones, defaults to true
+}
+
+export interface RouteFeature {
+  type: "Feature"
+  properties: {
+    summary: {
+      distance: number // meters
+      duration: number // seconds
+    }
+    avoided_zones?: number
+    profile: RouteProfile
+    avoidance_enabled: boolean
+  }
+  geometry: {
+    type: "LineString"
+    coordinates: [number, number][] // [lon, lat] pairs
+  }
+}
+
+export interface RouteCalculateResponse {
+  ok: boolean
+  route: {
+    type: "FeatureCollection"
+    features: RouteFeature[]
+  }
+  avoided_zones_count: number
+  avoidance_enabled: boolean
   error?: string
 }

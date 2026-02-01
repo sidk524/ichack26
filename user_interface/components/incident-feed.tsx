@@ -439,36 +439,76 @@ function IncidentTable({ incidents }: { incidents: Incident[] }) {
   )
 }
 
+export interface PendingCallData {
+  callId: string
+  coordinates: { lat: number; lon: number }
+  transcript: string
+  userId: string
+}
+
 interface IncidentFeedProps {
   className?: string
+  onCallReceived?: (data: PendingCallData) => void
 }
 
 /**
  * IncidentFeed component displays a live feed of news-based incidents
  * Uses WebSocket for real-time updates + REST API for initial load
  */
-export function IncidentFeed({ className }: IncidentFeedProps) {
+export function IncidentFeed({ className, onCallReceived }: IncidentFeedProps) {
   const [incidents, setIncidents] = useState<Incident[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const fetchIncidents = useCallback(async () => {
     try {
-      const response = await backendApi.news.list()
-      if (response.ok && response.news) {
-        const transformed = response.news.map(newsToIncident)
-        // Sort by most recent first
-        transformed.sort((a, b) => {
-          // Parse the reportedAt string to compare
-          const aRecent = a.reportedAt.includes("Just") || a.reportedAt.includes("m ago")
-          const bRecent = b.reportedAt.includes("Just") || b.reportedAt.includes("m ago")
-          if (aRecent && !bRecent) return -1
-          if (!aRecent && bRecent) return 1
-          return 0
-        })
-        setIncidents(transformed)
-        setError(null)
+      // Fetch both news and calls in parallel
+      const [newsResponse, callsResponse] = await Promise.all([
+        backendApi.news.list(),
+        backendApi.calls.list(),
+      ])
+
+      const allIncidents: Incident[] = []
+
+      // Transform news to incidents
+      if (newsResponse.ok && newsResponse.news) {
+        const newsIncidents = newsResponse.news.map(newsToIncident)
+        allIncidents.push(...newsIncidents)
       }
+
+      // Transform calls to incidents
+      if (callsResponse.ok && callsResponse.calls) {
+        const callIncidents = callsResponse.calls.map((call) => {
+          const type = inferTypeFromTitle(call.transcript)
+          const severity = inferSeverity(call.transcript, true)
+          const typeLabel = incidentTypeConfig[type]?.label || "Emergency"
+
+          return {
+            id: `call_${call.call_id}`,
+            type,
+            location: "Incoming Call",
+            severity,
+            status: "new" as IncidentStatus,
+            reportedAt: formatTimeAgo(call.start_time),
+            title: `${typeLabel} Emergency - Call`,
+            link: "",
+            isDisaster: true,
+          }
+        })
+        allIncidents.push(...callIncidents)
+      }
+
+      // Sort by most recent first
+      allIncidents.sort((a, b) => {
+        const aRecent = a.reportedAt.includes("Just") || a.reportedAt.includes("m ago")
+        const bRecent = b.reportedAt.includes("Just") || b.reportedAt.includes("m ago")
+        if (aRecent && !bRecent) return -1
+        if (!aRecent && bRecent) return 1
+        return 0
+      })
+
+      setIncidents(allIncidents)
+      setError(null)
     } catch (err) {
       console.error("Failed to fetch incidents:", err)
       setError("Failed to load incidents")
@@ -497,26 +537,55 @@ export function IncidentFeed({ className }: IncidentFeedProps) {
   }, [])
 
   // Handle real-time call updates - convert calls to incidents too
-  const handleNewCall = useCallback((event: NewCallEvent) => {
+  const handleNewCall = useCallback(async (event: NewCallEvent) => {
     const call = event.call
     const type = inferTypeFromTitle(call.transcript)
     const severity = inferSeverity(call.transcript, true)
 
+    // Get type label for display
+    const typeLabel = incidentTypeConfig[type]?.label || "Emergency"
+
+    // Fetch caller's GPS location from their location history
+    let callerLocation: { lat: number; lon: number } | null = null
+    try {
+      const userResponse = await backendApi.users.get(event.user_id)
+      const locationHistory = userResponse.user?.location_history
+      if (locationHistory && locationHistory.length > 0) {
+        const lastLocation = locationHistory[locationHistory.length - 1]
+        callerLocation = {
+          lat: lastLocation.lat,
+          lon: lastLocation.lon,
+        }
+      }
+    } catch (error) {
+      console.error("[IncidentFeed] Failed to get caller location:", error)
+    }
+
     const newIncident: Incident = {
       id: `call_${call.call_id}`,
       type,
-      location: "Location from call",
+      location: "Incoming Call", // Show it's a call
       severity,
       status: "new",
       reportedAt: "Just now",
-      title: call.transcript.slice(0, 100) + (call.transcript.length > 100 ? "..." : ""),
+      title: `${typeLabel} Emergency - Active Call`, // Show type of emergency
       link: "",
       isDisaster: true,
     }
 
     // Add to front of list
     setIncidents(prev => [newIncident, ...prev])
-  }, [])
+
+    // Trigger dispatch callback if location available
+    if (callerLocation && onCallReceived) {
+      onCallReceived({
+        callId: call.call_id,
+        coordinates: callerLocation,
+        transcript: call.transcript,
+        userId: event.user_id,
+      })
+    }
+  }, [onCallReceived])
 
   // Connect to real-time updates
   const { isConnected } = useDashboardUpdates({
