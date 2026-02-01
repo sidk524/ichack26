@@ -5,7 +5,7 @@ import mapboxgl from "mapbox-gl"
 import { cn } from "@/lib/utils"
 import { backendApi } from "@/lib/backend-api"
 import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent } from "@/hooks/use-dashboard-updates"
-import type { BackendNewsArticle } from "@/types/backend"
+import type { BackendNewsArticle, BackendDangerZone } from "@/types/backend"
 
 interface IncidentData {
   id: string
@@ -33,6 +33,7 @@ interface DisasterMapProps {
   className?: string
   showVehicles?: boolean
   autoFetchNews?: boolean
+  showDangerZones?: boolean
 }
 
 // Transform news article to incident data for the map
@@ -73,7 +74,7 @@ const vehicleDefinitions: Omit<VehicleData, "marker" | "path">[] = [
     startPoint: [36.10, 36.25],
     endPoint: [36.165, 36.202],
     progress: 0,
-    speed: 0.00015,
+    speed: 0.00007,
     direction: 1,
   },
   {
@@ -260,12 +261,13 @@ function interpolatePath(path: [number, number][], progress: number): { lng: num
   return { lng: path[lastIdx][0], lat: path[lastIdx][1] }
 }
 
-export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true }: DisasterMapProps) {
+export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true, showDangerZones = false }: DisasterMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
   const vehiclesRef = useRef<VehicleData[]>([])
   const animationRef = useRef<number | null>(null)
   const [liveIncidents, setLiveIncidents] = useState<IncidentData[]>([])
+  const [dangerZones, setDangerZones] = useState<BackendDangerZone[]>([])
   const [isLoading, setIsLoading] = useState(autoFetchNews)
 
   // Fetch news articles and transform to incidents
@@ -282,6 +284,18 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
       console.error("[DisasterMap] Failed to fetch news:", error)
     } finally {
       setIsLoading(false)
+    }
+  }, [])
+
+  // Fetch danger zones
+  const fetchDangerZones = useCallback(async () => {
+    try {
+      const response = await backendApi.dangerZones.list()
+      const activeZones = response.danger_zones.filter((z) => z.is_active)
+      console.log(`[DisasterMap] Loaded ${activeZones.length} active danger zones`)
+      setDangerZones(activeZones)
+    } catch (error) {
+      console.error("[DisasterMap] Failed to fetch danger zones:", error)
     }
   }, [])
 
@@ -323,6 +337,43 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
     const interval = setInterval(fetchNewsIncidents, 30000)
     return () => clearInterval(interval)
   }, [autoFetchNews, fetchNewsIncidents])
+
+  // Fetch danger zones on mount and poll every 30 seconds
+  useEffect(() => {
+    if (!showDangerZones) return
+
+    fetchDangerZones()
+    const interval = setInterval(fetchDangerZones, 30000)
+    return () => clearInterval(interval)
+  }, [showDangerZones, fetchDangerZones])
+
+  // Update danger zones layer when data changes
+  useEffect(() => {
+    if (!map.current || !showDangerZones || !map.current.getSource("danger-zones")) return
+
+    const geojsonData: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      features: dangerZones.map((zone) => ({
+        type: "Feature",
+        properties: {
+          id: zone.zone_id,
+          severity: zone.severity,
+          disaster_type: zone.disaster_type,
+          description: zone.description,
+          recommended_action: zone.recommended_action,
+          radius: zone.radius,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [zone.lon, zone.lat],
+        },
+      })),
+    }
+
+    const source = map.current.getSource("danger-zones") as mapboxgl.GeoJSONSource
+    source.setData(geojsonData)
+    console.log(`[DisasterMap] Updated map with ${dangerZones.length} danger zones`)
+  }, [dangerZones, showDangerZones])
 
   const incidents = propIncidents ?? (liveIncidents.length > 0 ? liveIncidents : fallbackIncidents)
 
@@ -366,7 +417,7 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
 
     mapboxgl.accessToken = token
 
-    // Add CSS for pulse animation (only once)
+    // Add CSS for pulse animation and popup styles (only once)
     if (!document.getElementById("vehicle-marker-styles")) {
       const style = document.createElement("style")
       style.id = "vehicle-marker-styles"
@@ -381,6 +432,38 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
         }
         .vehicle-marker {
           z-index: 10;
+        }
+        .mapboxgl-popup {
+          z-index: 1000 !important;
+        }
+        .mapboxgl-popup-content {
+          padding: 12px 14px !important;
+          border-radius: 12px !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+          background: #ffffff !important;
+        }
+        .mapboxgl-popup-close-button {
+          font-size: 18px !important;
+          padding: 4px 8px !important;
+          color: #9ca3af !important;
+          right: 4px !important;
+          top: 4px !important;
+        }
+        .mapboxgl-popup-close-button:hover {
+          color: #374151 !important;
+          background: transparent !important;
+        }
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+          border-top-color: #ffffff !important;
+        }
+        .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+          border-bottom-color: #ffffff !important;
+        }
+        .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+          border-right-color: #ffffff !important;
+        }
+        .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+          border-left-color: #ffffff !important;
         }
       `
       document.head.appendChild(style)
@@ -433,6 +516,146 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
           "heatmap-opacity": 0.9,
         },
       })
+
+      // Add danger zones source and layers
+      if (showDangerZones) {
+        map.current.addSource("danger-zones", { type: "geojson", data: emptyGeojsonData })
+
+        // Danger zone fill circles (radius based on actual zone radius)
+        map.current.addLayer({
+          id: "danger-zones-fill",
+          type: "circle",
+          source: "danger-zones",
+          paint: {
+            "circle-radius": [
+              "interpolate",
+              ["exponential", 2],
+              ["zoom"],
+              5, ["*", ["get", "radius"], 0.0003],
+              10, ["*", ["get", "radius"], 0.003],
+              15, ["*", ["get", "radius"], 0.03],
+            ],
+            "circle-color": [
+              "match",
+              ["get", "severity"],
+              5, "rgba(239, 68, 68, 0.3)",  // red
+              4, "rgba(249, 115, 22, 0.3)", // orange
+              3, "rgba(234, 179, 8, 0.3)",  // yellow
+              2, "rgba(59, 130, 246, 0.3)", // blue
+              "rgba(107, 114, 128, 0.3)",   // gray
+            ],
+            "circle-stroke-width": 2,
+            "circle-stroke-color": [
+              "match",
+              ["get", "severity"],
+              5, "#ef4444",
+              4, "#f97316",
+              3, "#eab308",
+              2, "#3b82f6",
+              "#6b7280",
+            ],
+            "circle-stroke-opacity": 0.8,
+          },
+        })
+
+        // Danger zone center markers
+        map.current.addLayer({
+          id: "danger-zones-center",
+          type: "circle",
+          source: "danger-zones",
+          paint: {
+            "circle-radius": 8,
+            "circle-color": [
+              "match",
+              ["get", "severity"],
+              5, "#ef4444",
+              4, "#f97316",
+              3, "#eab308",
+              2, "#3b82f6",
+              "#6b7280",
+            ],
+            "circle-stroke-width": 2,
+            "circle-stroke-color": "#ffffff",
+          },
+        })
+
+        // Add popup on click
+        map.current.on("click", "danger-zones-center", (e) => {
+          if (!e.features || e.features.length === 0) return
+          const feature = e.features[0]
+          const props = feature.properties
+          const coords = (feature.geometry as GeoJSON.Point).coordinates.slice() as [number, number]
+
+          const severityConfig: Record<number, { color: string; bg: string; label: string }> = {
+            5: { color: "#ef4444", bg: "rgba(239, 68, 68, 0.1)", label: "Critical" },
+            4: { color: "#f97316", bg: "rgba(249, 115, 22, 0.1)", label: "Severe" },
+            3: { color: "#eab308", bg: "rgba(234, 179, 8, 0.1)", label: "Moderate" },
+            2: { color: "#3b82f6", bg: "rgba(59, 130, 246, 0.1)", label: "Low" },
+            1: { color: "#22c55e", bg: "rgba(34, 197, 94, 0.1)", label: "Minor" },
+          }
+
+          const actionConfig: Record<string, { color: string; bg: string; icon: string }> = {
+            evacuate: { color: "#ef4444", bg: "rgba(239, 68, 68, 0.15)", icon: "↗" },
+            shelter_in_place: { color: "#f97316", bg: "rgba(249, 115, 22, 0.15)", icon: "⌂" },
+            avoid_area: { color: "#eab308", bg: "rgba(234, 179, 8, 0.15)", icon: "⊘" },
+          }
+
+          const severity = severityConfig[props?.severity] || severityConfig[3]
+          const action = actionConfig[props?.recommended_action] || { color: "#6b7280", bg: "rgba(107, 114, 128, 0.15)", icon: "!" }
+
+          new mapboxgl.Popup({ closeButton: true, maxWidth: "280px" })
+            .setLngLat(coords)
+            .setHTML(`
+              <div style="font-family: system-ui, -apple-system, sans-serif; padding: 4px;">
+                <!-- Header with severity badge -->
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: ${severity.color}; box-shadow: 0 0 8px ${severity.color}80;"></div>
+                    <span style="font-weight: 600; font-size: 15px; color: #1f2937; text-transform: capitalize;">
+                      ${props?.disaster_type?.replace(/_/g, " ") || "Unknown"}
+                    </span>
+                  </div>
+                  <span style="font-size: 10px; font-weight: 600; color: ${severity.color}; background: ${severity.bg}; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    ${severity.label}
+                  </span>
+                </div>
+
+                <!-- Description -->
+                <p style="font-size: 13px; color: #4b5563; line-height: 1.5; margin: 0 0 14px 0;">
+                  ${props?.description || "No description available"}
+                </p>
+
+                <!-- Footer with action and radius -->
+                <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid #e5e7eb;">
+                  <div style="display: flex; align-items: center; gap: 6px; background: ${action.bg}; padding: 5px 10px; border-radius: 6px;">
+                    <span style="font-size: 12px;">${action.icon}</span>
+                    <span style="font-size: 12px; font-weight: 500; color: ${action.color}; text-transform: capitalize;">
+                      ${props?.recommended_action?.replace(/_/g, " ") || "Unknown"}
+                    </span>
+                  </div>
+                  ${props?.radius ? `
+                    <div style="display: flex; align-items: center; gap: 4px; color: #6b7280;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+                      </svg>
+                      <span style="font-size: 12px; font-weight: 500;">${(props.radius / 1000).toFixed(1)} km</span>
+                    </div>
+                  ` : ""}
+                </div>
+              </div>
+            `)
+            .addTo(map.current!)
+        })
+
+        // Change cursor on hover
+        map.current.on("mouseenter", "danger-zones-center", () => {
+          if (map.current) map.current.getCanvas().style.cursor = "pointer"
+        })
+        map.current.on("mouseleave", "danger-zones-center", () => {
+          if (map.current) map.current.getCanvas().style.cursor = ""
+        })
+      }
 
       if (showVehicles) {
         // Fetch all routes from Mapbox Directions API
@@ -538,7 +761,7 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showVehicles]) // Only recreate map if showVehicles changes, not on every incident update
+  }, [showVehicles, showDangerZones]) // Recreate map if display options change
 
   return (
     <div className={cn("relative w-full h-full", className)}>
@@ -553,6 +776,24 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
             {isLoading ? "Loading..." : `${incidents.length} active incidents`}
           </span>
         </div>
+        {showDangerZones && dangerZones.length > 0 && (
+          <>
+            <div className="border-t my-2" />
+            <div className="font-semibold mb-2">Danger Zones</div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-3 h-3 rounded-full bg-red-500 border-2 border-red-600" />
+              <span>Critical ({dangerZones.filter(z => z.severity === 5).length})</span>
+            </div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-3 h-3 rounded-full bg-orange-500 border-2 border-orange-600" />
+              <span>Severe ({dangerZones.filter(z => z.severity === 4).length})</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-yellow-500 border-2 border-yellow-600" />
+              <span>Moderate ({dangerZones.filter(z => z.severity <= 3).length})</span>
+            </div>
+          </>
+        )}
         {showVehicles && (
           <>
             <div className="border-t my-2" />

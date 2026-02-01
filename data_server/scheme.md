@@ -466,8 +466,7 @@ curl http://localhost:8080/api/danger-zones
 - `recommended_action`: Recommended action ("evacuate", "shelter_in_place", "avoid_area")
 
 ---
-
-## AI-Extracted Entity Endpoints
+## AI-Extracted Entity Endpoints (DO NOT USE YET)
 
 ### Get All Extracted Entities
 **Endpoint:** `GET /api/entities`

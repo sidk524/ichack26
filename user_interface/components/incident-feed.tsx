@@ -151,6 +151,11 @@ const incidentTypeConfig: Record<IncidentType, { icon: typeof IconFlame; label: 
   other: { icon: IconCircleDot, label: "Other", color: "text-gray-500" },
 }
 
+// Extract first location value before comma
+function getShortLocation(location: string): string {
+  return location.split(",")[0].trim()
+}
+
 // UI configuration for incident statuses
 const statusConfig: Record<IncidentStatus, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
   new: { label: "New", variant: "destructive" },
@@ -197,9 +202,9 @@ function IncidentDetailDrawer({ incident }: { incident: Incident }) {
   return (
     <Drawer direction={isMobile ? "bottom" : "right"}>
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit px-0 text-left h-auto py-0">
-          <span className="font-medium text-xs truncate">
-            {incident.location}
+        <Button variant="link" className="text-foreground w-full px-0 text-left h-auto py-0 max-w-full">
+          <span className="font-medium text-xs truncate block max-w-[180px]">
+            {getShortLocation(incident.location)} - {incident.title}
           </span>
         </Button>
       </DrawerTrigger>
@@ -347,12 +352,9 @@ function IncidentRow({ incident }: { incident: Incident }) {
           <span className="text-xs font-medium">{typeConfig.label}</span>
         </div>
       </TableCell>
-      <TableCell className="px-2 py-2.5">
-        <div className="flex flex-col gap-0.5 min-w-0">
+      <TableCell className="px-2 py-2.5 max-w-[200px]">
+        <div className="min-w-0 overflow-hidden">
           <IncidentDetailDrawer incident={incident} />
-          <span className="text-muted-foreground text-[10px] truncate leading-tight max-w-[200px]">
-            {incident.title}
-          </span>
         </div>
       </TableCell>
       <TableCell className="px-2 py-2.5">
@@ -557,7 +559,7 @@ export function IncidentFeed({ className }: IncidentFeedProps) {
 
   return (
     <Card className={cn("flex flex-col", className)}>
-      <CardHeader className="flex-none border-b px-4 py-3">
+      <CardHeader className="flex-none border-b px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CardTitle className="text-sm font-semibold tracking-tight">Live Incidents</CardTitle>

@@ -8,9 +8,10 @@ import {
   IconClock,
   IconDroplet,
   IconLungs,
-  IconUser,
   IconChevronRight,
   IconLoader2,
+  IconPhone,
+  IconMapPin,
 } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -23,10 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { api } from "@/lib/api"
-import type { IncomingPatient } from "@/types/api"
+import type { IncomingPatient, Hospital, HospitalCapacity } from "@/types/api"
 
 const severityStyles: Record<IncomingPatient["severity"], string> = {
   critical: "bg-red-500",
@@ -35,65 +35,117 @@ const severityStyles: Record<IncomingPatient["severity"], string> = {
   low: "bg-green-500",
 }
 
+const statusColors: Record<string, string> = {
+  accepting: "text-green-500",
+  limited: "text-yellow-500",
+  diverting: "text-orange-500",
+  closed: "text-red-500",
+}
+
 /**
  * HospitalDashboard displays the main hospital overview
- * Fetches incoming patients from api.hospitals.getIncomingPatients()
+ * Fetches hospitals and capacity from real backend API
  */
 export function HospitalDashboard() {
+  const [hospitals, setHospitals] = useState<Hospital[]>([])
+  const [selectedHospitalId, setSelectedHospitalId] = useState<string>("")
+  const [capacity, setCapacity] = useState<HospitalCapacity | null>(null)
   const [incomingPatients, setIncomingPatients] = useState<IncomingPatient[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
+  // Fetch hospitals list
   useEffect(() => {
     api.hospitals
-      .getIncomingPatients()
+      .list()
       .then((data) => {
-        setIncomingPatients(data)
+        setHospitals(data)
+        if (data.length > 0 && !selectedHospitalId) {
+          setSelectedHospitalId(data[0].id)
+        }
       })
       .catch((err) => {
-        console.error("Failed to fetch incoming patients:", err)
+        console.error("Failed to fetch hospitals:", err)
       })
       .finally(() => {
         setIsLoading(false)
       })
   }, [])
 
+  // Fetch capacity when hospital changes
+  useEffect(() => {
+    if (!selectedHospitalId) return
+
+    api.hospitals
+      .getCapacity(selectedHospitalId)
+      .then(setCapacity)
+      .catch((err) => {
+        console.error("Failed to fetch hospital capacity:", err)
+      })
+
+    api.hospitals
+      .getIncomingPatients()
+      .then(setIncomingPatients)
+      .catch((err) => {
+        console.error("Failed to fetch incoming patients:", err)
+      })
+  }, [selectedHospitalId])
+
+  const selectedHospital = hospitals.find((h) => h.id === selectedHospitalId)
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <IconLoader2 className="size-8 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
+
+  // Get bed data from capacity
+  const erBed = capacity?.beds.find((b) => b.id === "er")
+  const icuBed = capacity?.beds.find((b) => b.id === "icu")
+  const generalBed = capacity?.beds.find((b) => b.id === "general")
+  const pediatricBed = capacity?.beds.find((b) => b.id === "pediatric")
+
   return (
     <div className="flex flex-col gap-6 p-4 lg:p-6 max-w-4xl mx-auto w-full">
 
-      {/* 1. STATUS HEADER - Most important, always visible */}
+      {/* 1. STATUS HEADER - Hospital selector */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Central Hospital</h1>
-          <p className="text-muted-foreground text-sm">Trauma Center Level 1</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-muted-foreground">Status:</span>
-          <Select defaultValue="accepting">
-            <SelectTrigger className="w-40">
-              <SelectValue />
+        <div className="flex-1">
+          <Select value={selectedHospitalId} onValueChange={setSelectedHospitalId}>
+            <SelectTrigger className="w-full sm:w-80">
+              <SelectValue placeholder="Select hospital" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="accepting">
-                <div className="flex items-center gap-2">
-                  <IconCircleFilled className="size-2 text-green-500" />
-                  Accepting
-                </div>
-              </SelectItem>
-              <SelectItem value="limited">
-                <div className="flex items-center gap-2">
-                  <IconCircleFilled className="size-2 text-yellow-500" />
-                  Limited
-                </div>
-              </SelectItem>
-              <SelectItem value="diverting">
-                <div className="flex items-center gap-2">
-                  <IconCircleFilled className="size-2 text-red-500" />
-                  Diverting
-                </div>
-              </SelectItem>
+              {hospitals.map((hospital) => (
+                <SelectItem key={hospital.id} value={hospital.id}>
+                  <div className="flex items-center gap-2">
+                    <IconCircleFilled className={cn("size-2", statusColors[hospital.status])} />
+                    {hospital.name}
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
+          {selectedHospital && (
+            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+              <span className="flex items-center gap-1">
+                <IconMapPin className="size-3" />
+                {selectedHospital.coordinates ? `${selectedHospital.coordinates.lat.toFixed(4)}, ${selectedHospital.coordinates.lon.toFixed(4)}` : "Unknown"}
+              </span>
+              <span className="capitalize flex items-center gap-1">
+                <IconCircleFilled className={cn("size-2", statusColors[selectedHospital.status])} />
+                {selectedHospital.status}
+              </span>
+            </div>
+          )}
         </div>
+        <Badge
+          variant={selectedHospital?.status === "accepting" ? "default" : "destructive"}
+          className="text-sm px-3 py-1"
+        >
+          {capacity ? `${capacity.totalOccupancy}% Occupied` : "Loading..."}
+        </Badge>
       </div>
 
       {/* 2. KEY METRICS - Quick glance at capacity */}
@@ -101,29 +153,30 @@ export function HospitalDashboard() {
         <MetricCard
           icon={IconBed}
           label="ER Beds"
-          value="8"
-          subtext="of 40 available"
-          alert={true}
+          value={erBed ? String(erBed.available) : "-"}
+          subtext={erBed ? `of ${erBed.total} available` : "loading"}
+          alert={erBed ? erBed.available < erBed.total * 0.2 : false}
         />
         <MetricCard
           icon={IconLungs}
           label="ICU"
-          value="2"
-          subtext="of 24 available"
-          alert={true}
+          value={icuBed ? String(icuBed.available) : "-"}
+          subtext={icuBed ? `of ${icuBed.total} available` : "loading"}
+          alert={icuBed ? icuBed.available < icuBed.total * 0.2 : false}
         />
         <MetricCard
-          icon={IconDroplet}
-          label="Blood O-"
-          value="8"
-          subtext="units"
-          alert={true}
+          icon={IconBed}
+          label="General"
+          value={generalBed ? String(generalBed.available) : "-"}
+          subtext={generalBed ? `of ${generalBed.total} available` : "loading"}
+          alert={generalBed ? generalBed.available < generalBed.total * 0.2 : false}
         />
         <MetricCard
-          icon={IconClock}
-          label="ER Wait"
-          value="12m"
-          subtext="average"
+          icon={IconBed}
+          label="Pediatric"
+          value={pediatricBed ? String(pediatricBed.available) : "-"}
+          subtext={pediatricBed ? `of ${pediatricBed.total} available` : "loading"}
+          alert={pediatricBed ? pediatricBed.available < pediatricBed.total * 0.2 : false}
         />
       </div>
 

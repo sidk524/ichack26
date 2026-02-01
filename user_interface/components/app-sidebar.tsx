@@ -37,14 +37,14 @@ const data = {
       icon: IconAlertTriangle,
     },
     {
+      title: "Civilians",
+      url: "/emergency",
+      icon: IconUsersGroup,
+    },
+    {
       title: "Hospitals",
       url: "/dashboard/hospitals",
       icon: IconBuildingHospital,
-    },
-    {
-      title: "People in Danger",
-      url: "/dashboard/civilians",
-      icon: IconUsersGroup,
     },
   ],
   navSecondary: [

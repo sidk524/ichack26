@@ -27,7 +27,7 @@ export default function Page() {
               <ResponderCards />
               <div className="grid grid-cols-1 gap-4 px-4 lg:grid-cols-2 lg:px-6">
                 <div>
-                  <DisasterMap className="h-125" />
+                  <DisasterMap className="h-125" showDangerZones />
                 </div>
                 <div>
                   <IncidentFeed className="h-125" />

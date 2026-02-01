@@ -2,9 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { IconCirclePlusFilled, IconPhone, type Icon } from "@tabler/icons-react"
+import { IconPhone, type Icon } from "@tabler/icons-react"
 
-import { Button } from "@/components/ui/button"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -28,25 +27,17 @@ export function NavMain({
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-2">
+          <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip="Quick Create"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-            >
-              <IconCirclePlusFilled />
-              <span>Quick Create</span>
-            </SidebarMenuButton>
-            <Button
-              size="icon"
-              className="size-8 group-data-[collapsible=icon]:opacity-0"
-              variant="outline"
               asChild
+              tooltip="Emergency Call"
+              className="bg-red-600 text-white hover:bg-red-700 hover:text-white active:bg-red-700 active:text-white min-w-8 duration-200 ease-linear"
             >
               <Link href="/emergency">
                 <IconPhone />
-                <span className="sr-only">Emergency Call</span>
+                <span>Emergency Call</span>
               </Link>
-            </Button>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
