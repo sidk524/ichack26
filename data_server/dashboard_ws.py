@@ -85,6 +85,19 @@ async def broadcast_new_danger_zone(zone_data: dict):
     print(f"[Dashboard WS] Broadcasted new_danger_zone: {zone_data.get('disaster_type', '')} at {zone_data.get('lat', '')}, {zone_data.get('lon', '')}")
 
 
+async def broadcast_status_change(user_id: str, role: str, old_status: str, new_status: str, reason: str):
+    """Broadcast when a user's status changes."""
+    await broadcast_event("status_changed", {
+        "user_id": user_id,
+        "role": role,
+        "old_status": old_status,
+        "new_status": new_status,
+        "reason": reason,
+        "timestamp": asyncio.get_event_loop().time()
+    })
+    print(f"[Dashboard WS] Broadcasted status_changed: {user_id} ({role}): {old_status} → {new_status} (reason: {reason})")
+
+
 async def dashboard_ws_handler(request):
     """WebSocket endpoint for dashboard real-time updates."""
     ws = web.WebSocketResponse(heartbeat=30)

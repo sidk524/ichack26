@@ -21,6 +21,9 @@ from database.postgres import (
     append_call,
 )
 from database.db import LocationPoint, Call
+from status_inference import calculate_priority_score
+import aiosqlite
+from database.postgres import db
 
 
 def register_data_routes(app: web.Application):
@@ -49,6 +52,9 @@ def register_data_routes(app: web.Application):
 
     # Seed endpoint for demo data
     app.router.add_post("/api/seed", seed_demo_data_handler)
+
+    # Priority scores
+    app.router.add_get("/api/priorities", get_priority_scores_handler)
 
 
 # === User Endpoints ===
@@ -264,6 +270,39 @@ async def seed_demo_data_handler(request: web.Request) -> web.Response:
         return web.json_response({
             "ok": True,
             "message": f"Seeded {len(demo_civilians)} civilians and {len(demo_responders)} first responders"
+        })
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+# === Priority Scores ===
+
+async def get_priority_scores_handler(request: web.Request) -> web.Response:
+    """GET /api/priorities - Get priority scores for all civilians needing help."""
+    try:
+        # Get all civilians with needs_help status
+        async with aiosqlite.connect(db.db_path) as conn:
+            async with conn.execute(
+                "SELECT user_id FROM users WHERE role = 'civilian' AND status = 'needs_help'"
+            ) as cursor:
+                civilian_ids = [row[0] async for row in cursor]
+
+        # Calculate priority scores
+        priorities = []
+        for user_id in civilian_ids:
+            score = await calculate_priority_score(user_id)
+            priorities.append({
+                "user_id": user_id,
+                "priority_score": score
+            })
+
+        # Sort by priority score descending
+        priorities.sort(key=lambda x: x['priority_score'], reverse=True)
+
+        return web.json_response({
+            "ok": True,
+            "count": len(priorities),
+            "priorities": priorities
         })
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=500)

@@ -10,6 +10,7 @@ from database.db import LocationPoint, Call
 from dashboard_ws import broadcast_new_call, broadcast_new_location
 from tag_extractor import extract_bilingual_tags
 from danger_extractor import extract_danger_from_call
+from status_inference import infer_civilian_status, infer_responder_status
 
 
 async def print_users_table():
@@ -72,6 +73,8 @@ async def phone_transcript_ws(request):
                     asyncio.create_task(
                         extract_danger_from_call(call.call_id, text, user_id)
                     )
+                    # Trigger status inference (civilian only, as calls are from civilians)
+                    asyncio.create_task(infer_civilian_status(user_id))
                     await ws.close()
                 else:
                     # Store partial text in case of sudden disconnect
@@ -114,6 +117,8 @@ async def phone_transcript_ws(request):
         asyncio.create_task(
             extract_danger_from_call(call.call_id, full_transcript, user_id)
         )
+        # Trigger status inference (civilian only, as calls are from civilians)
+        asyncio.create_task(infer_civilian_status(user_id))
 
     return ws
 
@@ -151,6 +156,13 @@ async def phone_location_ws(request):
                     "timestamp": location.timestamp,
                     "accuracy": location.accuracy,
                 })
+                # Trigger status inference for both roles (locations are tracked for all users)
+                user = await get_user(user_id)
+                if user:
+                    if user.role == 'civilian':
+                        asyncio.create_task(infer_civilian_status(user_id))
+                    elif user.role == 'first_responder':
+                        asyncio.create_task(infer_responder_status(user_id))
             else:
                 pass
         elif msg.type == web.WSMsgType.BINARY:

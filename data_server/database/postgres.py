@@ -135,11 +135,25 @@ class PostgresDB:
                 )
             """)
 
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS assignments (
+                    assignment_id TEXT PRIMARY KEY,
+                    civilian_id TEXT NOT NULL,
+                    responder_id TEXT NOT NULL,
+                    assigned_at REAL NOT NULL,
+                    completed_at REAL,
+                    is_active INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY (civilian_id) REFERENCES users (user_id) ON DELETE CASCADE,
+                    FOREIGN KEY (responder_id) REFERENCES users (user_id) ON DELETE CASCADE
+                )
+            """)
+
             await db.commit()
 
     async def wipe_db(self):
         """Clear all data from tables."""
         async with aiosqlite.connect(self.db_path) as db:
+            await db.execute("DELETE FROM assignments")
             await db.execute("DELETE FROM extracted_entities")
             await db.execute("DELETE FROM hospitals")
             await db.execute("DELETE FROM danger_zones")
