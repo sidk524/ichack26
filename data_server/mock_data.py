@@ -99,6 +99,57 @@ SAMPLE_DANGER_ZONES = [
         "radius": 400,
         "description": "Industrial fire in Ankara Ostim, smoke hazard",
         "action": "shelter_in_place"
+    },
+    # Infrastructure outages
+    {
+        "category": "infrastructure",
+        "disaster_type": "internet_outage",
+        "severity": 3,
+        "lat": 41.0391,
+        "lon": 28.9994,
+        "radius": 2500,
+        "description": "Major internet connectivity outage affecting Beşiktaş and surrounding districts. Fiber optic lines damaged.",
+        "action": "shelter_in_place"
+    },
+    {
+        "category": "infrastructure",
+        "disaster_type": "cell_service_outage",
+        "severity": 4,
+        "lat": 37.0735,
+        "lon": 37.3780,
+        "radius": 8000,
+        "description": "Cell tower infrastructure damaged in Gaziantep. Mobile communications severely impacted across the region.",
+        "action": "shelter_in_place"
+    },
+    {
+        "category": "infrastructure",
+        "disaster_type": "water_outage",
+        "severity": 4,
+        "lat": 38.4192,
+        "lon": 27.1287,
+        "radius": 3500,
+        "description": "Water main rupture in İzmir Konak district. Water supply interrupted for estimated 50,000 residents.",
+        "action": "shelter_in_place"
+    },
+    {
+        "category": "infrastructure",
+        "disaster_type": "power_outage",
+        "severity": 5,
+        "lat": 37.8560,
+        "lon": 37.1833,
+        "radius": 6000,
+        "description": "Major power grid failure in Kahramanmaraş following earthquake damage. Hospitals on backup generators.",
+        "action": "shelter_in_place"
+    },
+    {
+        "category": "infrastructure",
+        "disaster_type": "structural_damage",
+        "severity": 5,
+        "lat": 36.2025,
+        "lon": 36.1563,
+        "radius": 1500,
+        "description": "Severe structural damage to multiple buildings in Antakya historic district. Risk of further collapse.",
+        "action": "evacuate"
     }
 ]
 
