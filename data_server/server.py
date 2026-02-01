@@ -6,6 +6,7 @@ from aiohttp import web
 from news_client import register_news_routes
 from phone_client import register_phone_routes
 from sensor_client import register_sensor_routes
+from data_client import register_data_routes
 from database.postgres import init_db
 
 HOST = "0.0.0.0"
@@ -41,6 +42,7 @@ def create_app():
     register_phone_routes(app)
     register_news_routes(app)
     register_sensor_routes(app)
+    register_data_routes(app)
     app.router.add_get("/", root)
     app.router.add_get("/health", health)
 
