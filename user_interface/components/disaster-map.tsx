@@ -7,7 +7,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import { cn, findNearestHospital } from "@/lib/utils"
 import { backendApi } from "@/lib/backend-api"
 import { api } from "@/lib/api"
-import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent } from "@/hooks/use-dashboard-updates"
+import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent, type NewCallEvent } from "@/hooks/use-dashboard-updates"
 import type { BackendNewsArticle, BackendDangerZone } from "@/types/backend"
 import type { Hospital } from "@/types/api"
 import type { PendingCallData } from "@/components/incident-feed"
@@ -35,6 +35,20 @@ interface VehicleData {
   status: "idle" | "responding" | "on_scene" | "returning"
   targetIncidentId?: string
   basePoint: [number, number]  // Original start point for returning
+}
+
+interface CallerData {
+  user_id: string
+  call_id: string
+  transcript: string
+  location: {
+    lat: number
+    lon: number
+    timestamp: number
+    accuracy: number
+  } | null
+  marker: mapboxgl.Marker | null
+  last_updated: number
 }
 
 interface DisasterMapProps {
@@ -367,6 +381,45 @@ function createHospitalMarkerElement(hospital: Hospital): HTMLDivElement {
   return container
 }
 
+// Create caller marker element (for emergency callers)
+function createCallerMarkerElement(): HTMLDivElement {
+  const container = document.createElement("div")
+  container.className = "caller-marker"
+  container.innerHTML = `
+    <div class="caller-marker-inner" style="
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4), 0 0 0 3px rgba(239, 68, 68, 0.2);
+      animation: pulse-caller 2s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    ">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+        <path d="M15 7a2 2 0 0 1 2 2"/>
+        <path d="M15 3a6 6 0 0 1 6 6"/>
+      </svg>
+    </div>
+  `
+
+  container.addEventListener("mouseenter", () => {
+    const inner = container.querySelector(".caller-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1.15)"
+  })
+  container.addEventListener("mouseleave", () => {
+    const inner = container.querySelector(".caller-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1)"
+  })
+
+  return container
+}
+
 // Create animated marker element
 function createVehicleMarkerElement(type: string): HTMLDivElement {
   const config = vehicleIcons[type] || vehicleIcons.rescue
@@ -559,6 +612,7 @@ export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(funct
   const animationRef = useRef<number | null>(null)
   const hospitalLayerRef = useRef<HospitalModelLayer | null>(null)
   const hospitalMarkersRef = useRef<mapboxgl.Marker[]>([])
+  const callersRef = useRef<Map<string, CallerData>>(new Map())
   const [liveIncidents, setLiveIncidents] = useState<IncidentData[]>([])
   const [dangerZones, setDangerZones] = useState<BackendDangerZone[]>([])
   const [hospitals, setHospitals] = useState<Hospital[]>([])
@@ -816,16 +870,146 @@ export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(funct
     console.log(`[DisasterMap] Added real-time incident: ${article.title.slice(0, 50)}`)
   }, [])
 
-  // Handle real-time location updates (for tracking callers)
+  // Handle real-time call updates (create caller markers)
+  const handleNewCall = useCallback(async (event: NewCallEvent) => {
+    const { user_id, call } = event
+    console.log(`[DisasterMap] New call from ${user_id}:`, call.transcript.slice(0, 50))
+
+    // Try to get caller's location from their location history
+    let callerLocation: { lat: number; lon: number; timestamp: number; accuracy: number } | null = null
+    try {
+      const userResponse = await backendApi.users.get(user_id)
+      const locationHistory = userResponse.user?.location_history
+      if (locationHistory && locationHistory.length > 0) {
+        const lastLocation = locationHistory[locationHistory.length - 1]
+        callerLocation = {
+          lat: lastLocation.lat,
+          lon: lastLocation.lon,
+          timestamp: lastLocation.timestamp,
+          accuracy: lastLocation.accuracy || 0,
+        }
+      }
+    } catch (error) {
+      console.error(`[DisasterMap] Failed to get location for ${user_id}:`, error)
+    }
+
+    // Create or update caller data
+    const callerData: CallerData = {
+      user_id,
+      call_id: call.call_id,
+      transcript: call.transcript,
+      location: callerLocation,
+      marker: null,
+      last_updated: Date.now(),
+    }
+
+    // If we have a location and the map is ready, create a marker
+    if (callerLocation && map.current) {
+      const element = createCallerMarkerElement()
+      const marker = new mapboxgl.Marker({ element })
+        .setLngLat([callerLocation.lon, callerLocation.lat])
+        .addTo(map.current)
+
+      // Add popup with call details
+      const popup = new mapboxgl.Popup({ offset: 25, closeButton: true })
+        .setHTML(`
+          <div style="font-family: system-ui, -apple-system, sans-serif; padding: 8px; max-width: 250px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef444480; animation: pulse 2s ease-in-out infinite;"></div>
+              <span style="font-weight: 600; font-size: 14px; color: #ef4444;">Active Emergency Call</span>
+            </div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 8px;">
+              <strong>Caller ID:</strong> ${user_id.slice(0, 12)}...
+            </div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 8px;">
+              <strong>Transcript:</strong> ${call.transcript.slice(0, 100)}${call.transcript.length > 100 ? '...' : ''}
+            </div>
+            <div style="font-size: 11px; color: #999;">
+              Accuracy: ±${callerLocation.accuracy.toFixed(0)}m
+            </div>
+          </div>
+        `)
+
+      marker.setPopup(popup)
+      callerData.marker = marker
+
+      console.log(`[DisasterMap] Created marker for caller ${user_id} at [${callerLocation.lat}, ${callerLocation.lon}]`)
+    } else if (!callerLocation) {
+      console.log(`[DisasterMap] No location available yet for caller ${user_id}, waiting for location update`)
+    }
+
+    // Store caller data
+    callersRef.current.set(user_id, callerData)
+  }, [])
+
+  // Handle real-time location updates (update caller positions)
   const handleNewLocation = useCallback((event: NewLocationEvent) => {
-    // Could add caller location markers here in the future
-    console.log(`[DisasterMap] Location update for ${event.user_id}:`, event.location)
+    const { user_id, location } = event
+    console.log(`[DisasterMap] Location update for ${user_id}: [${location.lat}, ${location.lon}]`)
+
+    const caller = callersRef.current.get(user_id)
+
+    if (caller) {
+      // Update existing caller's location
+      caller.location = location
+      caller.last_updated = Date.now()
+
+      if (caller.marker) {
+        // Update existing marker position
+        caller.marker.setLngLat([location.lon, location.lat])
+        console.log(`[DisasterMap] Updated marker position for ${user_id}`)
+      } else if (map.current) {
+        // Create marker if it doesn't exist yet (caller started calling before location was available)
+        const element = createCallerMarkerElement()
+        const marker = new mapboxgl.Marker({ element })
+          .setLngLat([location.lon, location.lat])
+          .addTo(map.current)
+
+        const popup = new mapboxgl.Popup({ offset: 25, closeButton: true })
+          .setHTML(`
+            <div style="font-family: system-ui, -apple-system, sans-serif; padding: 8px; max-width: 250px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef444480; animation: pulse 2s ease-in-out infinite;"></div>
+                <span style="font-weight: 600; font-size: 14px; color: #ef4444;">Active Emergency Call</span>
+              </div>
+              <div style="font-size: 12px; color: #666; margin-bottom: 8px;">
+                <strong>Caller ID:</strong> ${user_id.slice(0, 12)}...
+              </div>
+              <div style="font-size: 12px; color: #666; margin-bottom: 8px;">
+                <strong>Transcript:</strong> ${caller.transcript.slice(0, 100)}${caller.transcript.length > 100 ? '...' : ''}
+              </div>
+              <div style="font-size: 11px; color: #999;">
+                Accuracy: ±${location.accuracy.toFixed(0)}m
+              </div>
+            </div>
+          `)
+
+        marker.setPopup(popup)
+        caller.marker = marker
+
+        console.log(`[DisasterMap] Created delayed marker for ${user_id}`)
+      }
+    } else {
+      // Location update for someone who hasn't called yet (or we missed the call event)
+      // Store the location in case the call comes later
+      const callerData: CallerData = {
+        user_id,
+        call_id: "",
+        transcript: "",
+        location,
+        marker: null,
+        last_updated: Date.now(),
+      }
+      callersRef.current.set(user_id, callerData)
+      console.log(`[DisasterMap] Stored location for ${user_id} (no call yet)`)
+    }
   }, [])
 
   // Connect to real-time updates
   useDashboardUpdates({
     onNewNews: handleNewNews,
     onNewLocation: handleNewLocation,
+    onNewCall: handleNewCall,
   })
 
   // Fetch news on mount and poll every 30 seconds (WebSocket is primary)
@@ -1031,8 +1215,19 @@ export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(funct
             box-shadow: 0 2px 12px rgba(0,0,0,0.4), 0 0 0 6px rgba(255,255,255,0.4);
           }
         }
+        @keyframes pulse-caller {
+          0%, 100% {
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4), 0 0 0 3px rgba(239, 68, 68, 0.2);
+          }
+          50% {
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.6), 0 0 0 6px rgba(239, 68, 68, 0.1), 0 0 20px rgba(239, 68, 68, 0.3);
+          }
+        }
         .vehicle-marker {
           z-index: 10;
+        }
+        .caller-marker {
+          z-index: 15;
         }
         .mapboxgl-popup {
           z-index: 1000 !important;
@@ -1394,6 +1589,10 @@ export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(funct
       })
       hospitalMarkersRef.current.forEach((marker) => marker.remove())
       hospitalMarkersRef.current = []
+      callersRef.current.forEach((caller) => {
+        if (caller.marker) caller.marker.remove()
+      })
+      callersRef.current.clear()
       if (map.current) {
         map.current.remove()
         map.current = null
@@ -1430,6 +1629,20 @@ export const DisasterMap = forwardRef<DisasterMapHandle, DisasterMapProps>(funct
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-yellow-500 border-2 border-yellow-600" />
               <span>Moderate ({dangerZones.filter(z => z.severity <= 3).length})</span>
+            </div>
+          </>
+        )}
+        {callersRef.current.size > 0 && (
+          <>
+            <div className="border-t my-2" />
+            <div className="font-semibold mb-2">Active Callers</div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center" style={{ animation: "pulse-caller 2s ease-in-out infinite" }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/>
+                </svg>
+              </div>
+              <span>Emergency Calls ({callersRef.current.size})</span>
             </div>
           </>
         )}
