@@ -351,7 +351,7 @@ export function DataTable() {
   )
 
   React.useEffect(() => {
-    api.units
+    api.responders
       .list()
       .then((units) => {
         setData(units)

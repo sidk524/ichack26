@@ -5,10 +5,10 @@ import { IconMapPin, IconClock, IconExternalLink, IconAlertTriangle } from "@tab
 import { cn } from "@/lib/utils"
 import { api } from "@/lib/api"
 import type { NewsArticle } from "@/types/api"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface NewsFeedProps {
   className?: string
+  compact?: boolean
 }
 
 // Mock news for when API returns empty
@@ -69,7 +69,7 @@ function formatTimeAgo(dateString: string): string {
   return `${diffDays}d ago`
 }
 
-export function NewsFeed({ className }: NewsFeedProps) {
+export function NewsFeed({ className, compact = false }: NewsFeedProps) {
   const [news, setNews] = useState<NewsArticle[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -86,60 +86,71 @@ export function NewsFeed({ className }: NewsFeedProps) {
     return () => clearInterval(interval)
   }, [])
 
+  if (isLoading) {
+    return (
+      <div className={cn("flex items-center justify-center h-12 text-muted-foreground text-xs", className)}>
+        Loading...
+      </div>
+    )
+  }
+
+  // Compact mode: show just the latest headline
+  if (compact) {
+    const latest = news[0]
+    if (!latest) return null
+
+    return (
+      <div className={cn("flex items-center gap-2", className)}>
+        <IconAlertTriangle className="size-4 text-red-500 flex-shrink-0" />
+        <p className="text-sm truncate flex-1">{latest.title}</p>
+        <span className="text-xs text-muted-foreground flex-shrink-0">
+          +{news.length - 1} more
+        </span>
+      </div>
+    )
+  }
+
+  // Expanded mode: show all news items
   return (
-    <Card className={cn("flex flex-col", className)}>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <IconAlertTriangle className="size-5 text-red-500" />
-          Emergency Updates
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 overflow-y-auto space-y-3 pb-4">
-        {isLoading ? (
-          <div className="flex items-center justify-center h-32 text-muted-foreground text-sm">
-            Loading news...
+    <div className={cn("space-y-3", className)}>
+      {news.map((article) => (
+        <div
+          key={article.article_id}
+          className={cn(
+            "p-3 rounded-lg border bg-muted/30",
+            "hover:bg-muted/50 transition-colors"
+          )}
+        >
+          <h3 className="font-medium text-sm leading-snug mb-2">
+            {article.title}
+          </h3>
+
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            {article.location_name && (
+              <span className="flex items-center gap-1">
+                <IconMapPin className="size-3" />
+                {article.location_name}
+              </span>
+            )}
+            <span className="flex items-center gap-1">
+              <IconClock className="size-3" />
+              {formatTimeAgo(article.pub_date)}
+            </span>
           </div>
-        ) : (
-          news.map((article) => (
-            <div
-              key={article.article_id}
-              className={cn(
-                "p-3 rounded-lg border bg-muted/30",
-                "hover:bg-muted/50 transition-colors"
-              )}
+
+          {article.link && article.link !== "#" && (
+            <a
+              href={article.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
             >
-              <h3 className="font-medium text-sm leading-snug mb-2">
-                {article.title}
-              </h3>
-
-              <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                {article.location_name && (
-                  <span className="flex items-center gap-1">
-                    <IconMapPin className="size-3" />
-                    {article.location_name}
-                  </span>
-                )}
-                <span className="flex items-center gap-1">
-                  <IconClock className="size-3" />
-                  {formatTimeAgo(article.pub_date)}
-                </span>
-              </div>
-
-              {article.link && article.link !== "#" && (
-                <a
-                  href={article.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                >
-                  Read more
-                  <IconExternalLink className="size-3" />
-                </a>
-              )}
-            </div>
-          ))
-        )}
-      </CardContent>
-    </Card>
+              Read more
+              <IconExternalLink className="size-3" />
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
   )
 }

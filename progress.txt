@@ -1,0 +1,141 @@
+# Data Sources Research Progress
+# RALPH LOOP - COMPLETED via 5 parallel agents
+# Focus: Turkey + UK
+
+## Shelters and Sanctuaries
+- [x] Hospitals - OVERPASS API (Turkey bbox: 36,26,42,45 | UK bbox: 50,-6,56,2)
+- [x] Schools - OVERPASS API
+- [x] Bunkers - OVERPASS API (military=bunker tag)
+- [ ] DMZs (coordinates, boundaries) - No free API found
+- [x] Refugee Camps - OVERPASS (amenity=refugee_site) + UNHCR API
+- [ ] Humanitarian Corridors - No free API found
+- [ ] UN Safe Areas - No free API found
+
+## People Disasters
+- [x] Civil Unrest (protests, riots) - GDELT API + ACLED (needs registration)
+- [x] Civilian casualties in warzones - ACLED (needs free registration)
+- [x] Crime Areas (UK) - UK Police API (data.police.uk) - FREE, NO KEY
+- [ ] Crime Areas (Turkey) - No free API found
+
+## Infrastructure
+- [x] Internet Connectivity - IODA API (Georgia Tech) - FREE, NO KEY
+- [ ] Cell Service status - No free API found
+- [ ] Water Outage data - No free API found (Thames Water needs key)
+- [x] Power Outage (UK) - National Grid CSV + UK Power Networks API
+- [ ] Power Outage (Turkey) - EPIAS needs auth token
+- [ ] Structural Damage reports - No free API found
+
+## Natural Disasters
+- [x] Droughts - NASA EONET + GDACS
+- [x] Earthquakes (Global) - USGS API - FREE, NO KEY
+- [x] Earthquakes (Turkey) - AFAD API + Kandilli + EMSC
+- [x] Earthquakes (UK/Europe) - EMSC Seismic Portal - FREE, NO KEY
+- [x] Floods - NASA EONET + GDACS
+- [x] Tsunamis - USGS (tsunami flag) + GDACS
+- [x] Fires - NASA EONET - FREE, NO KEY
+- [x] Volcanoes - NASA EONET - FREE, NO KEY
+- [x] Severe Storms - NASA EONET + GDACS
+
+## Other Data
+- [x] News/Headlines - GDELT API - FREE, NO KEY
+- [x] Fuel Stations - OVERPASS API
+- [ ] Hospital capacity - No real-time API found
+
+---
+# CONFIRMED WORKING APIs - TURKEY + UK FOCUS
+
+## 1. USGS Earthquake API ⭐ FREE, NO KEY
+Turkey: https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minlatitude=36&maxlatitude=42&minlongitude=26&maxlongitude=45
+UK: https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minlatitude=50&maxlatitude=60&minlongitude=-8&maxlongitude=2
+Fields: mag, place, time, coordinates [lon,lat,depth], tsunami flag
+
+## 2. EMSC Seismic Portal ⭐ FREE, NO KEY
+Endpoint: https://www.seismicportal.eu/fdsnws/event/1/query
+Example: ?limit=10&format=json&minlat=36&maxlat=42&minlon=26&maxlon=45
+Best for: Turkey + UK/Europe earthquakes
+
+## 3. AFAD Turkey Earthquakes ⭐ FREE, NO KEY
+Endpoint: https://deprem.afad.gov.tr/EventData/GetEventsByFilter
+Method: POST with JSON body
+Fields: magnitude, coordinates, depth, location in Turkish
+
+## 4. NASA EONET ⭐ FREE, NO KEY
+Endpoint: https://eonet.gsfc.nasa.gov/api/v3/events
+Categories: wildfires, floods, earthquakes, volcanoes, severeStorms, drought, landslides
+Example: ?category=wildfires&status=open&limit=10
+Fields: title, coordinates, magnitude, date
+
+## 5. GDACS Global Disasters ⭐ FREE, NO KEY
+Endpoint: https://www.gdacs.org/gdacsapi/api/events/geteventlist/EVENTS
+Covers: Earthquakes, floods, cyclones, droughts globally
+Fields: GeoJSON with coordinates, severity, affected population
+
+## 6. UNHCR Population API ⭐ FREE, NO KEY
+Turkey: https://api.unhcr.org/population/v1/population/?year=2024&coa=TUR
+UK: https://api.unhcr.org/population/v1/population/?year=2024&coa=GBR
+Fields: refugees, asylum_seekers, idps, stateless counts
+
+## 7. Overpass API (OpenStreetMap) ⭐ FREE, NO KEY
+Endpoint: https://overpass-api.de/api/interpreter
+Queries:
+- Hospitals: node["amenity"="hospital"](bbox);out body;
+- Schools: node["amenity"="school"](bbox);out body;
+- Fuel: node["amenity"="fuel"](bbox);out body;
+- Shelters: node["emergency"="shelter"](bbox);out body;
+- Refugee sites: node["amenity"="refugee_site"](bbox);out body;
+Turkey bbox: (36,26,42,45) | UK bbox: (50,-6,56,2)
+
+## 8. UK Police Crime API ⭐ FREE, NO KEY
+Endpoint: https://data.police.uk/api/crimes-street/all-crime
+Example: ?lat=51.5&lng=-0.1&date=2024-01
+Fields: category, latitude, longitude, street, outcome_status
+
+## 9. GDELT News & Events ⭐ FREE, NO KEY (1 req/5sec limit)
+Doc API: https://api.gdeltproject.org/api/v2/doc/doc?query=disaster%20turkey&mode=ArtList&format=json
+Geo API: https://api.gdeltproject.org/api/v2/geo/geo?query=protest&format=GeoJSON
+Fields: title, url, date, tone, coordinates
+
+## 10. IODA Internet Outages ⭐ FREE, NO KEY
+Turkey: https://api.ioda.inetintel.cc.gatech.edu/v2/signals/raw/country/TR?from=TIMESTAMP&until=TIMESTAMP
+UK: https://api.ioda.inetintel.cc.gatech.edu/v2/signals/raw/country/GB?from=TIMESTAMP&until=TIMESTAMP
+Fields: bgp, active_probing, telescope signals
+
+## 11. UK Power Networks ⭐ FREE, NO KEY
+Endpoint: https://ukpowernetworks.opendatasoft.com/api/explore/v2.1/catalog/datasets/ukpn-disruption-report/records
+Fields: latitude, longitude, postcode, customers_affected, etr
+
+## 12. National Grid UK ⭐ FREE, NO KEY
+CSV Feeds for power outages
+Fields: latitude, longitude, postcode, incident details
+
+## 13. Open-Meteo Weather ⭐ FREE, NO KEY
+Turkey: https://api.open-meteo.com/v1/forecast?latitude=39.9&longitude=32.8&current_weather=true
+UK: https://api.open-meteo.com/v1/forecast?latitude=51.5&longitude=-0.1&current_weather=true
+Fields: temperature, windspeed, weathercode
+
+## 14. Norway Met Alerts ⭐ FREE, NO KEY
+Endpoint: https://api.met.no/weatherapi/metalerts/2.0/all.json
+Covers: European marine areas, some land alerts
+Fields: polygon coordinates, severity, event type
+
+---
+# NEEDS REGISTRATION (but free)
+
+## ACLED Conflict Data
+URL: https://acleddata.com
+Register: Free for researchers
+Data: Protests, riots, battles, violence - global coverage including Turkey + UK
+
+## UK Met Office
+URL: https://datahub.metoffice.gov.uk
+Register: Request API key via form
+Data: Official UK weather warnings
+
+---
+# DETAILED RESEARCH FILES
+See /Users/bugatt/Downloads/ichack26/research/ for full documentation:
+- agent1_natural_disasters.md
+- agent2_humanitarian.md
+- agent3_infrastructure.md
+- agent4_crime_unrest.md
+- agent5_news_alerts.md

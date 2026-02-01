@@ -45,7 +45,7 @@ export function HospitalDashboard() {
 
   useEffect(() => {
     api.hospitals
-      .getIncomingPatients("H-001")
+      .incomingPatients("H-001")
       .then((data) => {
         setIncomingPatients(data)
       })

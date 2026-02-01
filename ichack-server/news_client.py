@@ -73,7 +73,18 @@ async def danger_entities_out(request):
     return web.json_response({"ok": True, "danger_entities": []})
 
 
+async def news_list_out(request):
+    """Return all news articles from the database."""
+    try:
+        articles = await list_news()
+        return web.json_response(articles)
+    except Exception as e:
+        print(f"Error fetching news list: {e}")
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
 def register_news_routes(app):
     app.router.add_post("/sensor_information_in", sensor_information_in)
     app.router.add_post("/news_information_in", news_information_in)
     app.router.add_get("/danger_entities_out", danger_entities_out)
+    app.router.add_get("/news_list", news_list_out)
