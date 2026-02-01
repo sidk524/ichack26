@@ -63,12 +63,14 @@ export function HospitalCapacity({ className, hospitalId = "H-001" }: HospitalCa
     api.hospitals
       .getCapacity(hospitalId)
       .then((data) => {
-        setBedCategories(
-          data.beds.map((cat) => ({
-            ...cat,
-            icon: iconMap[cat.id] || IconBed,
-          }))
-        )
+        if (data && data.beds) {
+          setBedCategories(
+            data.beds.map((cat) => ({
+              ...cat,
+              icon: iconMap[cat.id] || IconBed,
+            }))
+          )
+        }
       })
       .catch((err) => {
         console.error("Failed to fetch bed capacity:", err)

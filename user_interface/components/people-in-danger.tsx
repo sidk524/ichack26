@@ -231,7 +231,7 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                           <span className="font-medium text-sm">
                             {caller.name}
                           </span>
-                          {caller.peopleWith > 0 && (
+                          {(caller.peopleWith ?? 0) > 0 && (
                             <Badge
                               variant="outline"
                               className="text-[10px] px-1 py-0 h-4"
@@ -249,7 +249,7 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                     <TableCell className="py-2.5">
                       <div className="flex items-start gap-1.5">
                         <IconMapPin className="size-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                        <span className="text-xs">{caller.location}</span>
+                        <span className="text-xs">{typeof caller.location === 'string' ? caller.location : caller.location ? `${caller.location.lat.toFixed(4)}, ${caller.location.lon.toFixed(4)}` : 'Unknown'}</span>
                       </div>
                     </TableCell>
                     <TableCell className="py-2.5">
@@ -273,7 +273,7 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                           )}
                         </div>
                         <div className="flex flex-wrap gap-0.5">
-                          {caller.medicalConditions.slice(0, 2).map((condition) => (
+                          {(caller.medicalConditions ?? []).slice(0, 2).map((condition) => (
                             <span
                               key={condition}
                               className="text-[9px] text-muted-foreground"

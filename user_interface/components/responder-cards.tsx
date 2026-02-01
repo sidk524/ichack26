@@ -48,7 +48,7 @@ export function ResponderCards() {
       .get()
       .then((response) => {
         // Handle both response.stats and direct response formats
-        const statsData = response.stats || response
+        const statsData = (response as { stats?: DashboardStats }).stats || response
         // Ensure all required fields exist with defaults
         setStats({
           activeIncidents: statsData.activeIncidents || 0,
