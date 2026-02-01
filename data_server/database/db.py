@@ -112,12 +112,14 @@ class ExtractedEntity:
     entity_id: str
     source_type: Literal["call", "news", "sensor"]
     source_id: str  # call_id, article_id, or reading_id
-    entity_type: Literal["person_status", "movement", "danger_zone", "medical"]
+    entity_type: Literal["person_status", "movement", "danger_zone", "medical", "infrastructure", "rescue_operation", "medical_facility"]
     urgency: int  # 1-5 scale
-    status: str  # extracted status (needs_help, safe, etc.)
+    status: str  # extracted status (needs_help, safe, monitoring, active_incident, in_progress, overwhelmed, etc.)
     zone_id: Optional[str] = None  # Links to danger_zones.zone_id if entity relates to a danger zone
-    needs: List[str] = field(default_factory=list)  # medical, evacuation, translation, shelter
+    needs: List[str] = field(default_factory=list)  # medical, evacuation, translation, shelter, search_and_rescue, etc.
     location_mentioned: str = ""
+    lat: Optional[float] = None
+    lon: Optional[float] = None
     medical_keywords: List[str] = field(default_factory=list)
     extracted_at: float = 0.0
 

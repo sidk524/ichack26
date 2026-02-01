@@ -111,7 +111,9 @@ SAMPLE_EXTRACTED_ENTITIES = [
         "urgency": 5,
         "status": "needs_help",
         "needs": ["medical", "evacuation", "search_and_rescue"],
-        "location_mentioned": "Şahinbey ilçesi, çökmüş bina",
+        "location_mentioned": "Şahinbey District, Gaziantep",
+        "lat": 37.0594,
+        "lon": 37.3825,
         "medical_keywords": ["trapped", "building_collapse", "unconscious", "bleeding"]
     },
     {
@@ -121,7 +123,9 @@ SAMPLE_EXTRACTED_ENTITIES = [
         "urgency": 5,
         "status": "active_incident",
         "needs": ["evacuation", "search_and_rescue", "medical_aid"],
-        "location_mentioned": "Kahramanmaraş merkez",
+        "location_mentioned": "Kahramanmaraş City Center",
+        "lat": 37.5858,
+        "lon": 36.9371,
         "medical_keywords": ["crush_injuries", "hypothermia"]
     },
     {
@@ -131,7 +135,9 @@ SAMPLE_EXTRACTED_ENTITIES = [
         "urgency": 3,
         "status": "monitoring",
         "needs": ["structural_assessment", "evacuation_planning"],
-        "location_mentioned": "Beyoğlu, Galata Tower yakını",
+        "location_mentioned": "Beyoğlu District, Near Galata Tower",
+        "lat": 41.0256,
+        "lon": 28.9744,
         "medical_keywords": []
     },
     {
@@ -141,7 +147,9 @@ SAMPLE_EXTRACTED_ENTITIES = [
         "urgency": 4,
         "status": "help_coming",
         "needs": ["medical", "ambulance"],
-        "location_mentioned": "Kızılay Meydanı",
+        "location_mentioned": "Kızılay Square, Ankara",
+        "lat": 39.9208,
+        "lon": 32.8541,
         "medical_keywords": ["heart_attack", "chest_pain", "elderly"]
     },
     {
@@ -151,8 +159,70 @@ SAMPLE_EXTRACTED_ENTITIES = [
         "urgency": 5,
         "status": "needs_help",
         "needs": ["search_and_rescue", "medical", "heavy_equipment"],
-        "location_mentioned": "Antakya eski şehir merkezi",
+        "location_mentioned": "Antakya Old City Center, Hatay",
+        "lat": 36.2048,
+        "lon": 36.1581,
         "medical_keywords": ["trapped_under_debris", "multiple_injuries", "family_of_four"]
+    },
+    {
+        "source_type": "call",
+        "source_id": "call_adiyaman_fire",
+        "entity_type": "infrastructure",
+        "urgency": 4,
+        "status": "active_incident",
+        "needs": ["fire_suppression", "evacuation", "medical"],
+        "location_mentioned": "Adıyaman Province Center",
+        "lat": 37.7648,
+        "lon": 38.2786,
+        "medical_keywords": ["smoke_inhalation", "burns"]
+    },
+    {
+        "source_type": "news",
+        "source_id": "article_malatya_rescue",
+        "entity_type": "rescue_operation",
+        "urgency": 5,
+        "status": "in_progress",
+        "needs": ["heavy_equipment", "search_and_rescue", "medical_teams"],
+        "location_mentioned": "Malatya City Center",
+        "lat": 38.3552,
+        "lon": 38.3095,
+        "medical_keywords": ["crush_syndrome", "dehydration", "hypothermia"]
+    },
+    {
+        "source_type": "sensor",
+        "source_id": "sensor_diyarbakir_bridge",
+        "entity_type": "infrastructure",
+        "urgency": 3,
+        "status": "monitoring",
+        "needs": ["structural_inspection", "traffic_diversion"],
+        "location_mentioned": "Diyarbakır Historic Bridge",
+        "lat": 37.9144,
+        "lon": 40.2306,
+        "medical_keywords": []
+    },
+    {
+        "source_type": "call",
+        "source_id": "call_iskenderun_port",
+        "entity_type": "infrastructure",
+        "urgency": 4,
+        "status": "active_incident",
+        "needs": ["fire_suppression", "hazmat_team", "evacuation"],
+        "location_mentioned": "İskenderun Port, Hatay",
+        "lat": 36.5873,
+        "lon": 36.1734,
+        "medical_keywords": ["chemical_exposure", "respiratory_distress"]
+    },
+    {
+        "source_type": "news",
+        "source_id": "article_sanliurfa_hospital",
+        "entity_type": "medical_facility",
+        "urgency": 5,
+        "status": "overwhelmed",
+        "needs": ["medical_supplies", "additional_staff", "blood_donations"],
+        "location_mentioned": "Şanlıurfa Training and Research Hospital",
+        "lat": 37.1674,
+        "lon": 38.7955,
+        "medical_keywords": ["mass_casualties", "triage", "critical_care"]
     }
 ]
 
@@ -247,6 +317,8 @@ async def create_extracted_entity_data():
             status=entity_info["status"],
             needs=entity_info["needs"],
             location_mentioned=entity_info["location_mentioned"],
+            lat=entity_info.get("lat"),
+            lon=entity_info.get("lon"),
             medical_keywords=entity_info["medical_keywords"],
             extracted_at=current_time - random.randint(60, 1800)  # 1min to 30min ago
         )

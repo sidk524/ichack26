@@ -123,12 +123,14 @@ class PostgresDB:
                     entity_id TEXT PRIMARY KEY,
                     source_type TEXT NOT NULL CHECK(source_type IN ('call', 'news', 'sensor')),
                     source_id TEXT NOT NULL,
-                    entity_type TEXT NOT NULL CHECK(entity_type IN ('person_status', 'movement', 'danger_zone', 'medical')),
+                    entity_type TEXT NOT NULL,
                     urgency INTEGER NOT NULL CHECK(urgency >= 1 AND urgency <= 5),
                     status TEXT NOT NULL,
                     zone_id TEXT,
                     needs TEXT DEFAULT '',
                     location_mentioned TEXT DEFAULT '',
+                    lat REAL,
+                    lon REAL,
                     medical_keywords TEXT DEFAULT '',
                     extracted_at REAL NOT NULL,
                     FOREIGN KEY (zone_id) REFERENCES danger_zones (zone_id) ON DELETE SET NULL
@@ -496,11 +498,12 @@ class PostgresDB:
             await db.execute(
                 """INSERT OR REPLACE INTO extracted_entities
                    (entity_id, source_type, source_id, entity_type, urgency, status,
-                    zone_id, needs, location_mentioned, medical_keywords, extracted_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    zone_id, needs, location_mentioned, lat, lon, medical_keywords, extracted_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (entity.entity_id, entity.source_type, entity.source_id, entity.entity_type,
                  entity.urgency, entity.status, entity.zone_id, ','.join(entity.needs),
-                 entity.location_mentioned, ','.join(entity.medical_keywords), entity.extracted_at)
+                 entity.location_mentioned, entity.lat, entity.lon,
+                 ','.join(entity.medical_keywords), entity.extracted_at)
             )
             await db.commit()
 
@@ -510,7 +513,7 @@ class PostgresDB:
         async with aiosqlite.connect(self.db_path) as db:
             async with db.execute(
                 """SELECT entity_id, source_type, source_id, entity_type, urgency, status,
-                          zone_id, needs, location_mentioned, medical_keywords, extracted_at
+                          zone_id, needs, location_mentioned, lat, lon, medical_keywords, extracted_at
                    FROM extracted_entities ORDER BY extracted_at DESC"""
             ) as cursor:
                 async for row in cursor:
@@ -524,8 +527,10 @@ class PostgresDB:
                         "zone_id": row[6],
                         "needs": row[7].split(',') if row[7] else [],
                         "location_mentioned": row[8],
-                        "medical_keywords": row[9].split(',') if row[9] else [],
-                        "extracted_at": row[10]
+                        "lat": row[9],
+                        "lon": row[10],
+                        "medical_keywords": row[11].split(',') if row[11] else [],
+                        "extracted_at": row[12]
                     })
         return entities
 

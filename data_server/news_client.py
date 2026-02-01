@@ -110,6 +110,15 @@ async def danger_entities_out(request):
         return web.json_response({"ok": False, "error": str(e)}, status=500)
 
 
+async def danger_zones_out(request):
+    """GET /danger_zones_out - Retrieve all active danger zones."""
+    try:
+        zones = await list_danger_zones()
+        return web.json_response({"ok": True, "danger_zones": zones})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
 # === Danger Zones WebSocket ===
 
 async def _broadcast_danger_zones_loop():
@@ -208,5 +217,6 @@ def register_news_routes(app):
     app.router.add_post("/sensor_information_in", sensor_information_in)
     app.router.add_post("/news_information_in", news_information_in)
     app.router.add_get("/danger_entities_out", danger_entities_out)
+    app.router.add_get("/danger_zones_out", danger_zones_out)
     # WebSocket for real-time danger zones (every second)
     app.router.add_get("/ws/danger_zones", danger_zones_ws_handler)

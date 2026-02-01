@@ -499,7 +499,9 @@ curl http://localhost:8080/api/entities
       "urgency": 5,
       "status": "needs_help",
       "needs": ["medical", "evacuation", "search_and_rescue"],
-      "location_mentioned": "Şahinbey ilçesi, çökmüş bina",
+      "location_mentioned": "Şahinbey District, Gaziantep",
+      "lat": 37.0594,
+      "lon": 37.3825,
       "medical_keywords": ["trapped", "building_collapse", "unconscious", "bleeding"],
       "extracted_at": 1234567890.123
     }
@@ -511,11 +513,12 @@ curl http://localhost:8080/api/entities
 - `entity_id`: Unique identifier for the extracted entity
 - `source_type`: Source of the entity ("call", "news", "sensor")
 - `source_id`: ID of the source record (call_id, article_id, or reading_id)
-- `entity_type`: Type of entity ("person_status", "movement", "danger_zone", "medical")
+- `entity_type`: Type of entity ("person_status", "movement", "danger_zone", "medical", "infrastructure", "rescue_operation", "medical_facility")
 - `urgency`: Urgency level from 1 (low) to 5 (critical)
-- `status`: Current status (e.g., "needs_help", "help_coming", "monitoring", "active_incident")
-- `needs`: Array of identified needs (e.g., ["medical", "evacuation", "ambulance"])
+- `status`: Current status (e.g., "needs_help", "help_coming", "monitoring", "active_incident", "in_progress", "overwhelmed")
+- `needs`: Array of identified needs (e.g., ["medical", "evacuation", "ambulance", "search_and_rescue", "fire_suppression", "blood_donations"])
 - `location_mentioned`: Location extracted from the source text
+- `lat`/`lon`: GPS coordinates of the entity location (may be null)
 - `medical_keywords`: Medical terms identified in the source
 - `extracted_at`: When the entity was extracted (Unix timestamp)
 

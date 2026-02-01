@@ -16,14 +16,19 @@ from database.postgres import (
     get_all_news,
     get_news_by_id,
     get_all_sensors,
+    list_hospitals,
+    list_danger_zones,
+    list_extracted_entities,
+    save_hospital,
+    save_danger_zone,
     ensure_user_exists,
     append_location,
     append_call,
 )
-from database.db import LocationPoint, Call
 from status_inference import calculate_priority_score
 import aiosqlite
 from database.postgres import db
+from database.db import LocationPoint, Call, Hospital, DangerZone
 
 
 def register_data_routes(app: web.Application):
@@ -46,6 +51,15 @@ def register_data_routes(app: web.Application):
 
     # Sensors
     app.router.add_get("/api/sensors", get_sensors_handler)
+
+    # Hospitals
+    app.router.add_get("/api/hospitals", get_hospitals_handler)
+
+    # Danger Zones
+    app.router.add_get("/api/danger-zones", get_danger_zones_handler)
+
+    # Extracted Entities
+    app.router.add_get("/api/entities", get_extracted_entities_handler)
 
     # Complete data dump
     app.router.add_get("/api/data/all", get_all_data_handler)
@@ -156,6 +170,39 @@ async def get_sensors_handler(request: web.Request) -> web.Response:
         return web.json_response({"ok": False, "error": str(e)}, status=500)
 
 
+# === Hospital Endpoints ===
+
+async def get_hospitals_handler(request: web.Request) -> web.Response:
+    """GET /api/hospitals - Retrieve all hospitals with capacity info."""
+    try:
+        hospitals = await list_hospitals()
+        return web.json_response({"ok": True, "hospitals": hospitals})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+# === Danger Zone Endpoints ===
+
+async def get_danger_zones_handler(request: web.Request) -> web.Response:
+    """GET /api/danger-zones - Retrieve all active danger zones."""
+    try:
+        zones = await list_danger_zones()
+        return web.json_response({"ok": True, "danger_zones": zones})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+# === Extracted Entity Endpoints ===
+
+async def get_extracted_entities_handler(request: web.Request) -> web.Response:
+    """GET /api/entities - Retrieve all AI-extracted entities."""
+    try:
+        entities = await list_extracted_entities()
+        return web.json_response({"ok": True, "entities": entities})
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
 # === Complete Data Dump ===
 
 async def get_all_data_handler(request: web.Request) -> web.Response:
@@ -164,6 +211,9 @@ async def get_all_data_handler(request: web.Request) -> web.Response:
         users = await get_all_users_with_data()
         news = await get_all_news()
         sensors = await get_all_sensors()
+        hospitals = await list_hospitals()
+        danger_zones = await list_danger_zones()
+        entities = await list_extracted_entities()
 
         return web.json_response({
             "ok": True,
@@ -171,6 +221,9 @@ async def get_all_data_handler(request: web.Request) -> web.Response:
                 "users": users,
                 "news": news,
                 "sensors": sensors,
+                "hospitals": hospitals,
+                "danger_zones": danger_zones,
+                "entities": entities,
                 "timestamp": time.time()
             }
         })
