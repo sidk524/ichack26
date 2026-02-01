@@ -23,6 +23,7 @@ class Call:
     transcript: str
     start_time: float
     end_time: float
+    tags: List[str] = field(default_factory=list)  # Top 3 meaningful words extracted from transcript
 
 
 @dataclass
@@ -31,6 +32,7 @@ class User:
     role: Literal["civilian", "first_responder"]
     status: str = "normal"  # civilian: normal, needs_help, help_coming, at_incident, in_transport, at_hospital
                            # responder: roaming, docked, en_route_to_civ, on_scene, en_route_to_hospital
+    preferred_language: str = "en"  # Language preference: 'en' (English) or 'tr' (Turkish)
     location_history: List[LocationPoint] = field(default_factory=list)
     calls: List[Call] = field(default_factory=list)
 

@@ -31,6 +31,7 @@ curl http://localhost:8080/api/users
       "user_id": "user_123",
       "role": "civilian",
       "status": "normal",
+      "preferred_language": "en",
       "location_history": [
         {
           "lat": 51.5074,
@@ -44,7 +45,8 @@ curl http://localhost:8080/api/users
           "call_id": "call_abc123",
           "transcript": "Emergency at warehouse on 5th street",
           "start_time": 1234567890.123,
-          "end_time": 1234567895.456
+          "end_time": 1234567895.456,
+          "tags": ["emergency", "fire", "warehouse"]
         }
       ]
     }
@@ -58,8 +60,10 @@ curl http://localhost:8080/api/users
 - `status`: Current user status
   - For civilians: "normal", "needs_help", "help_coming", "at_incident", "in_transport", "at_hospital"
   - For responders: "roaming", "docked", "en_route_to_civ", "on_scene", "en_route_to_hospital"
+- `preferred_language`: User's preferred language ("en" for English, "tr" for Turkish)
 - `location_history`: Array of GPS coordinates with timestamps
 - `calls`: Array of emergency call transcripts
+  - `tags`: Top 3 meaningful words extracted from transcript using NLP
 - `timestamp`: Unix timestamp (seconds since epoch)
 - `accuracy`: GPS accuracy in meters
 
@@ -83,6 +87,7 @@ curl http://localhost:8080/api/users/user_123
     "user_id": "user_123",
     "role": "civilian",
     "status": "normal",
+    "preferred_language": "en",
     "location_history": [...],
     "calls": [...]
   }
@@ -185,7 +190,8 @@ curl http://localhost:8080/api/calls
       "user_id": "user_123",
       "transcript": "Emergency at warehouse on 5th street. Fire spreading quickly.",
       "start_time": 1234567890.123,
-      "end_time": 1234567895.456
+      "end_time": 1234567895.456,
+      "tags": ["emergency", "fire", "warehouse"]
     }
   ]
 }
@@ -197,6 +203,7 @@ curl http://localhost:8080/api/calls
 - `transcript`: Complete text transcript of the emergency call
 - `start_time`: When the call started (Unix timestamp)
 - `end_time`: When the call ended (Unix timestamp)
+- `tags`: Top 3 meaningful words extracted from transcript using NLP (supports English and Turkish)
 
 ---
 
@@ -219,7 +226,8 @@ curl http://localhost:8080/api/calls/user_123
       "call_id": "call_abc123",
       "transcript": "Emergency at warehouse",
       "start_time": 1234567890.123,
-      "end_time": 1234567895.456
+      "end_time": 1234567895.456,
+      "tags": ["emergency", "warehouse"]
     }
   ]
 }
@@ -528,6 +536,7 @@ curl http://localhost:8080/api/data/all
         "user_id": "user_123",
         "role": "civilian",
         "status": "normal",
+        "preferred_language": "en",
         "location_history": [...],
         "calls": [...]
       }

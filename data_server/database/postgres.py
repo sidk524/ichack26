@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 from typing import Optional, List
 from pathlib import Path
 
@@ -20,6 +21,7 @@ class PostgresDB:
                     user_id TEXT PRIMARY KEY,
                     role TEXT NOT NULL CHECK(role IN ('civilian', 'first_responder')),
                     status TEXT DEFAULT 'normal',
+                    preferred_language TEXT DEFAULT 'en' CHECK(preferred_language IN ('en', 'tr')),
                     created_at REAL DEFAULT (julianday('now'))
                 )
             """)
@@ -43,6 +45,7 @@ class PostgresDB:
                     transcript TEXT NOT NULL,
                     start_time REAL NOT NULL,
                     end_time REAL NOT NULL,
+                    tags TEXT DEFAULT '',
                     FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
                 )
             """)
@@ -147,12 +150,12 @@ class PostgresDB:
 
     # --- Users ---
 
-    async def ensure_user_exists(self, user_id: str, role: str = "civilian", status: str = "normal") -> None:
+    async def ensure_user_exists(self, user_id: str, role: str = "civilian", status: str = "normal", preferred_language: str = "en") -> None:
         """Create user if they don't exist."""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
-                "INSERT OR IGNORE INTO users (user_id, role, status) VALUES (?, ?, ?)",
-                (user_id, role, status)
+                "INSERT OR IGNORE INTO users (user_id, role, status, preferred_language) VALUES (?, ?, ?, ?)",
+                (user_id, role, status, preferred_language)
             )
             await db.commit()
 
@@ -161,8 +164,8 @@ class PostgresDB:
         async with aiosqlite.connect(self.db_path) as db:
             # Save or update user
             await db.execute(
-                "INSERT OR REPLACE INTO users (user_id, role, status) VALUES (?, ?, ?)",
-                (user.user_id, user.role, user.status)
+                "INSERT OR REPLACE INTO users (user_id, role, status, preferred_language) VALUES (?, ?, ?, ?)",
+                (user.user_id, user.role, user.status, user.preferred_language)
             )
 
             # Clear existing location history and calls
@@ -178,9 +181,10 @@ class PostgresDB:
 
             # Save calls
             for call in user.calls:
+                tags_str = ','.join(call.tags) if call.tags else ''
                 await db.execute(
-                    "INSERT INTO calls (call_id, user_id, transcript, start_time, end_time) VALUES (?, ?, ?, ?, ?)",
-                    (call.call_id, user.user_id, call.transcript, call.start_time, call.end_time)
+                    "INSERT INTO calls (call_id, user_id, transcript, start_time, end_time, tags) VALUES (?, ?, ?, ?, ?, ?)",
+                    (call.call_id, user.user_id, call.transcript, call.start_time, call.end_time, tags_str)
                 )
 
             await db.commit()
@@ -189,7 +193,7 @@ class PostgresDB:
         """Get user with their location history and calls."""
         async with aiosqlite.connect(self.db_path) as db:
             # Get user
-            async with db.execute("SELECT user_id, role, status FROM users WHERE user_id = ?", (user_id,)) as cursor:
+            async with db.execute("SELECT user_id, role, status, preferred_language FROM users WHERE user_id = ?", (user_id,)) as cursor:
                 user_row = await cursor.fetchone()
                 if not user_row:
                     return None
@@ -208,18 +212,20 @@ class PostgresDB:
             # Get calls
             calls = []
             async with db.execute(
-                "SELECT call_id, transcript, start_time, end_time FROM calls WHERE user_id = ? ORDER BY start_time",
+                "SELECT call_id, transcript, start_time, end_time, tags FROM calls WHERE user_id = ? ORDER BY start_time",
                 (user_id,)
             ) as cursor:
                 async for row in cursor:
+                    tags = row[4].split(',') if row[4] else []
                     calls.append(Call(
-                        call_id=row[0], transcript=row[1], start_time=row[2], end_time=row[3]
+                        call_id=row[0], transcript=row[1], start_time=row[2], end_time=row[3], tags=tags
                     ))
 
             return User(
                 user_id=user_row[0],
                 role=user_row[1],
                 status=user_row[2],
+                preferred_language=user_row[3] if len(user_row) > 3 else 'en',
                 location_history=location_history,
                 calls=calls
             )
@@ -236,9 +242,10 @@ class PostgresDB:
     async def append_call(self, user_id: str, call: Call) -> None:
         """Add a call to user's history."""
         async with aiosqlite.connect(self.db_path) as db:
+            tags_str = ','.join(call.tags) if call.tags else ''
             await db.execute(
-                "INSERT INTO calls (call_id, user_id, transcript, start_time, end_time) VALUES (?, ?, ?, ?, ?)",
-                (call.call_id, user_id, call.transcript, call.start_time, call.end_time)
+                "INSERT INTO calls (call_id, user_id, transcript, start_time, end_time, tags) VALUES (?, ?, ?, ?, ?, ?)",
+                (call.call_id, user_id, call.transcript, call.start_time, call.end_time, tags_str)
             )
             await db.commit()
 
@@ -246,7 +253,7 @@ class PostgresDB:
         """List all users as raw dicts."""
         users = []
         async with aiosqlite.connect(self.db_path) as db:
-            async with db.execute("SELECT user_id, role, status FROM users") as cursor:
+            async with db.execute("SELECT user_id, role, status, preferred_language FROM users") as cursor:
                 async for row in cursor:
                     user = await self.get_user(row[0])
                     if user:
@@ -254,12 +261,14 @@ class PostgresDB:
                             "user_id": user.user_id,
                             "role": user.role,
                             "status": user.status,
+                            "preferred_language": user.preferred_language,
                             "location_history": [
                                 {"lat": lp.lat, "lon": lp.lon, "timestamp": lp.timestamp, "accuracy": lp.accuracy}
                                 for lp in user.location_history
                             ],
                             "calls": [
-                                {"call_id": c.call_id, "transcript": c.transcript, "start_time": c.start_time, "end_time": c.end_time}
+                                {"call_id": c.call_id, "transcript": c.transcript, "start_time": c.start_time,
+                                 "end_time": c.end_time, "tags": c.tags}
                                 for c in user.calls
                             ]
                         })
@@ -507,8 +516,8 @@ async def init_db():
     # Removed wipe_db() call to preserve data across restarts
     print("Database initialized (data preserved)")
 
-async def ensure_user_exists(user_id: str, role: str = "civilian", status: str = "normal") -> None:
-    await db.ensure_user_exists(user_id, role, status)
+async def ensure_user_exists(user_id: str, role: str = "civilian", status: str = "normal", preferred_language: str = "en") -> None:
+    await db.ensure_user_exists(user_id, role, status, preferred_language)
 
 async def save_user(user: User) -> None:
     await db.save_user(user)
@@ -626,15 +635,24 @@ async def get_all_calls() -> List[dict]:
     calls = []
     async with aiosqlite.connect(db.db_path) as conn:
         async with conn.execute(
-            "SELECT call_id, user_id, transcript, start_time, end_time FROM calls ORDER BY start_time"
+            "SELECT call_id, user_id, transcript, start_time, end_time, tags FROM calls ORDER BY start_time"
         ) as cursor:
             async for row in cursor:
+                # Handle both JSON array and comma-separated formats
+                if row[5]:
+                    try:
+                        tags = json.loads(row[5]) if row[5].startswith('[') else row[5].split(',')
+                    except:
+                        tags = row[5].split(',') if ',' in row[5] else [row[5]]
+                else:
+                    tags = []
                 calls.append({
                     "call_id": row[0],
                     "user_id": row[1],
                     "transcript": row[2],
                     "start_time": row[3],
-                    "end_time": row[4]
+                    "end_time": row[4],
+                    "tags": tags
                 })
     return calls
 
@@ -644,15 +662,24 @@ async def get_calls_for_user(user_id: str) -> List[dict]:
     calls = []
     async with aiosqlite.connect(db.db_path) as conn:
         async with conn.execute(
-            "SELECT call_id, transcript, start_time, end_time FROM calls WHERE user_id = ? ORDER BY start_time",
+            "SELECT call_id, transcript, start_time, end_time, tags FROM calls WHERE user_id = ? ORDER BY start_time",
             (user_id,)
         ) as cursor:
             async for row in cursor:
+                # Handle both JSON array and comma-separated formats
+                if row[4]:
+                    try:
+                        tags = json.loads(row[4]) if row[4].startswith('[') else row[4].split(',')
+                    except:
+                        tags = row[4].split(',') if ',' in row[4] else [row[4]]
+                else:
+                    tags = []
                 calls.append({
                     "call_id": row[0],
                     "transcript": row[1],
                     "start_time": row[2],
-                    "end_time": row[3]
+                    "end_time": row[3],
+                    "tags": tags
                 })
     return calls
 

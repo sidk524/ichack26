@@ -4,9 +4,10 @@ import time
 import uuid
 from aiohttp import web
 
-from database.postgres import ensure_user_exists, append_location, append_call, list_users
+from database.postgres import ensure_user_exists, append_location, append_call, list_users, get_user
 from database.db import LocationPoint, Call
 from dashboard_ws import broadcast_new_call, broadcast_new_location
+from tag_extractor import extract_bilingual_tags
 
 
 async def print_users_table():
@@ -43,14 +44,19 @@ async def phone_transcript_ws(request):
                 if is_final is True:
                     # Save completed call to database
                     await ensure_user_exists(user_id)
+
+                    # Extract tags from transcript
+                    tags = extract_bilingual_tags(text, num_tags=3)
+
                     call = Call(
                         call_id=uuid.uuid4().hex,
                         transcript=text,
                         start_time=call_start_time,
                         end_time=time.time(),
+                        tags=tags
                     )
                     await append_call(user_id, call)
-                    print(f"Call saved for user {user_id}")
+                    print(f"Call saved for user {user_id} with tags: {tags}")
                     await print_users_table()
                     # Broadcast to dashboards
                     await broadcast_new_call(user_id, {
@@ -58,6 +64,7 @@ async def phone_transcript_ws(request):
                         "transcript": call.transcript,
                         "start_time": call.start_time,
                         "end_time": call.end_time,
+                        "tags": call.tags
                     })
                     await ws.close()
                 else:
@@ -74,14 +81,20 @@ async def phone_transcript_ws(request):
     # If websocket closed without is_final, save concatenated partial texts
     if user_id and partial_texts:
         await ensure_user_exists(user_id)
+        full_transcript = " ".join(partial_texts)
+
+        # Extract tags from transcript
+        tags = extract_bilingual_tags(full_transcript, num_tags=3)
+
         call = Call(
             call_id=uuid.uuid4().hex,
-            transcript=" ".join(partial_texts),
+            transcript=full_transcript,
             start_time=call_start_time,
             end_time=time.time(),
+            tags=tags
         )
         await append_call(user_id, call)
-        print(f"Call saved on disconnect for user {user_id}")
+        print(f"Call saved on disconnect for user {user_id} with tags: {tags}")
         await print_users_table()
         # Broadcast to dashboards
         await broadcast_new_call(user_id, {
@@ -89,6 +102,7 @@ async def phone_transcript_ws(request):
             "transcript": call.transcript,
             "start_time": call.start_time,
             "end_time": call.end_time,
+            "tags": call.tags
         })
 
     return ws

@@ -5,9 +5,11 @@ import uuid
 import random
 from database.postgres import (
     init_db, save_hospital, save_danger_zone, save_extracted_entity,
-    list_hospitals, list_danger_zones, list_extracted_entities
+    list_hospitals, list_danger_zones, list_extracted_entities,
+    ensure_user_exists, append_call, list_users
 )
-from database.db import Hospital, DangerZone, ExtractedEntity
+from database.db import Hospital, DangerZone, ExtractedEntity, Call
+from tag_extractor import extract_bilingual_tags
 
 # Real hospital data for Turkey
 REAL_HOSPITALS = [
@@ -245,6 +247,76 @@ async def create_extracted_entity_data():
     return entities
 
 
+async def create_sample_users_and_calls():
+    """Create sample users with language preferences and emergency calls with tags."""
+    current_time = time.time()
+
+    # Sample emergency call transcripts in English and Turkish
+    sample_calls = [
+        # English calls
+        {
+            "user_id": "civilian_en_001",
+            "lang": "en",
+            "role": "civilian",
+            "transcript": "Help! There's a fire in the building and we're trapped on the third floor. The smoke is getting thick and we need immediate evacuation assistance. There are five people here including two children."
+        },
+        {
+            "user_id": "civilian_en_002",
+            "lang": "en",
+            "role": "civilian",
+            "transcript": "Emergency! An earthquake just hit and the building collapsed. People are trapped under rubble. We need search and rescue teams immediately at the industrial district."
+        },
+        {
+            "user_id": "responder_en_001",
+            "lang": "en",
+            "role": "first_responder",
+            "transcript": "This is unit 42. We're responding to the building collapse on Main Street. Multiple casualties confirmed. Requesting additional ambulances and heavy equipment for extraction."
+        },
+        # Turkish calls
+        {
+            "user_id": "civilian_tr_001",
+            "lang": "tr",
+            "role": "civilian",
+            "transcript": "İmdat! Deprem oldu ve binamız yıkıldı. Enkaz altında insanlar var. Gaziantep Şehitkamil bölgesindeyiz. Acil yardım gönderin, çocuklar var burada!"
+        },
+        {
+            "user_id": "civilian_tr_002",
+            "lang": "tr",
+            "role": "civilian",
+            "transcript": "Yangın var! Hastane yakınında büyük bir yangın çıktı. Dumanlar yükseliyor ve insanlar tahliye ediliyor. İtfaiye ve ambulans lazım acil!"
+        },
+        {
+            "user_id": "responder_tr_001",
+            "lang": "tr",
+            "role": "first_responder",
+            "transcript": "Ekip 23 burada. Kahramanmaraş merkezdeki göçük bölgesine ulaştık. Ağır yaralılar var. Ek ambulans ve kurtarma ekibi takviyesi gerekiyor."
+        }
+    ]
+
+    print("\nCreating sample users with language preferences and emergency calls...")
+    for call_data in sample_calls:
+        # Create user with language preference
+        await ensure_user_exists(call_data["user_id"], role=call_data["role"])
+
+        # Extract tags from transcript
+        tags = extract_bilingual_tags(call_data["transcript"], num_tags=3)
+
+        # Create call with extracted tags
+        call = Call(
+            call_id=uuid.uuid4().hex,
+            transcript=call_data["transcript"],
+            start_time=current_time - random.randint(300, 1800),
+            end_time=current_time - random.randint(60, 299),
+            tags=tags
+        )
+
+        await append_call(call_data["user_id"], call)
+
+        lang_label = "🇬🇧 English" if call_data["lang"] == "en" else "🇹🇷 Turkish"
+        print(f"  ✓ {call_data['user_id']} ({lang_label} {call_data['role']})")
+        print(f"    📞 Call tags: {', '.join(tags) if tags else 'None'}")
+
+
 async def populate_mock_data():
     """Populate database with mock data."""
     print("Creating mock hospitals...")
@@ -265,9 +337,26 @@ async def populate_mock_data():
         await save_extracted_entity(entity)
         print(f"  🤖 {entity.entity_type} from {entity.source_type} - Urgency {entity.urgency}")
 
+    # Create sample users and calls with language preferences and tags
+    await create_sample_users_and_calls()
+
 
 async def show_mock_data():
     """Display current mock data in database."""
+    # Show users and their calls first
+    print("\n=== USERS & CALLS ===")
+    users = await list_users()
+    for user in users:
+        lang = "🇬🇧 EN" if user.get('preferred_language', 'en') == 'en' else "🇹🇷 TR"
+        print(f"{user['user_id']} ({lang} - {user['role']})")
+        if user.get('calls'):
+            for call in user['calls']:
+                tags = call.get('tags', [])
+                if tags:
+                    print(f"  📞 Call: {call['transcript'][:60]}...")
+                    print(f"     Tags: {', '.join(tags)}")
+        print()
+
     print("\n=== HOSPITALS ===")
     hospitals = await list_hospitals()
     for hospital in hospitals:
