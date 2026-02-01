@@ -15,7 +15,8 @@ export default function TestWebSocket() {
   }
 
   const connect = () => {
-    const url = "ws://localhost:8080/phone_location_in"
+    const wsBase = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080"
+    const url = `${wsBase}/phone_location_in`
     addLog(`Connecting to ${url}...`)
     setStatus("connecting")
 

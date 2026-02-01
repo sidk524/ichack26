@@ -560,7 +560,9 @@ export function DisasterMap({ incidents: propIncidents, className, showVehicles 
   const fetchNewsIncidents = useCallback(async () => {
     try {
       const response = await backendApi.news.list()
-      const newsIncidents = response.news
+      // Handle the response format: { ok: true, news: [...] }
+      const newsArticles = response.news || []
+      const newsIncidents = newsArticles
         .map(newsToIncident)
         .filter((incident): incident is IncidentData => incident !== null)
 

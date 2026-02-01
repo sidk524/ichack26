@@ -82,13 +82,13 @@ async def news_information_in(request):
             "received_at": article.received_at,
         })
         # Extract danger zone in background (don't block response)
+        # Note: extract_danger_from_news expects (article_id, title, content)
+        # For now, pass title as content since we don't have full content
         asyncio.create_task(
             extract_danger_from_news(
                 article.article_id,
                 article.title,
-                article.lat,
-                article.lon,
-                article.disaster,
+                article.title  # Using title as content for now
             )
         )
     except Exception as e:

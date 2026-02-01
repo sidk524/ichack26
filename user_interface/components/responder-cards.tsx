@@ -46,11 +46,25 @@ export function ResponderCards() {
   useEffect(() => {
     api.stats
       .get()
-      .then((data) => {
-        setStats(data)
+      .then((response) => {
+        // Handle both response.stats and direct response formats
+        const statsData = response.stats || response
+        // Ensure all required fields exist with defaults
+        setStats({
+          activeIncidents: statsData.activeIncidents || 0,
+          incidentsTrend: statsData.incidentsTrend || 0,
+          peopleInDanger: statsData.peopleInDanger || 0,
+          peopleTrend: statsData.peopleTrend || 0,
+          respondersDeployed: statsData.respondersDeployed || 0,
+          respondersTrend: statsData.respondersTrend || 0,
+          resourcesAvailable: statsData.resourcesAvailable || 0,
+          resourcesTrend: statsData.resourcesTrend || 0,
+        })
       })
       .catch((err) => {
         console.error("Failed to fetch stats:", err)
+        // Keep default stats on error
+        setStats(defaultStats)
       })
       .finally(() => {
         setIsLoading(false)
