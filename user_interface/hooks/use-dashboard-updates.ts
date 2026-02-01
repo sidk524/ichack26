@@ -56,7 +56,7 @@ interface UseDashboardUpdatesOptions {
   onDisconnected?: () => void
 }
 
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080"
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "wss://drdatabackend.ngrok.dev"
 
 export function useDashboardUpdates(options: UseDashboardUpdatesOptions = {}) {
   const wsRef = useRef<WebSocket | null>(null)

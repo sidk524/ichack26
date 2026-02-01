@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import type { TranscriptPayload } from "@/types/api"
 
 // Configuration
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080"
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "wss://drdatabackend.ngrok.dev"
 const LOCATION_ENDPOINT = "/phone_location_in"
 const TRANSCRIPT_ENDPOINT = "/phone_transcript_in"
 

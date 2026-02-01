@@ -15,7 +15,7 @@ export default function TestWebSocket() {
   }
 
   const connect = () => {
-    const wsBase = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080"
+    const wsBase = process.env.NEXT_PUBLIC_WS_URL || "wss://drdatabackend.ngrok.dev"
     const url = `${wsBase}/phone_location_in`
     addLog(`Connecting to ${url}...`)
     setStatus("connecting")
