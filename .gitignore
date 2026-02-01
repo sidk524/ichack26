@@ -45,3 +45,6 @@ htmlcov/
 # Misc
 .DS_Store
 *.log
+
+# Server (separate repo)
+ichack-server-main/

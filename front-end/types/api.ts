@@ -101,7 +101,7 @@ export interface DashboardStats {
 // ============================================================================
 
 export interface LocationPayload {
-  client_id: string
+  user_id: string
   data: {
     lat: number
     lon: number
@@ -111,7 +111,7 @@ export interface LocationPayload {
 }
 
 export interface TranscriptPayload {
-  client_id: string
+  user_id: string
   data: {
     transcript: {
       text: string

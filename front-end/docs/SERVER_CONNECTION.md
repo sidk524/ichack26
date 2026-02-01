@@ -148,7 +148,7 @@ That's it. Components already fetch via `api.*` methods.
 
 ```json
 {
-  "client_id": "session_1706745600000_abc123def",
+  "user_id": "session_1706745600000_abc123def",
   "data": {
     "lat": 37.7749,
     "lon": -122.4194,
@@ -162,7 +162,7 @@ That's it. Components already fetch via `api.*` methods.
 
 ```json
 {
-  "client_id": "session_1706745600000_abc123def",
+  "user_id": "session_1706745600000_abc123def",
   "data": {
     "transcript": {
       "text": "I need help, there's a fire",

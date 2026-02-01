@@ -70,20 +70,27 @@ export function EmergencyCall() {
   const [callDuration, setCallDuration] = useState(0)
   const [currentInstruction, setCurrentInstruction] = useState<string>("")
 
-  // Generate a unique session ID for this call
+  // Generate a unique user ID for this call session
   // This persists across re-renders but changes for each new call
   const sessionId = useMemo(() => generateSessionId(), [])
 
   // Server WebSocket connection for location and transcript streaming
-  // Currently in mock mode - data is logged to console
-  // When server is ready: set WEBSOCKET_ENABLED=true in use-server-websocket.ts
-  const { sendLocation, sendTranscript } = useServerWebSocket({
-    clientId: sessionId,
+  const {
+    sendLocation,
+    sendTranscript,
+    connect: connectWebSocket,
+    disconnect: disconnectWebSocket,
+    status: wsStatus,
+  } = useServerWebSocket({
+    userId: sessionId,
     onStatusChange: (status) => {
       console.log("[EmergencyCall] WebSocket status:", status)
     },
     onError: (error) => {
       console.error("[EmergencyCall] WebSocket error:", error.message)
+    },
+    onMessage: (data) => {
+      console.log("[EmergencyCall] WebSocket message received:", data)
     },
   })
 
@@ -149,14 +156,14 @@ export function EmergencyCall() {
   const personaState = getPersonaState(callStatus, mode)
 
   // Send transcript updates to server when messages change
-  // Currently logs to console (mock mode)
-  // When server is ready, this will stream to /phone_transcript_in
+  // Send as partial (is_final=false) during the call
+  // Server will save all partials when connection closes
   useEffect(() => {
     if (messages.length > 0 && callStatus === "connected") {
       const lastMessage = messages[messages.length - 1]
       sendTranscript({
         text: lastMessage.content,
-        is_final: true, // ElevenLabs provides final transcripts
+        is_final: false, // Keep connection open, server saves on disconnect
       })
       console.log("[EmergencyCall] Transcript update:", {
         role: lastMessage.role,
@@ -187,15 +194,19 @@ export function EmergencyCall() {
   const handleStartCall = useCallback(async () => {
     setCallDuration(0)
     setHasEnded(false)
+    // Connect to server WebSocket
+    connectWebSocket()
     // Start location tracking when call begins
     startLocationTracking()
     await startConversation()
-  }, [startConversation, startLocationTracking])
+  }, [startConversation, startLocationTracking, connectWebSocket])
 
   const handleEndCall = useCallback(async () => {
     await endConversation()
     // Stop location tracking when call ends
     stopLocationTracking()
+    // Disconnect from server WebSocket
+    disconnectWebSocket()
     setHasEnded(true)
     setCurrentInstruction("")
 
@@ -203,7 +214,7 @@ export function EmergencyCall() {
     setTimeout(() => {
       setHasEnded(false)
     }, 3000)
-  }, [endConversation, stopLocationTracking])
+  }, [endConversation, stopLocationTracking, disconnectWebSocket])
 
   const toggleMute = useCallback(() => {
     const newMuted = !isMuted
@@ -220,7 +231,22 @@ export function EmergencyCall() {
           <span className="font-semibold text-sm">Emergency Response</span>
         </div>
         {callStatus === "connected" && (
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-3 text-sm">
+            {/* WebSocket status indicator */}
+            <div className="flex items-center gap-1">
+              <span
+                className={cn(
+                  "size-2 rounded-full",
+                  wsStatus === "connected" && "bg-green-500",
+                  wsStatus === "connecting" && "bg-yellow-500 animate-pulse",
+                  wsStatus === "error" && "bg-red-500",
+                  wsStatus === "disconnected" && "bg-gray-400"
+                )}
+              />
+              <span className="text-xs text-muted-foreground">
+                {wsStatus === "connected" ? "Server" : wsStatus}
+              </span>
+            </div>
             <span className="relative flex size-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full size-2 bg-red-500"></span>
