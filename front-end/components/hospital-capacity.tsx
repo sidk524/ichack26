@@ -61,10 +61,10 @@ export function HospitalCapacity({ className, hospitalId = "H-001" }: HospitalCa
 
   useEffect(() => {
     api.hospitals
-      .getCapacity(hospitalId)
+      .capacity(hospitalId)
       .then((data) => {
         setBedCategories(
-          data.map((cat) => ({
+          data.beds.map((cat) => ({
             ...cat,
             icon: iconMap[cat.id] || IconBed,
           }))

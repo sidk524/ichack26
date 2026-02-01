@@ -121,6 +121,22 @@ export interface TranscriptPayload {
 }
 
 // ============================================================================
+// News Article Types
+// ============================================================================
+
+export interface NewsArticle {
+  article_id: string
+  title: string
+  link: string
+  pub_date: string
+  disaster: boolean
+  location_name: string
+  lat?: number
+  lon?: number
+  image_url?: string
+}
+
+// ============================================================================
 // API Response Wrapper Types
 // ============================================================================
 
