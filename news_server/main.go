@@ -15,7 +15,7 @@ import (
 type Location struct {
 	Name string  `json:"name"`
 	Lat  float32 `json:"lat"`
-	Long float32 `json:"long"`
+	Long float32 `json:"lng"`
 }
 
 // NewsItem represents the full data read from the file
@@ -48,7 +48,7 @@ type NewsData struct {
 	ConvertedAt string     `json:"convertedAt"`
 }
 
-const targetURL = "https://715814cd2aaf.ngrok-free.app/news_information_in"
+const targetURL = "http://localhost:8080/news_information_in"
 
 func main() {
 	// 1. Setup Zerolog with Nano precision timestamp

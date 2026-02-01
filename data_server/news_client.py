@@ -41,7 +41,7 @@ async def news_information_in(request):
     location = data.get("location", {})
     location_name = location.get("name", "") if isinstance(location, dict) else ""
     lat = location.get("lat") if isinstance(location, dict) else None
-    lon = location.get("long") if isinstance(location, dict) else None  # Note: "long" in input
+    lon = location.get("lng") if isinstance(location, dict) else None  # Note: "lng" from Go server
 
     # Create and save news article
     article = NewsArticle(
