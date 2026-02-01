@@ -502,10 +502,10 @@ db = PostgresDB()
 
 # Re-export functions with same signature as firestore module
 async def init_db():
-    """Initialize database and wipe existing data."""
+    """Initialize database (no longer wipes on startup to preserve seeded data)."""
     await db.init_db()
-    await db.wipe_db()
-    print("Database initialized and wiped clean")
+    # Removed wipe_db() call to preserve data across restarts
+    print("Database initialized (data preserved)")
 
 async def ensure_user_exists(user_id: str, role: str = "civilian", status: str = "normal") -> None:
     await db.ensure_user_exists(user_id, role, status)
@@ -557,3 +557,129 @@ async def save_extracted_entity(entity: ExtractedEntity) -> None:
 
 async def list_extracted_entities() -> List[dict]:
     return await db.list_extracted_entities()
+
+
+# === Additional GET API functions for data_client.py ===
+
+async def get_all_users_with_data() -> List[dict]:
+    """Get all users with their location history and calls as dicts."""
+    return await db.list_users()
+
+
+async def get_user_with_data(user_id: str) -> Optional[dict]:
+    """Get a specific user with location history and calls as dict."""
+    user = await db.get_user(user_id)
+    if user is None:
+        return None
+    return {
+        "user_id": user.user_id,
+        "role": user.role,
+        "location_history": [
+            {"lat": lp.lat, "lon": lp.lon, "timestamp": lp.timestamp, "accuracy": lp.accuracy}
+            for lp in user.location_history
+        ],
+        "calls": [
+            {"call_id": c.call_id, "transcript": c.transcript, "start_time": c.start_time, "end_time": c.end_time}
+            for c in user.calls
+        ]
+    }
+
+
+async def get_all_locations() -> List[dict]:
+    """Get all location points from all users in a flat array."""
+    locations = []
+    async with aiosqlite.connect(db.db_path) as conn:
+        async with conn.execute(
+            "SELECT user_id, lat, lon, timestamp, accuracy FROM location_points ORDER BY timestamp"
+        ) as cursor:
+            async for row in cursor:
+                locations.append({
+                    "user_id": row[0],
+                    "lat": row[1],
+                    "lon": row[2],
+                    "timestamp": row[3],
+                    "accuracy": row[4]
+                })
+    return locations
+
+
+async def get_locations_for_user(user_id: str) -> List[dict]:
+    """Get location history for a specific user."""
+    locations = []
+    async with aiosqlite.connect(db.db_path) as conn:
+        async with conn.execute(
+            "SELECT lat, lon, timestamp, accuracy FROM location_points WHERE user_id = ? ORDER BY timestamp",
+            (user_id,)
+        ) as cursor:
+            async for row in cursor:
+                locations.append({
+                    "lat": row[0],
+                    "lon": row[1],
+                    "timestamp": row[2],
+                    "accuracy": row[3]
+                })
+    return locations
+
+
+async def get_all_calls() -> List[dict]:
+    """Get all emergency calls from all users."""
+    calls = []
+    async with aiosqlite.connect(db.db_path) as conn:
+        async with conn.execute(
+            "SELECT call_id, user_id, transcript, start_time, end_time FROM calls ORDER BY start_time"
+        ) as cursor:
+            async for row in cursor:
+                calls.append({
+                    "call_id": row[0],
+                    "user_id": row[1],
+                    "transcript": row[2],
+                    "start_time": row[3],
+                    "end_time": row[4]
+                })
+    return calls
+
+
+async def get_calls_for_user(user_id: str) -> List[dict]:
+    """Get calls for a specific user."""
+    calls = []
+    async with aiosqlite.connect(db.db_path) as conn:
+        async with conn.execute(
+            "SELECT call_id, transcript, start_time, end_time FROM calls WHERE user_id = ? ORDER BY start_time",
+            (user_id,)
+        ) as cursor:
+            async for row in cursor:
+                calls.append({
+                    "call_id": row[0],
+                    "transcript": row[1],
+                    "start_time": row[2],
+                    "end_time": row[3]
+                })
+    return calls
+
+
+async def get_all_news() -> List[dict]:
+    """Get all news articles."""
+    return await db.list_news()
+
+
+async def get_news_by_id(article_id: str) -> Optional[dict]:
+    """Get a specific news article as dict."""
+    article = await db.get_news(article_id)
+    if article is None:
+        return None
+    return {
+        "article_id": article.article_id,
+        "link": article.link,
+        "title": article.title,
+        "pub_date": article.pub_date,
+        "disaster": article.disaster,
+        "location_name": article.location_name,
+        "received_at": article.received_at,
+        "lat": article.lat,
+        "lon": article.lon
+    }
+
+
+async def get_all_sensors() -> List[dict]:
+    """Get all sensor readings."""
+    return await db.list_sensor_readings()

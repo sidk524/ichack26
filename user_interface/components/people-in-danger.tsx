@@ -1,15 +1,16 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
   IconPhone,
   IconMapPin,
-  IconHeartbeat,
   IconUser,
   IconUsers,
-  IconAlertTriangle,
   IconCircleFilled,
   IconPlayerPlay,
   IconAmbulance,
+  IconLoader2,
+  IconAlertCircle,
 } from "@tabler/icons-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -24,24 +25,43 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
+import { api, type PersonInDanger } from "@/lib/api"
 
 type CallerStatus = "on_call" | "waiting" | "being_rescued" | "rescued" | "safe"
 
-interface Caller {
-  id: string
-  name: string
-  phone: string
-  location: string
-  status: CallerStatus
-  isTrapped: boolean
-  isInjured: boolean
-  peopleWith: number
-  medicalConditions: string[]
-  incidentId: string
-  lastContact: string
-  assignedUnit?: string
+// Extend PersonInDanger to match the component's needs
+interface Caller extends PersonInDanger {
+  // PersonInDanger already has all the fields we need
 }
 
+const statusConfig: Record<
+  CallerStatus,
+  { label: string; color: string; bgColor: string }
+> = {
+  on_call: {
+    label: "On Call",
+    color: "text-blue-600",
+    bgColor: "bg-blue-500",
+  },
+  waiting: {
+    label: "Waiting",
+    color: "text-orange-600",
+    bgColor: "bg-orange-500",
+  },
+  being_rescued: {
+    label: "Being Rescued",
+    color: "text-purple-600",
+    bgColor: "bg-purple-500",
+  },
+  rescued: {
+    label: "Rescued",
+    color: "text-green-600",
+    bgColor: "bg-green-500",
+  },
+  safe: { label: "Safe", color: "text-gray-600", bgColor: "bg-gray-500" },
+}
+
+// Fallback mock data for when API returns empty
 const mockCallers: Caller[] = [
   {
     id: "C-001",
@@ -61,7 +81,7 @@ const mockCallers: Caller[] = [
     id: "C-002",
     name: "Fatma K.",
     phone: "+90 533 XXX XX02",
-    location: "Kahramanmaraş - Hospital Staff",
+    location: "Kahramanmaras - Hospital Staff",
     status: "waiting",
     isTrapped: true,
     isInjured: false,
@@ -75,7 +95,7 @@ const mockCallers: Caller[] = [
     id: "C-003",
     name: "Mehmet A.",
     phone: "+90 535 XXX XX03",
-    location: "Pazarcık - Near Epicenter",
+    location: "Pazarcik - Near Epicenter",
     status: "being_rescued",
     isTrapped: true,
     isInjured: true,
@@ -85,82 +105,80 @@ const mockCallers: Caller[] = [
     lastContact: "5m ago",
     assignedUnit: "Rescue 2",
   },
-  {
-    id: "C-004",
-    name: "Ayşe D.",
-    phone: "+90 537 XXX XX04",
-    location: "Elbistan - School Building",
-    status: "on_call",
-    isTrapped: true,
-    isInjured: false,
-    peopleWith: 15,
-    medicalConditions: ["Children (12)", "Teacher"],
-    incidentId: "INC-004",
-    lastContact: "Active",
-    assignedUnit: undefined,
-  },
-  {
-    id: "C-005",
-    name: "Ali B.",
-    phone: "+90 538 XXX XX05",
-    location: "Defne, Hatay - Residential",
-    status: "waiting",
-    isTrapped: false,
-    isInjured: true,
-    peopleWith: 1,
-    medicalConditions: ["Burns", "Smoke inhalation"],
-    incidentId: "INC-005",
-    lastContact: "8m ago",
-    assignedUnit: "Medic 7",
-  },
-  {
-    id: "C-006",
-    name: "Zeynep S.",
-    phone: "+90 539 XXX XX06",
-    location: "Gaziantep - Apartment Block",
-    status: "rescued",
-    isTrapped: false,
-    isInjured: true,
-    peopleWith: 0,
-    medicalConditions: ["Fractures"],
-    incidentId: "INC-006",
-    lastContact: "12m ago",
-    assignedUnit: "Medic 12",
-  },
 ]
-
-const statusConfig: Record<CallerStatus, { label: string; color: string; bgColor: string }> = {
-  on_call: { label: "On Call", color: "text-blue-600", bgColor: "bg-blue-500" },
-  waiting: { label: "Waiting", color: "text-orange-600", bgColor: "bg-orange-500" },
-  being_rescued: { label: "Being Rescued", color: "text-purple-600", bgColor: "bg-purple-500" },
-  rescued: { label: "Rescued", color: "text-green-600", bgColor: "bg-green-500" },
-  safe: { label: "Safe", color: "text-gray-600", bgColor: "bg-gray-500" },
-}
 
 interface PeopleInDangerProps {
   className?: string
 }
 
 export function PeopleInDanger({ className }: PeopleInDangerProps) {
-  const activeCount = mockCallers.filter((c) => c.status === "on_call" || c.status === "waiting").length
-  const trappedCount = mockCallers.filter((c) => c.isTrapped && c.status !== "rescued" && c.status !== "safe").length
+  const [callers, setCallers] = useState<Caller[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const people = await api.people.list()
+
+        // Use API data if available, otherwise use mock data
+        if (people.length > 0) {
+          setCallers(people)
+        } else {
+          // Fall back to mock data when no real data
+          setCallers(mockCallers)
+        }
+        setError(null)
+      } catch (err) {
+        console.error("[PeopleInDanger] Failed to fetch:", err)
+        setError("Failed to load data")
+        // Use mock data on error
+        setCallers(mockCallers)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+
+    // Poll for updates every 10 seconds
+    const interval = setInterval(fetchData, 10000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const activeCount = callers.filter(
+    (c) => c.status === "on_call" || c.status === "waiting"
+  ).length
+  const trappedCount = callers.filter(
+    (c) => c.isTrapped && c.status !== "rescued" && c.status !== "safe"
+  ).length
 
   return (
     <Card className={cn("flex flex-col", className)}>
       <CardHeader className="flex-none border-b px-4 py-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-semibold">People in Danger</CardTitle>
+          <CardTitle className="text-sm font-semibold">
+            People in Danger
+          </CardTitle>
           <div className="flex items-center gap-2">
+            {isLoading && (
+              <IconLoader2 className="size-4 animate-spin text-muted-foreground" />
+            )}
             <Badge variant="destructive" className="animate-pulse">
               {trappedCount} trapped
             </Badge>
-            <Badge variant="secondary">
-              {activeCount} active
-            </Badge>
+            <Badge variant="secondary">{activeCount} active</Badge>
           </div>
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden p-0">
+        {error && (
+          <div className="flex items-center gap-2 px-4 py-2 bg-destructive/10 text-destructive text-xs">
+            <IconAlertCircle className="size-4" />
+            {error} - showing cached data
+          </div>
+        )}
         <div className="h-full overflow-y-auto">
           <Table>
             <TableHeader className="bg-muted/50 sticky top-0 z-10">
@@ -174,35 +192,58 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockCallers.map((caller) => {
+              {callers.length === 0 && !isLoading && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8">
+                    <p className="text-muted-foreground text-sm">
+                      No people in danger reported
+                    </p>
+                  </TableCell>
+                </TableRow>
+              )}
+              {callers.map((caller) => {
                 const status = statusConfig[caller.status]
                 return (
                   <TableRow
                     key={caller.id}
                     className={cn(
-                      caller.status === "on_call" && "bg-blue-50/50 dark:bg-blue-950/20",
-                      caller.isTrapped && caller.status !== "rescued" && "border-l-2 border-l-red-500"
+                      caller.status === "on_call" &&
+                        "bg-blue-50/50 dark:bg-blue-950/20",
+                      caller.isTrapped &&
+                        caller.status !== "rescued" &&
+                        "border-l-2 border-l-red-500"
                     )}
                   >
                     <TableCell className="pl-4 py-2.5">
                       <div className="flex flex-col items-center gap-1">
-                        <IconCircleFilled className={cn("size-2.5", status.color)} />
-                        <span className="text-[9px] text-muted-foreground">{status.label}</span>
+                        <IconCircleFilled
+                          className={cn("size-2.5", status.color)}
+                        />
+                        <span className="text-[9px] text-muted-foreground">
+                          {status.label}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className="py-2.5">
                       <div className="flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <IconUser className="size-3.5 text-muted-foreground" />
-                          <span className="font-medium text-sm">{caller.name}</span>
+                          <span className="font-medium text-sm">
+                            {caller.name}
+                          </span>
                           {caller.peopleWith > 0 && (
-                            <Badge variant="outline" className="text-[10px] px-1 py-0 h-4">
-                              <IconUsers className="size-2.5 mr-0.5" />
-                              +{caller.peopleWith}
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] px-1 py-0 h-4"
+                            >
+                              <IconUsers className="size-2.5 mr-0.5" />+
+                              {caller.peopleWith}
                             </Badge>
                           )}
                         </div>
-                        <span className="text-[10px] text-muted-foreground">{caller.phone}</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          {caller.phone}
+                        </span>
                       </div>
                     </TableCell>
                     <TableCell className="py-2.5">
@@ -215,19 +256,28 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                       <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-1">
                           {caller.isTrapped && (
-                            <Badge variant="destructive" className="text-[9px] px-1 py-0 h-4">
+                            <Badge
+                              variant="destructive"
+                              className="text-[9px] px-1 py-0 h-4"
+                            >
                               Trapped
                             </Badge>
                           )}
                           {caller.isInjured && (
-                            <Badge variant="outline" className="text-[9px] px-1 py-0 h-4 text-orange-600 border-orange-200">
+                            <Badge
+                              variant="outline"
+                              className="text-[9px] px-1 py-0 h-4 text-orange-600 border-orange-200"
+                            >
                               Injured
                             </Badge>
                           )}
                         </div>
                         <div className="flex flex-wrap gap-0.5">
                           {caller.medicalConditions.slice(0, 2).map((condition) => (
-                            <span key={condition} className="text-[9px] text-muted-foreground">
+                            <span
+                              key={condition}
+                              className="text-[9px] text-muted-foreground"
+                            >
                               {condition}
                             </span>
                           ))}
@@ -238,10 +288,15 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                       {caller.assignedUnit ? (
                         <div className="flex items-center gap-1.5">
                           <IconAmbulance className="size-3.5 text-muted-foreground" />
-                          <span className="text-xs font-medium">{caller.assignedUnit}</span>
+                          <span className="text-xs font-medium">
+                            {caller.assignedUnit}
+                          </span>
                         </div>
                       ) : (
-                        <Badge variant="outline" className="text-[10px] text-yellow-600 border-yellow-200">
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] text-yellow-600 border-yellow-200"
+                        >
                           Unassigned
                         </Badge>
                       )}
@@ -249,7 +304,11 @@ export function PeopleInDanger({ className }: PeopleInDangerProps) {
                     <TableCell className="pr-4 py-2.5">
                       <div className="flex items-center gap-1">
                         {caller.status === "on_call" && (
-                          <Button variant="ghost" size="icon" className="size-7 text-green-600">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-7 text-green-600"
+                          >
                             <IconPhone className="size-3.5" />
                           </Button>
                         )}

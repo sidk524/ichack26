@@ -6,6 +6,7 @@ from aiohttp import web
 
 from database.postgres import save_news, list_news
 from database.db import NewsArticle
+from dashboard_ws import broadcast_new_news
 
 
 async def print_news_table():
@@ -59,6 +60,18 @@ async def news_information_in(request):
         await save_news(article)
         print(f"News saved: {title[:50]}..." if len(title) > 50 else f"News saved: {title}")
         await print_news_table()
+        # Broadcast to dashboards
+        await broadcast_new_news({
+            "article_id": article.article_id,
+            "title": article.title,
+            "link": article.link,
+            "pub_date": article.pub_date,
+            "disaster": article.disaster,
+            "location_name": article.location_name,
+            "lat": article.lat,
+            "lon": article.lon,
+            "received_at": article.received_at,
+        })
     except Exception as e:
         print(f"Error saving news: {e}")
         return web.json_response({"ok": False, "error": str(e)}, status=500)

@@ -6,6 +6,7 @@ from aiohttp import web
 
 from database.postgres import ensure_user_exists, append_location, append_call, list_users
 from database.db import LocationPoint, Call
+from dashboard_ws import broadcast_new_call, broadcast_new_location
 
 
 async def print_users_table():
@@ -51,6 +52,13 @@ async def phone_transcript_ws(request):
                     await append_call(user_id, call)
                     print(f"Call saved for user {user_id}")
                     await print_users_table()
+                    # Broadcast to dashboards
+                    await broadcast_new_call(user_id, {
+                        "call_id": call.call_id,
+                        "transcript": call.transcript,
+                        "start_time": call.start_time,
+                        "end_time": call.end_time,
+                    })
                     await ws.close()
                 else:
                     # Store partial text in case of sudden disconnect
@@ -75,6 +83,13 @@ async def phone_transcript_ws(request):
         await append_call(user_id, call)
         print(f"Call saved on disconnect for user {user_id}")
         await print_users_table()
+        # Broadcast to dashboards
+        await broadcast_new_call(user_id, {
+            "call_id": call.call_id,
+            "transcript": call.transcript,
+            "start_time": call.start_time,
+            "end_time": call.end_time,
+        })
 
     return ws
 
@@ -105,6 +120,13 @@ async def phone_location_ws(request):
                 await append_location(user_id, location)
                 print(f"Location saved for {user_id}: {location}")
                 await print_users_table()
+                # Broadcast to dashboards
+                await broadcast_new_location(user_id, {
+                    "lat": location.lat,
+                    "lon": location.lon,
+                    "timestamp": location.timestamp,
+                    "accuracy": location.accuracy,
+                })
             else:
                 pass
         elif msg.type == web.WSMsgType.BINARY:

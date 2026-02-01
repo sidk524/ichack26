@@ -64,7 +64,7 @@ export function HospitalCapacity({ className, hospitalId = "H-001" }: HospitalCa
       .getCapacity(hospitalId)
       .then((data) => {
         setBedCategories(
-          data.map((cat) => ({
+          data.beds.map((cat) => ({
             ...cat,
             icon: iconMap[cat.id] || IconBed,
           }))

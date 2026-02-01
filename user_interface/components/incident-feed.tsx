@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import {
   IconFlame,
   IconHeartbeat,
@@ -10,9 +10,9 @@ import {
   IconCircleDot,
   IconCircleFilled,
   IconDotsVertical,
-  IconPhone,
+  IconExternalLink,
   IconMapPin,
-  IconUsers,
+  IconNews,
   IconClock,
   IconTrendingUp,
   IconLoader2,
@@ -71,15 +71,16 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import { api } from "@/lib/api"
+import { backendApi } from "@/lib/backend-api"
+import { useDashboardUpdates, type NewNewsEvent, type NewCallEvent } from "@/hooks/use-dashboard-updates"
+import type { BackendNewsArticle } from "@/types/backend"
 import type {
   IncidentType,
   IncidentStatus,
   SeverityLevel,
-  Incident as ApiIncident,
 } from "@/types/api"
 
-// Local display type (maps API incident to component needs)
+// Local display type for news-based incidents
 interface Incident {
   id: string
   type: IncidentType
@@ -87,21 +88,56 @@ interface Incident {
   severity: SeverityLevel
   status: IncidentStatus
   reportedAt: string
-  assignedUnits: number
-  description: string
+  title: string
+  link: string
+  isDisaster: boolean
 }
 
-// Transform API incident to local display format
-function toDisplayIncident(incident: ApiIncident): Incident {
+// Infer incident type from news title
+function inferTypeFromTitle(title: string): IncidentType {
+  const t = title.toLowerCase()
+  if (t.includes("fire") || t.includes("blaze") || t.includes("burn")) return "fire"
+  if (t.includes("flood") || t.includes("water") || t.includes("rain")) return "flood"
+  if (t.includes("earthquake") || t.includes("collapse") || t.includes("rescue") || t.includes("trapped")) return "rescue"
+  if (t.includes("crash") || t.includes("accident") || t.includes("collision")) return "accident"
+  if (t.includes("medical") || t.includes("hospital") || t.includes("injury") || t.includes("injured")) return "medical"
+  return "other"
+}
+
+// Infer severity from title keywords
+function inferSeverity(title: string, isDisaster: boolean): SeverityLevel {
+  const t = title.toLowerCase()
+  if (t.includes("major") || t.includes("massive") || t.includes("devastating") || t.includes("magnitude")) return 5
+  if (t.includes("severe") || t.includes("serious") || t.includes("multiple") || t.includes("dead")) return 4
+  if (isDisaster) return 4
+  if (t.includes("minor") || t.includes("small")) return 2
+  return 3
+}
+
+// Format time ago from timestamp
+function formatTimeAgo(timestamp: number): string {
+  const seconds = Math.floor(Date.now() / 1000 - timestamp)
+  if (seconds < 60) return "Just now"
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
+  return `${Math.floor(seconds / 86400)}d ago`
+}
+
+// Transform news article to incident display format
+function newsToIncident(article: BackendNewsArticle): Incident {
+  const type = inferTypeFromTitle(article.title)
+  const severity = inferSeverity(article.title, article.disaster)
+
   return {
-    id: incident.id,
-    type: incident.type,
-    location: incident.location,
-    severity: incident.severity,
-    status: incident.status,
-    reportedAt: incident.reportedAt,
-    assignedUnits: incident.assignedUnits.length,
-    description: incident.description,
+    id: article.article_id,
+    type,
+    location: article.location_name || "Unknown Location",
+    severity,
+    status: article.disaster ? "new" : "dispatched",
+    reportedAt: formatTimeAgo(article.received_at),
+    title: article.title,
+    link: article.link,
+    isDisaster: article.disaster,
   }
 }
 
@@ -171,10 +207,10 @@ function IncidentDetailDrawer({ incident }: { incident: Incident }) {
         <DrawerHeader className="gap-1">
           <div className="flex items-center gap-2">
             <TypeIcon className={cn("size-5", typeConfig.color)} />
-            <DrawerTitle>{incident.id}: {typeConfig.label}</DrawerTitle>
+            <DrawerTitle>{typeConfig.label} Incident</DrawerTitle>
           </div>
           <DrawerDescription>
-            {incident.location} - {incident.description}
+            {incident.title}
           </DrawerDescription>
         </DrawerHeader>
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
@@ -227,8 +263,8 @@ function IncidentDetailDrawer({ incident }: { incident: Incident }) {
                   <IconTrendingUp className="size-4" />
                 </div>
                 <div className="text-muted-foreground">
-                  This area has seen increased incident activity. {incident.assignedUnits} units
-                  currently assigned to this incident.
+                  This incident was reported {incident.reportedAt}.
+                  {incident.isDisaster && " Marked as disaster-related."}
                 </div>
               </div>
               <Separator />
@@ -243,17 +279,17 @@ function IncidentDetailDrawer({ incident }: { incident: Incident }) {
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg border p-3">
-              <IconUsers className="size-5 text-muted-foreground" />
+              <IconNews className="size-5 text-muted-foreground" />
               <div>
-                <p className="text-xs text-muted-foreground">Units Assigned</p>
-                <p className="font-medium text-sm">{incident.assignedUnits}</p>
+                <p className="text-xs text-muted-foreground">Source</p>
+                <p className="font-medium text-sm">News Report</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg border p-3">
               <IconClock className="size-5 text-muted-foreground" />
               <div>
                 <p className="text-xs text-muted-foreground">Reported</p>
-                <p className="font-medium text-sm">{incident.reportedAt} ago</p>
+                <p className="font-medium text-sm">{incident.reportedAt}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg border p-3">
@@ -264,68 +300,19 @@ function IncidentDetailDrawer({ incident }: { incident: Incident }) {
               </div>
             </div>
           </div>
-          <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="description">Description</Label>
-              <Input id="description" defaultValue={incident.description} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="type">Incident Type</Label>
-                <Select defaultValue={incident.type}>
-                  <SelectTrigger id="type" className="w-full">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fire">Fire</SelectItem>
-                    <SelectItem value="medical">Medical</SelectItem>
-                    <SelectItem value="rescue">Rescue</SelectItem>
-                    <SelectItem value="flood">Flood</SelectItem>
-                    <SelectItem value="accident">Accident</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="status">Status</Label>
-                <Select defaultValue={incident.status}>
-                  <SelectTrigger id="status" className="w-full">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="new">New</SelectItem>
-                    <SelectItem value="dispatched">Dispatched</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="resolved">Resolved</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="severity">Severity Level</Label>
-                <Select defaultValue={incident.severity.toString()}>
-                  <SelectTrigger id="severity" className="w-full">
-                    <SelectValue placeholder="Select severity" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">1 - Low</SelectItem>
-                    <SelectItem value="2">2 - Minor</SelectItem>
-                    <SelectItem value="3">3 - Moderate</SelectItem>
-                    <SelectItem value="4">4 - High</SelectItem>
-                    <SelectItem value="5">5 - Critical</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="units">Assigned Units</Label>
-                <Input id="units" type="number" defaultValue={incident.assignedUnits} />
-              </div>
-            </div>
-          </form>
+          {incident.link && (
+            <a
+              href={incident.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-primary hover:underline"
+            >
+              <IconExternalLink className="size-4" />
+              View Original Article
+            </a>
+          )}
         </div>
         <DrawerFooter>
-          <Button>Update Incident</Button>
           <DrawerClose asChild>
             <Button variant="outline">Close</Button>
           </DrawerClose>
@@ -345,7 +332,7 @@ function IncidentRow({ incident }: { incident: Incident }) {
     <TableRow
       className={cn(
         "transition-colors",
-        incident.status === "new" && "bg-destructive/5 hover:bg-destructive/10"
+        incident.isDisaster && "bg-destructive/5 hover:bg-destructive/10"
       )}
     >
       <TableCell className="pl-4 pr-2 py-2.5">
@@ -363,18 +350,24 @@ function IncidentRow({ incident }: { incident: Incident }) {
       <TableCell className="px-2 py-2.5">
         <div className="flex flex-col gap-0.5 min-w-0">
           <IncidentDetailDrawer incident={incident} />
-          <span className="text-muted-foreground text-[10px] truncate leading-tight">
-            {incident.description}
+          <span className="text-muted-foreground text-[10px] truncate leading-tight max-w-[200px]">
+            {incident.title}
           </span>
         </div>
       </TableCell>
       <TableCell className="px-2 py-2.5">
-        <Badge variant={status.variant} className="text-[10px] font-medium px-1.5 py-0.5">
-          {status.label}
-        </Badge>
+        <span className="text-xs text-muted-foreground">{incident.reportedAt}</span>
       </TableCell>
-      <TableCell className="px-2 py-2.5 text-center">
-        <span className="text-xs font-medium tabular-nums">{incident.assignedUnits}</span>
+      <TableCell className="px-2 py-2.5">
+        {incident.isDisaster ? (
+          <Badge variant="destructive" className="text-[10px] font-medium px-1.5 py-0.5">
+            Disaster
+          </Badge>
+        ) : (
+          <Badge variant="secondary" className="text-[10px] font-medium px-1.5 py-0.5">
+            News
+          </Badge>
+        )}
       </TableCell>
       <TableCell className="pl-2 pr-2 py-2.5">
         <DropdownMenu>
@@ -393,14 +386,14 @@ function IncidentRow({ incident }: { incident: Incident }) {
               <IconMapPin className="size-4 mr-2" />
               View on Map
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <IconUsers className="size-4 mr-2" />
-              Dispatch Units
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <IconPhone className="size-4 mr-2" />
-              Contact Reporter
-            </DropdownMenuItem>
+            {incident.link && (
+              <DropdownMenuItem asChild>
+                <a href={incident.link} target="_blank" rel="noopener noreferrer">
+                  <IconExternalLink className="size-4 mr-2" />
+                  View Source
+                </a>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
               Mark Resolved
@@ -421,8 +414,8 @@ function IncidentTable({ incidents }: { incidents: Incident[] }) {
             <TableHead className="w-12 pl-4 pr-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Sev</TableHead>
             <TableHead className="w-20 px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Type</TableHead>
             <TableHead className="px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Location</TableHead>
-            <TableHead className="w-24 px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Status</TableHead>
-            <TableHead className="w-12 px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground text-center">Units</TableHead>
+            <TableHead className="w-20 px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Time</TableHead>
+            <TableHead className="w-16 px-2 py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Tag</TableHead>
             <TableHead className="w-10 pl-2 pr-2 py-2"></TableHead>
           </TableRow>
         </TableHeader>
@@ -449,29 +442,92 @@ interface IncidentFeedProps {
 }
 
 /**
- * IncidentFeed component displays a live feed of emergency incidents
- * Fetches data from api.incidents.list()
+ * IncidentFeed component displays a live feed of news-based incidents
+ * Uses WebSocket for real-time updates + REST API for initial load
  */
 export function IncidentFeed({ className }: IncidentFeedProps) {
   const [incidents, setIncidents] = useState<Incident[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    api.incidents
-      .list()
-      .then((data) => {
-        setIncidents(data.map(toDisplayIncident))
+  const fetchIncidents = useCallback(async () => {
+    try {
+      const response = await backendApi.news.list()
+      if (response.ok && response.news) {
+        const transformed = response.news.map(newsToIncident)
+        // Sort by most recent first
+        transformed.sort((a, b) => {
+          // Parse the reportedAt string to compare
+          const aRecent = a.reportedAt.includes("Just") || a.reportedAt.includes("m ago")
+          const bRecent = b.reportedAt.includes("Just") || b.reportedAt.includes("m ago")
+          if (aRecent && !bRecent) return -1
+          if (!aRecent && bRecent) return 1
+          return 0
+        })
+        setIncidents(transformed)
         setError(null)
-      })
-      .catch((err) => {
-        console.error("Failed to fetch incidents:", err)
-        setError("Failed to load incidents")
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+      }
+    } catch (err) {
+      console.error("Failed to fetch incidents:", err)
+      setError("Failed to load incidents")
+    } finally {
+      setIsLoading(false)
+    }
   }, [])
+
+  // Handle real-time news updates via WebSocket
+  const handleNewNews = useCallback((event: NewNewsEvent) => {
+    const article = event.article
+    const newIncident = newsToIncident({
+      article_id: article.article_id,
+      title: article.title,
+      link: article.link,
+      pub_date: article.pub_date,
+      disaster: article.disaster,
+      location_name: article.location_name,
+      lat: article.lat,
+      lon: article.lon,
+      received_at: article.received_at,
+    })
+
+    // Add to front of list (most recent first)
+    setIncidents(prev => [newIncident, ...prev])
+  }, [])
+
+  // Handle real-time call updates - convert calls to incidents too
+  const handleNewCall = useCallback((event: NewCallEvent) => {
+    const call = event.call
+    const type = inferTypeFromTitle(call.transcript)
+    const severity = inferSeverity(call.transcript, true)
+
+    const newIncident: Incident = {
+      id: `call_${call.call_id}`,
+      type,
+      location: "Location from call",
+      severity,
+      status: "new",
+      reportedAt: "Just now",
+      title: call.transcript.slice(0, 100) + (call.transcript.length > 100 ? "..." : ""),
+      link: "",
+      isDisaster: true,
+    }
+
+    // Add to front of list
+    setIncidents(prev => [newIncident, ...prev])
+  }, [])
+
+  // Connect to real-time updates
+  const { isConnected } = useDashboardUpdates({
+    onNewNews: handleNewNews,
+    onNewCall: handleNewCall,
+  })
+
+  useEffect(() => {
+    fetchIncidents()
+    // Poll for updates every 30 seconds as fallback (WebSocket is primary)
+    const interval = setInterval(fetchIncidents, 30000)
+    return () => clearInterval(interval)
+  }, [fetchIncidents])
 
   const newIncidents = incidents.filter(i => i.status === "new")
   const dispatchedIncidents = incidents.filter(i => i.status === "dispatched")
@@ -503,7 +559,13 @@ export function IncidentFeed({ className }: IncidentFeedProps) {
     <Card className={cn("flex flex-col", className)}>
       <CardHeader className="flex-none border-b px-4 py-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-semibold tracking-tight">Live Incidents</CardTitle>
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-sm font-semibold tracking-tight">Live Incidents</CardTitle>
+            <div className={cn(
+              "w-2 h-2 rounded-full",
+              isConnected ? "bg-green-500 animate-pulse" : "bg-yellow-500"
+            )} title={isConnected ? "Real-time connected" : "Connecting..."} />
+          </div>
           {newIncidents.length > 0 && (
             <Badge variant="destructive" className="animate-pulse text-[10px]">
               {newIncidents.length} New

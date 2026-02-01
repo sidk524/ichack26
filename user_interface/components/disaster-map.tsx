@@ -1,25 +1,29 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import mapboxgl from "mapbox-gl"
-import * as THREE from "three"
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { cn } from "@/lib/utils"
+import { backendApi } from "@/lib/backend-api"
+import { useDashboardUpdates, type NewNewsEvent, type NewLocationEvent } from "@/hooks/use-dashboard-updates"
+import type { BackendNewsArticle } from "@/types/backend"
 
 interface IncidentData {
   id: string
   coordinates: [number, number]
   peopleInDanger: number
   severity: number
+  title?: string
+  location_name?: string
 }
 
 interface VehicleData {
   id: string
-  type: "firetruck" | "ambulance"
-  model: THREE.Group | null
-  path: [number, number][] // Will be populated with road coordinates
+  type: "firetruck" | "ambulance" | "police" | "rescue"
+  marker: mapboxgl.Marker | null
+  path: [number, number][]
   progress: number
   speed: number
+  direction: 1 | -1  // 1 = forward, -1 = reverse
   startPoint: [number, number]
   endPoint: [number, number]
 }
@@ -28,52 +32,49 @@ interface DisasterMapProps {
   incidents?: IncidentData[]
   className?: string
   showVehicles?: boolean
+  autoFetchNews?: boolean
 }
 
-const defaultIncidents: IncidentData[] = [
-  { id: "1", coordinates: [36.165, 36.202], peopleInDanger: 350, severity: 5 },
-  { id: "1a", coordinates: [36.175, 36.210], peopleInDanger: 300, severity: 5 },
-  { id: "1b", coordinates: [36.155, 36.195], peopleInDanger: 280, severity: 5 },
-  { id: "1c", coordinates: [36.180, 36.198], peopleInDanger: 250, severity: 5 },
-  { id: "2", coordinates: [36.12, 36.19], peopleInDanger: 280, severity: 5 },
-  { id: "2a", coordinates: [36.13, 36.18], peopleInDanger: 220, severity: 5 },
-  { id: "2b", coordinates: [36.11, 36.20], peopleInDanger: 200, severity: 5 },
-  { id: "3", coordinates: [36.58, 36.59], peopleInDanger: 200, severity: 4 },
-  { id: "3a", coordinates: [36.57, 36.58], peopleInDanger: 180, severity: 4 },
-  { id: "4", coordinates: [36.08, 36.12], peopleInDanger: 120, severity: 3 },
-  { id: "4a", coordinates: [36.40, 36.35], peopleInDanger: 150, severity: 4 },
-  { id: "4b", coordinates: [36.35, 36.50], peopleInDanger: 130, severity: 4 },
-  { id: "5", coordinates: [36.937, 37.585], peopleInDanger: 320, severity: 5 },
-  { id: "5a", coordinates: [36.95, 37.59], peopleInDanger: 280, severity: 5 },
-  { id: "5b", coordinates: [36.92, 37.58], peopleInDanger: 250, severity: 5 },
-  { id: "6", coordinates: [37.05, 37.50], peopleInDanger: 180, severity: 4 },
-  { id: "7", coordinates: [37.29, 37.49], peopleInDanger: 250, severity: 5 },
-  { id: "7a", coordinates: [37.25, 37.47], peopleInDanger: 200, severity: 5 },
-  { id: "8", coordinates: [37.20, 38.20], peopleInDanger: 220, severity: 5 },
-  { id: "8a", coordinates: [37.18, 38.18], peopleInDanger: 180, severity: 5 },
-  { id: "9", coordinates: [37.38, 37.07], peopleInDanger: 220, severity: 4 },
-  { id: "9a", coordinates: [37.36, 37.05], peopleInDanger: 180, severity: 4 },
-  { id: "10", coordinates: [37.02, 37.00], peopleInDanger: 180, severity: 4 },
-  { id: "10a", coordinates: [36.98, 36.97], peopleInDanger: 160, severity: 4 },
-  { id: "11", coordinates: [38.28, 37.76], peopleInDanger: 200, severity: 4 },
-  { id: "11a", coordinates: [38.26, 37.74], peopleInDanger: 170, severity: 4 },
-  { id: "12", coordinates: [38.10, 37.90], peopleInDanger: 100, severity: 3 },
-  { id: "13", coordinates: [38.32, 38.35], peopleInDanger: 180, severity: 4 },
-  { id: "13a", coordinates: [38.30, 38.33], peopleInDanger: 150, severity: 4 },
-  { id: "14", coordinates: [38.09, 38.26], peopleInDanger: 90, severity: 3 },
-  { id: "15", coordinates: [40.22, 37.91], peopleInDanger: 70, severity: 2 },
-  { id: "16", coordinates: [38.79, 37.16], peopleInDanger: 60, severity: 2 },
+// Transform news article to incident data for the map
+function newsToIncident(article: BackendNewsArticle): IncidentData | null {
+  if (article.lat === null || article.lon === null) return null
+
+  let severity = article.disaster ? 4 : 2
+  const title = article.title.toLowerCase()
+  if (title.includes("earthquake") || title.includes("major") || title.includes("massive")) {
+    severity = 5
+  } else if (title.includes("fire") || title.includes("flood") || title.includes("explosion")) {
+    severity = 4
+  } else if (title.includes("accident") || title.includes("crash")) {
+    severity = 3
+  }
+
+  return {
+    id: article.article_id,
+    coordinates: [article.lon, article.lat],
+    peopleInDanger: severity * 50,
+    severity,
+    title: article.title,
+    location_name: article.location_name,
+  }
+}
+
+// Fallback incidents when API has no data
+const fallbackIncidents: IncidentData[] = [
+  { id: "fallback-1", coordinates: [-0.1278, 51.5074], peopleInDanger: 50, severity: 3 },
 ]
 
 // Vehicle definitions with start and end points
-const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
+// Speed values are much slower for realistic movement
+const vehicleDefinitions: Omit<VehicleData, "marker" | "path">[] = [
   {
     id: "ft1",
     type: "firetruck",
     startPoint: [36.10, 36.25],
     endPoint: [36.165, 36.202],
     progress: 0,
-    speed: 0.003,
+    speed: 0.00015,
+    direction: 1,
   },
   {
     id: "ft2",
@@ -81,7 +82,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [36.22, 36.15],
     endPoint: [36.165, 36.202],
     progress: 0.3,
-    speed: 0.0025,
+    speed: 0.00012,
+    direction: 1,
   },
   {
     id: "amb1",
@@ -89,7 +91,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [36.85, 37.55],
     endPoint: [36.937, 37.585],
     progress: 0.1,
-    speed: 0.0035,
+    speed: 0.00018,
+    direction: 1,
   },
   {
     id: "amb2",
@@ -97,7 +100,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [37.02, 37.62],
     endPoint: [36.937, 37.585],
     progress: 0.5,
-    speed: 0.003,
+    speed: 0.00014,
+    direction: 1,
   },
   {
     id: "ft3",
@@ -105,7 +109,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [37.32, 37.12],
     endPoint: [37.38, 37.07],
     progress: 0.2,
-    speed: 0.0028,
+    speed: 0.00013,
+    direction: 1,
   },
   {
     id: "amb3",
@@ -113,7 +118,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [36.48, 36.52],
     endPoint: [36.58, 36.59],
     progress: 0.4,
-    speed: 0.0032,
+    speed: 0.00016,
+    direction: 1,
   },
   {
     id: "ft4",
@@ -121,7 +127,8 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [37.08, 38.12],
     endPoint: [37.20, 38.20],
     progress: 0.6,
-    speed: 0.0026,
+    speed: 0.00011,
+    direction: 1,
   },
   {
     id: "amb4",
@@ -129,11 +136,72 @@ const vehicleDefinitions: Omit<VehicleData, "model" | "path">[] = [
     startPoint: [38.18, 37.82],
     endPoint: [38.28, 37.76],
     progress: 0.7,
-    speed: 0.003,
+    speed: 0.00015,
+    direction: 1,
   },
 ]
 
-const MercatorCoordinate = mapboxgl.MercatorCoordinate
+// SVG icons for vehicles (Tabler icons)
+const vehicleIcons: Record<string, { icon: string; color: string; bgColor: string }> = {
+  firetruck: {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a2 2 0 0 0 -2 -2h-1l-2 -4h-11l-2 8h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h1a2 2 0 1 0 4 0h6a2 2 0 1 0 4 0h1a1 1 0 0 0 1 -1v-3a2 2 0 0 0 -2 -2z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M10 6h4v4h-4z"/></svg>`,
+    color: "#ffffff",
+    bgColor: "#ef4444",
+  },
+  ambulance: {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/><path d="M10 6v4"/><path d="M8 8h4"/></svg>`,
+    color: "#ffffff",
+    bgColor: "#3b82f6",
+  },
+  police: {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M18 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M4 17h-2v-5l2 -5h11l3 5h1a2 2 0 0 1 2 2v3h-2"/><path d="M8 17h8"/><path d="M10 5l1 -2h2l1 2"/><path d="M7 12h3"/><path d="M14 12h3"/></svg>`,
+    color: "#ffffff",
+    bgColor: "#1e3a8a",
+  },
+  rescue: {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>`,
+    color: "#ffffff",
+    bgColor: "#f97316",
+  },
+}
+
+// Create animated marker element
+function createVehicleMarkerElement(type: string): HTMLDivElement {
+  const config = vehicleIcons[type] || vehicleIcons.rescue
+
+  const container = document.createElement("div")
+  container.className = "vehicle-marker"
+  container.innerHTML = `
+    <div class="vehicle-marker-inner" style="
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: ${config.bgColor};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${config.color};
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.8);
+      animation: pulse 2s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    ">
+      ${config.icon}
+    </div>
+  `
+
+  // Add hover effect
+  container.addEventListener("mouseenter", () => {
+    const inner = container.querySelector(".vehicle-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1.2)"
+  })
+  container.addEventListener("mouseleave", () => {
+    const inner = container.querySelector(".vehicle-marker-inner") as HTMLElement
+    if (inner) inner.style.transform = "scale(1)"
+  })
+
+  return container
+}
 
 // Fetch route from Mapbox Directions API
 async function fetchRoute(start: [number, number], end: [number, number], accessToken: string): Promise<[number, number][]> {
@@ -149,19 +217,17 @@ async function fetchRoute(start: [number, number], end: [number, number], access
     console.error("Error fetching route:", error)
   }
 
-  // Fallback to straight line if API fails
   return [start, end]
 }
 
-// Interpolate position along path with proper bearing calculation
-function interpolatePath(path: [number, number][], progress: number): { lng: number; lat: number; bearing: number } {
+// Interpolate position along path
+function interpolatePath(path: [number, number][], progress: number): { lng: number; lat: number } {
   if (path.length < 2) {
-    return { lng: path[0]?.[0] || 0, lat: path[0]?.[1] || 0, bearing: 0 }
+    return { lng: path[0]?.[0] || 0, lat: path[0]?.[1] || 0 }
   }
 
   const clampedProgress = Math.max(0, Math.min(1, progress))
 
-  // Calculate total path length
   let totalLength = 0
   const segmentLengths: number[] = []
 
@@ -173,7 +239,6 @@ function interpolatePath(path: [number, number][], progress: number): { lng: num
     totalLength += length
   }
 
-  // Find position along path
   const targetLength = clampedProgress * totalLength
   let accumulatedLength = 0
 
@@ -186,37 +251,110 @@ function interpolatePath(path: [number, number][], progress: number): { lng: num
       const lng = start[0] + (end[0] - start[0]) * segmentProgress
       const lat = start[1] + (end[1] - start[1]) * segmentProgress
 
-      // Calculate bearing (heading direction) - North is 0, East is 90, etc.
-      const dx = end[0] - start[0]
-      const dy = end[1] - start[1]
-      const bearing = Math.atan2(dx, dy) // Radians, 0 = North
-
-      return { lng, lat, bearing }
+      return { lng, lat }
     }
     accumulatedLength += segmentLengths[i]
   }
 
-  // At the end of path
   const lastIdx = path.length - 1
-  const dx = path[lastIdx][0] - path[lastIdx - 1][0]
-  const dy = path[lastIdx][1] - path[lastIdx - 1][1]
-
-  return {
-    lng: path[lastIdx][0],
-    lat: path[lastIdx][1],
-    bearing: Math.atan2(dx, dy),
-  }
+  return { lng: path[lastIdx][0], lat: path[lastIdx][1] }
 }
 
-export function DisasterMap({ incidents = defaultIncidents, className, showVehicles = true }: DisasterMapProps) {
+export function DisasterMap({ incidents: propIncidents, className, showVehicles = true, autoFetchNews = true }: DisasterMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null)
   const map = useRef<mapboxgl.Map | null>(null)
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
-  const sceneRef = useRef<THREE.Scene | null>(null)
-  const cameraRef = useRef<THREE.Camera | null>(null)
   const vehiclesRef = useRef<VehicleData[]>([])
-  const [routesLoaded, setRoutesLoaded] = useState(false)
+  const animationRef = useRef<number | null>(null)
+  const [liveIncidents, setLiveIncidents] = useState<IncidentData[]>([])
+  const [isLoading, setIsLoading] = useState(autoFetchNews)
 
+  // Fetch news articles and transform to incidents
+  const fetchNewsIncidents = useCallback(async () => {
+    try {
+      const response = await backendApi.news.list()
+      const newsIncidents = response.news
+        .map(newsToIncident)
+        .filter((incident): incident is IncidentData => incident !== null)
+
+      console.log(`[DisasterMap] Loaded ${newsIncidents.length} incidents from news API`)
+      setLiveIncidents(newsIncidents)
+    } catch (error) {
+      console.error("[DisasterMap] Failed to fetch news:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  // Handle real-time news updates
+  const handleNewNews = useCallback((event: NewNewsEvent) => {
+    const article = event.article
+    if (article.lat === null || article.lon === null) return
+
+    const newIncident: IncidentData = {
+      id: article.article_id,
+      coordinates: [article.lon, article.lat],
+      peopleInDanger: article.disaster ? 200 : 50,
+      severity: article.disaster ? 5 : 3,
+      title: article.title,
+      location_name: article.location_name,
+    }
+
+    setLiveIncidents(prev => [newIncident, ...prev])
+    console.log(`[DisasterMap] Added real-time incident: ${article.title.slice(0, 50)}`)
+  }, [])
+
+  // Handle real-time location updates (for tracking callers)
+  const handleNewLocation = useCallback((event: NewLocationEvent) => {
+    // Could add caller location markers here in the future
+    console.log(`[DisasterMap] Location update for ${event.user_id}:`, event.location)
+  }, [])
+
+  // Connect to real-time updates
+  useDashboardUpdates({
+    onNewNews: handleNewNews,
+    onNewLocation: handleNewLocation,
+  })
+
+  // Fetch news on mount and poll every 30 seconds (WebSocket is primary)
+  useEffect(() => {
+    if (!autoFetchNews) return
+
+    fetchNewsIncidents()
+    const interval = setInterval(fetchNewsIncidents, 30000)
+    return () => clearInterval(interval)
+  }, [autoFetchNews, fetchNewsIncidents])
+
+  const incidents = propIncidents ?? (liveIncidents.length > 0 ? liveIncidents : fallbackIncidents)
+
+  // Update map source when incidents change
+  useEffect(() => {
+    if (!map.current || !map.current.getSource("incidents")) return
+
+    const geojsonData: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      features: incidents.map((incident) => ({
+        type: "Feature",
+        properties: {
+          id: incident.id,
+          peopleInDanger: incident.peopleInDanger,
+          severity: incident.severity,
+          weight: (incident.peopleInDanger / 200) * 0.6 + (incident.severity / 5) * 0.4,
+          title: incident.title,
+          location_name: incident.location_name,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: incident.coordinates,
+        },
+      })),
+    }
+
+    const source = map.current.getSource("incidents") as mapboxgl.GeoJSONSource
+    source.setData(geojsonData)
+    console.log(`[DisasterMap] Updated map with ${incidents.length} incidents`)
+  }, [incidents])
+
+  // Initialize map only once on mount
   useEffect(() => {
     if (!mapContainer.current || map.current) return
 
@@ -227,6 +365,26 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
     }
 
     mapboxgl.accessToken = token
+
+    // Add CSS for pulse animation (only once)
+    if (!document.getElementById("vehicle-marker-styles")) {
+      const style = document.createElement("style")
+      style.id = "vehicle-marker-styles"
+      style.textContent = `
+        @keyframes pulse {
+          0%, 100% {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 3px rgba(255,255,255,0.8);
+          }
+          50% {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.4), 0 0 0 6px rgba(255,255,255,0.4);
+          }
+        }
+        .vehicle-marker {
+          z-index: 10;
+        }
+      `
+      document.head.appendChild(style)
+    }
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -241,25 +399,14 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
     map.current.on("load", async () => {
       if (!map.current) return
 
-      // Add incident heatmap
-      const geojsonData: GeoJSON.FeatureCollection = {
+      // Add incident heatmap with empty initial data
+      // Data will be populated by the separate incidents useEffect
+      const emptyGeojsonData: GeoJSON.FeatureCollection = {
         type: "FeatureCollection",
-        features: incidents.map((incident) => ({
-          type: "Feature",
-          properties: {
-            id: incident.id,
-            peopleInDanger: incident.peopleInDanger,
-            severity: incident.severity,
-            weight: (incident.peopleInDanger / 200) * 0.6 + (incident.severity / 5) * 0.4,
-          },
-          geometry: {
-            type: "Point",
-            coordinates: incident.coordinates,
-          },
-        })),
+        features: [],
       }
 
-      map.current.addSource("incidents", { type: "geojson", data: geojsonData })
+      map.current.addSource("incidents", { type: "geojson", data: emptyGeojsonData })
 
       map.current.addLayer({
         id: "incidents-heat",
@@ -289,22 +436,21 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
 
       if (showVehicles) {
         // Fetch all routes from Mapbox Directions API
-        console.log("[3D] Fetching road routes...")
+        console.log("[Vehicles] Fetching road routes...")
         const routePromises = vehicleDefinitions.map(async (vehicle) => {
           const path = await fetchRoute(vehicle.startPoint, vehicle.endPoint, token)
           return {
             ...vehicle,
             path,
-            model: null as THREE.Group | null,
+            marker: null as mapboxgl.Marker | null,
           }
         })
 
         vehiclesRef.current = await Promise.all(routePromises)
-        setRoutesLoaded(true)
-        console.log("[3D] Routes loaded:", vehiclesRef.current.length)
+        console.log("[Vehicles] Routes loaded:", vehiclesRef.current.length)
 
-        // Add route lines to map for visualization
-        vehiclesRef.current.forEach((vehicle, idx) => {
+        // Add route lines to map
+        vehiclesRef.current.forEach((vehicle) => {
           if (vehicle.path.length > 1 && map.current) {
             map.current.addSource(`route-${vehicle.id}`, {
               type: "geojson",
@@ -318,6 +464,7 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
               },
             })
 
+            const config = vehicleIcons[vehicle.type] || vehicleIcons.rescue
             map.current.addLayer({
               id: `route-line-${vehicle.id}`,
               type: "line",
@@ -327,165 +474,104 @@ export function DisasterMap({ incidents = defaultIncidents, className, showVehic
                 "line-cap": "round",
               },
               paint: {
-                "line-color": vehicle.type === "firetruck" ? "#ef4444" : "#3b82f6",
+                "line-color": config.bgColor,
                 "line-width": 3,
-                "line-opacity": 0.6,
+                "line-opacity": 0.5,
                 "line-dasharray": [2, 2],
               },
             })
           }
         })
 
-        // Create Three.js custom layer
-        const customLayer: mapboxgl.CustomLayerInterface = {
-          id: "3d-vehicles",
-          type: "custom",
-          renderingMode: "3d",
+        // Create markers for each vehicle
+        vehiclesRef.current.forEach((vehicle) => {
+          if (!map.current) return
 
-          onAdd(mapInstance, gl) {
-            sceneRef.current = new THREE.Scene()
-            cameraRef.current = new THREE.Camera()
+          const element = createVehicleMarkerElement(vehicle.type)
+          const { lng, lat } = interpolatePath(vehicle.path, vehicle.progress)
 
-            // Better lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.0)
-            sceneRef.current.add(ambientLight)
+          vehicle.marker = new mapboxgl.Marker({ element })
+            .setLngLat([lng, lat])
+            .addTo(map.current)
+        })
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
-            directionalLight.position.set(100, 100, 100)
-            sceneRef.current.add(directionalLight)
+        // Animation loop with ping-pong effect (reverse direction at path ends)
+        const animate = () => {
+          vehiclesRef.current.forEach((vehicle) => {
+            if (!vehicle.marker || vehicle.path.length < 2) return
 
-            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4)
-            directionalLight2.position.set(-100, 50, -100)
-            sceneRef.current.add(directionalLight2)
+            // Update progress based on direction
+            vehicle.progress += vehicle.speed * vehicle.direction
 
-            rendererRef.current = new THREE.WebGLRenderer({
-              canvas: mapInstance.getCanvas(),
-              context: gl,
-              antialias: true,
-            })
-            rendererRef.current.autoClear = false
+            // Reverse direction at path ends (ping-pong effect)
+            if (vehicle.progress >= 1) {
+              vehicle.progress = 1
+              vehicle.direction = -1
+            } else if (vehicle.progress <= 0) {
+              vehicle.progress = 0
+              vehicle.direction = 1
+            }
 
-            const loader = new GLTFLoader()
+            const { lng, lat } = interpolatePath(vehicle.path, vehicle.progress)
+            vehicle.marker.setLngLat([lng, lat])
+          })
 
-            // Smaller scale for the models
-            const modelScale = 0.000003
-
-            // Load firetruck
-            loader.load(
-              "/3d_models/low_poly_fire_truck.glb",
-              (gltf) => {
-                const template = gltf.scene
-                template.scale.set(modelScale, modelScale, modelScale)
-
-                vehiclesRef.current.forEach((vehicle) => {
-                  if (vehicle.type === "firetruck" && sceneRef.current) {
-                    const model = template.clone()
-                    vehicle.model = model
-                    sceneRef.current.add(model)
-                  }
-                })
-                console.log("[3D] Fire trucks loaded")
-              },
-              undefined,
-              (error) => console.error("[3D] Fire truck error:", error)
-            )
-
-            // Load ambulance
-            loader.load(
-              "/3d_models/lowpoly_ambulance_-_low_poly_free.glb",
-              (gltf) => {
-                const template = gltf.scene
-                template.scale.set(modelScale, modelScale, modelScale)
-
-                vehiclesRef.current.forEach((vehicle) => {
-                  if (vehicle.type === "ambulance" && sceneRef.current) {
-                    const model = template.clone()
-                    vehicle.model = model
-                    sceneRef.current.add(model)
-                  }
-                })
-                console.log("[3D] Ambulances loaded")
-              },
-              undefined,
-              (error) => console.error("[3D] Ambulance error:", error)
-            )
-          },
-
-          render(_gl, matrix) {
-            if (!sceneRef.current || !cameraRef.current || !rendererRef.current || !map.current) return
-
-            vehiclesRef.current.forEach((vehicle) => {
-              if (!vehicle.model || vehicle.path.length < 2) return
-
-              // Update progress (loop)
-              vehicle.progress += vehicle.speed
-              if (vehicle.progress > 1) vehicle.progress = 0
-
-              const { lng, lat, bearing } = interpolatePath(vehicle.path, vehicle.progress)
-              const mercator = MercatorCoordinate.fromLngLat({ lng, lat }, 0)
-
-              // Position
-              vehicle.model.position.set(mercator.x, mercator.y, mercator.z || 0)
-
-              // Rotation: model should face direction of travel
-              // Reset rotation first
-              vehicle.model.rotation.set(0, 0, 0)
-
-              // Rotate to face north initially (Z-up in Three.js world)
-              vehicle.model.rotateX(Math.PI / 2)
-
-              // Then rotate around Z axis to face bearing direction
-              // Bearing: 0 = North, positive = clockwise
-              vehicle.model.rotateZ(-bearing)
-            })
-
-            // Sync camera
-            const m = new THREE.Matrix4().fromArray(matrix)
-            cameraRef.current.projectionMatrix = m
-
-            rendererRef.current.resetState()
-            rendererRef.current.render(sceneRef.current, cameraRef.current)
-            map.current?.triggerRepaint()
-          },
+          animationRef.current = requestAnimationFrame(animate)
         }
 
-        map.current.addLayer(customLayer)
+        animate()
       }
 
       map.current.addControl(new mapboxgl.NavigationControl(), "top-right")
     })
 
     return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+      vehiclesRef.current.forEach((vehicle) => {
+        if (vehicle.marker) vehicle.marker.remove()
+      })
       if (map.current) {
         map.current.remove()
         map.current = null
       }
-      sceneRef.current = null
-      cameraRef.current = null
-      rendererRef.current = null
     }
-  }, [incidents, showVehicles])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showVehicles]) // Only recreate map if showVehicles changes, not on every incident update
 
   return (
     <div className={cn("relative w-full h-full", className)}>
       <div ref={mapContainer} className="w-full h-full rounded-lg overflow-hidden" />
 
-      {showVehicles && (
-        <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm shadow-lg border">
-          <div className="font-semibold mb-2">Emergency Response</div>
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-3 h-3 bg-red-500 rounded-sm" />
-            <span>Fire Trucks ({vehiclesRef.current.filter(v => v.type === "firetruck").length})</span>
-          </div>
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-sm" />
-            <span>Ambulances ({vehiclesRef.current.filter(v => v.type === "ambulance").length})</span>
-          </div>
-          <div className="text-xs text-muted-foreground">
-            {routesLoaded ? "✓ Following road routes" : "Loading routes..."}
-          </div>
+      {/* Legend */}
+      <div className="absolute bottom-4 left-4 z-50 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm shadow-lg border">
+        <div className="font-semibold mb-2">Live Incidents</div>
+        <div className="flex items-center gap-2 mb-1">
+          <div className="w-3 h-3 rounded-full bg-linear-to-r from-yellow-500 to-red-500" />
+          <span>
+            {isLoading ? "Loading..." : `${incidents.length} active incidents`}
+          </span>
         </div>
-      )}
+        {showVehicles && (
+          <>
+            <div className="border-t my-2" />
+            <div className="font-semibold mb-2">Emergency Response</div>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12a2 2 0 0 0 -2 -2h-1l-2 -4h-11l-2 8h-2a1 1 0 0 0 -1 1v2a1 1 0 0 0 1 1h1a2 2 0 1 0 4 0h6a2 2 0 1 0 4 0h1a1 1 0 0 0 1 -1v-3a2 2 0 0 0 -2 -2z"/></svg>
+              </div>
+              <span>Fire Trucks ({vehiclesRef.current.filter(v => v.type === "firetruck").length})</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></svg>
+              </div>
+              <span>Ambulances ({vehiclesRef.current.filter(v => v.type === "ambulance").length})</span>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
