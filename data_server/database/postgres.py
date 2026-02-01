@@ -13,9 +13,26 @@ class PostgresDB:
         self.db_path = Path(db_path)
         self.db_path.parent.mkdir(exist_ok=True)
 
-    async def init_db(self):
-        """Initialize database tables."""
+    async def init_db(self, wipe: bool = False):
+        """Initialize database tables.
+
+        Args:
+            wipe: If True, drops all tables first for a clean slate.
+        """
         async with aiosqlite.connect(self.db_path) as db:
+            if wipe:
+                # Drop all tables in correct order (respect foreign keys)
+                await db.execute("DROP TABLE IF EXISTS assignments")
+                await db.execute("DROP TABLE IF EXISTS extracted_entities")
+                await db.execute("DROP TABLE IF EXISTS hospitals")
+                await db.execute("DROP TABLE IF EXISTS danger_zones")
+                await db.execute("DROP TABLE IF EXISTS sensor_readings")
+                await db.execute("DROP TABLE IF EXISTS news_articles")
+                await db.execute("DROP TABLE IF EXISTS calls")
+                await db.execute("DROP TABLE IF EXISTS location_points")
+                await db.execute("DROP TABLE IF EXISTS users")
+                await db.commit()
+
             await db.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                     user_id TEXT PRIMARY KEY,
@@ -539,11 +556,18 @@ class PostgresDB:
 db = PostgresDB()
 
 # Re-export functions with same signature as firestore module
-async def init_db():
-    """Initialize database (no longer wipes on startup to preserve seeded data)."""
-    await db.init_db()
-    # Removed wipe_db() call to preserve data across restarts
-    print("Database initialized (data preserved)")
+async def init_db(wipe: bool = True):
+    """Initialize database.
+
+    Args:
+        wipe: If True (default), drops and recreates all tables for a clean slate.
+              This ensures schema changes are always applied.
+    """
+    await db.init_db(wipe=wipe)
+    if wipe:
+        print("Database initialized (clean slate)")
+    else:
+        print("Database initialized (data preserved)")
 
 async def ensure_user_exists(user_id: str, role: str = "civilian", status: str = "normal", preferred_language: str = "en") -> None:
     await db.ensure_user_exists(user_id, role, status, preferred_language)
