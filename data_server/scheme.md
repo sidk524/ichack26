@@ -420,13 +420,13 @@ curl http://localhost:8080/api/hospitals
 ## Danger Zone Endpoints
 
 ### Get All Danger Zones
-**Endpoint:** `GET /api/danger-zones`
+**Endpoint:** `GET /danger_zones_out`
 
 **Description:** Retrieves all active danger zones including natural disasters, infrastructure failures, and civil incidents.
 
 **Usage:**
 ```bash
-curl http://localhost:8080/api/danger-zones
+curl http://localhost:8080/danger_zones_out
 ```
 
 **Response Format:**
@@ -441,7 +441,14 @@ curl http://localhost:8080/api/danger-zones
       "severity": 5,
       "lat": 37.0662,
       "lon": 37.3833,
-      "radius": 5000,
+      "vertices": [
+        {"lat": 37.1112, "lon": 37.3833},
+        {"lat": 37.0887, "lon": 37.4222},
+        {"lat": 37.0437, "lon": 37.4222},
+        {"lat": 37.0212, "lon": 37.3833},
+        {"lat": 37.0437, "lon": 37.3444},
+        {"lat": 37.0887, "lon": 37.3444}
+      ],
       "is_active": true,
       "detected_at": 1234567890.123,
       "expires_at": 1234571490.123,
@@ -458,7 +465,7 @@ curl http://localhost:8080/api/danger-zones
 - `disaster_type`: Specific disaster type (e.g., "earthquake", "fire", "flood", "building_collapse")
 - `severity`: Severity level from 1 (minimal) to 5 (critical)
 - `lat`/`lon`: Center coordinates of the danger zone
-- `radius`: Affected radius in meters
+- `vertices`: Array of 6 lat/lon pairs forming a polygon boundary approximating the danger area
 - `is_active`: Whether the danger zone is currently active
 - `detected_at`: When the danger was first detected (Unix timestamp)
 - `expires_at`: When the danger is expected to expire (Unix timestamp, may be null)
@@ -466,7 +473,8 @@ curl http://localhost:8080/api/danger-zones
 - `recommended_action`: Recommended action ("evacuate", "shelter_in_place", "avoid_area")
 
 ---
-## AI-Extracted Entity Endpoints (DO NOT USE YET)
+
+## AI-Extracted Entity Endpoints
 
 ### Get All Extracted Entities
 **Endpoint:** `GET /api/entities`

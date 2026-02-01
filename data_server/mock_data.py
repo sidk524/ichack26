@@ -8,7 +8,8 @@ from database.postgres import (
     list_hospitals, list_danger_zones, list_extracted_entities,
     ensure_user_exists, append_call, list_users
 )
-from database.db import Hospital, DangerZone, ExtractedEntity, Call
+from database.db import Hospital, DangerZone, DangerZoneVertex, ExtractedEntity, Call
+from danger_extractor import generate_polygon_vertices
 from tag_extractor import extract_bilingual_tags
 
 # Real hospital data for Turkey
@@ -203,6 +204,14 @@ async def create_danger_zone_data():
     current_time = time.time()
 
     for zone_info in SAMPLE_DANGER_ZONES:
+        # Generate polygon vertices from center and radius
+        vertices = generate_polygon_vertices(
+            zone_info["lat"],
+            zone_info["lon"],
+            zone_info["radius"],
+            num_vertices=6
+        )
+
         zone = DangerZone(
             zone_id=str(uuid.uuid4()),
             category=zone_info["category"],
@@ -210,7 +219,7 @@ async def create_danger_zone_data():
             severity=zone_info["severity"],
             lat=zone_info["lat"],
             lon=zone_info["lon"],
-            radius=zone_info["radius"],
+            vertices=vertices,
             is_active=True,
             detected_at=current_time - random.randint(300, 3600),  # 5min to 1hr ago
             expires_at=current_time + random.randint(3600, 86400) if random.random() < 0.7 else None,  # 1hr to 1 day
@@ -373,7 +382,8 @@ async def show_mock_data():
     zones = await list_danger_zones()
     for zone in zones:
         print(f"⚠️  {zone['disaster_type'].upper()} - {zone['category']}")
-        print(f"  📍 ({zone['lat']:.4f}, {zone['lon']:.4f}) radius {zone['radius']}m")
+        vertices_count = len(zone.get('vertices', []))
+        print(f"  📍 ({zone['lat']:.4f}, {zone['lon']:.4f}) with {vertices_count} vertices")
         print(f"  🔥 Severity {zone['severity']}/5 - {zone['description']}")
         print(f"  💡 Action: {zone['recommended_action']}")
         print(f"  ⏰ Active: {'Yes' if zone['is_active'] else 'No'}")

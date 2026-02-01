@@ -77,6 +77,14 @@ async def broadcast_new_user(user_id: str, role: str):
     })
 
 
+async def broadcast_new_danger_zone(zone_data: dict):
+    """Broadcast when a new danger zone is detected."""
+    await broadcast_event("new_danger_zone", {
+        "zone": zone_data
+    })
+    print(f"[Dashboard WS] Broadcasted new_danger_zone: {zone_data.get('disaster_type', '')} at {zone_data.get('lat', '')}, {zone_data.get('lon', '')}")
+
+
 async def dashboard_ws_handler(request):
     """WebSocket endpoint for dashboard real-time updates."""
     ws = web.WebSocketResponse(heartbeat=30)

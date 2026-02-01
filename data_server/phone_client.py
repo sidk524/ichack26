@@ -2,12 +2,14 @@
 import json
 import time
 import uuid
+import asyncio
 from aiohttp import web
 
 from database.postgres import ensure_user_exists, append_location, append_call, list_users, get_user
 from database.db import LocationPoint, Call
 from dashboard_ws import broadcast_new_call, broadcast_new_location
 from tag_extractor import extract_bilingual_tags
+from danger_extractor import extract_danger_from_call
 
 
 async def print_users_table():
@@ -66,6 +68,10 @@ async def phone_transcript_ws(request):
                         "end_time": call.end_time,
                         "tags": call.tags
                     })
+                    # Extract danger zone in background (don't block response)
+                    asyncio.create_task(
+                        extract_danger_from_call(call.call_id, text, user_id)
+                    )
                     await ws.close()
                 else:
                     # Store partial text in case of sudden disconnect
@@ -104,6 +110,10 @@ async def phone_transcript_ws(request):
             "end_time": call.end_time,
             "tags": call.tags
         })
+        # Extract danger zone in background (don't block response)
+        asyncio.create_task(
+            extract_danger_from_call(call.call_id, full_transcript, user_id)
+        )
 
     return ws
 

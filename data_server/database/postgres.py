@@ -5,7 +5,7 @@ from pathlib import Path
 
 import aiosqlite
 
-from .db import User, Call, LocationPoint, NewsArticle, SensorReading, DangerZone, Hospital, ExtractedEntity
+from .db import User, Call, LocationPoint, NewsArticle, SensorReading, DangerZone, DangerZoneVertex, Hospital, ExtractedEntity
 
 class PostgresDB:
     def __init__(self, db_path: str = "data/ichack_server.db"):
@@ -90,7 +90,7 @@ class PostgresDB:
                     severity INTEGER NOT NULL CHECK(severity >= 1 AND severity <= 5),
                     lat REAL NOT NULL,
                     lon REAL NOT NULL,
-                    radius REAL NOT NULL,
+                    vertices TEXT NOT NULL,
                     is_active INTEGER NOT NULL DEFAULT 1,
                     detected_at REAL NOT NULL,
                     expires_at REAL,
@@ -126,10 +126,12 @@ class PostgresDB:
                     entity_type TEXT NOT NULL CHECK(entity_type IN ('person_status', 'movement', 'danger_zone', 'medical')),
                     urgency INTEGER NOT NULL CHECK(urgency >= 1 AND urgency <= 5),
                     status TEXT NOT NULL,
+                    zone_id TEXT,
                     needs TEXT DEFAULT '',
                     location_mentioned TEXT DEFAULT '',
                     medical_keywords TEXT DEFAULT '',
-                    extracted_at REAL NOT NULL
+                    extracted_at REAL NOT NULL,
+                    FOREIGN KEY (zone_id) REFERENCES danger_zones (zone_id) ON DELETE SET NULL
                 )
             """)
 
@@ -378,14 +380,16 @@ class PostgresDB:
 
     async def save_danger_zone(self, zone: DangerZone) -> None:
         """Save danger zone."""
+        # Serialize vertices to JSON
+        vertices_json = json.dumps([{"lat": v.lat, "lon": v.lon} for v in zone.vertices])
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 """INSERT OR REPLACE INTO danger_zones
-                   (zone_id, category, disaster_type, severity, lat, lon, radius,
+                   (zone_id, category, disaster_type, severity, lat, lon, vertices,
                     is_active, detected_at, expires_at, description, recommended_action)
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (zone.zone_id, zone.category, zone.disaster_type, zone.severity,
-                 zone.lat, zone.lon, zone.radius, 1 if zone.is_active else 0,
+                 zone.lat, zone.lon, vertices_json, 1 if zone.is_active else 0,
                  zone.detected_at, zone.expires_at, zone.description, zone.recommended_action)
             )
             await db.commit()
@@ -395,11 +399,16 @@ class PostgresDB:
         zones = []
         async with aiosqlite.connect(self.db_path) as db:
             async with db.execute(
-                """SELECT zone_id, category, disaster_type, severity, lat, lon, radius,
+                """SELECT zone_id, category, disaster_type, severity, lat, lon, vertices,
                           is_active, detected_at, expires_at, description, recommended_action
                    FROM danger_zones ORDER BY detected_at DESC"""
             ) as cursor:
                 async for row in cursor:
+                    # Parse vertices from JSON
+                    try:
+                        vertices = json.loads(row[6]) if row[6] else []
+                    except json.JSONDecodeError:
+                        vertices = []
                     zones.append({
                         "zone_id": row[0],
                         "category": row[1],
@@ -407,7 +416,7 @@ class PostgresDB:
                         "severity": row[3],
                         "lat": row[4],
                         "lon": row[5],
-                        "radius": row[6],
+                        "vertices": vertices,
                         "is_active": bool(row[7]),
                         "detected_at": row[8],
                         "expires_at": row[9],
@@ -473,10 +482,10 @@ class PostgresDB:
             await db.execute(
                 """INSERT OR REPLACE INTO extracted_entities
                    (entity_id, source_type, source_id, entity_type, urgency, status,
-                    needs, location_mentioned, medical_keywords, extracted_at)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    zone_id, needs, location_mentioned, medical_keywords, extracted_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (entity.entity_id, entity.source_type, entity.source_id, entity.entity_type,
-                 entity.urgency, entity.status, ','.join(entity.needs),
+                 entity.urgency, entity.status, entity.zone_id, ','.join(entity.needs),
                  entity.location_mentioned, ','.join(entity.medical_keywords), entity.extracted_at)
             )
             await db.commit()
@@ -487,7 +496,7 @@ class PostgresDB:
         async with aiosqlite.connect(self.db_path) as db:
             async with db.execute(
                 """SELECT entity_id, source_type, source_id, entity_type, urgency, status,
-                          needs, location_mentioned, medical_keywords, extracted_at
+                          zone_id, needs, location_mentioned, medical_keywords, extracted_at
                    FROM extracted_entities ORDER BY extracted_at DESC"""
             ) as cursor:
                 async for row in cursor:
@@ -498,10 +507,11 @@ class PostgresDB:
                         "entity_type": row[3],
                         "urgency": row[4],
                         "status": row[5],
-                        "needs": row[6].split(',') if row[6] else [],
-                        "location_mentioned": row[7],
-                        "medical_keywords": row[8].split(',') if row[8] else [],
-                        "extracted_at": row[9]
+                        "zone_id": row[6],
+                        "needs": row[7].split(',') if row[7] else [],
+                        "location_mentioned": row[8],
+                        "medical_keywords": row[9].split(',') if row[9] else [],
+                        "extracted_at": row[10]
                     })
         return entities
 

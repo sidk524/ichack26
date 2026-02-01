@@ -1,3 +1,3 @@
-from .db import DB, User, Call, LocationPoint, NewsArticle, SensorReading, DangerZone, Hospital, ExtractedEntity
+from .db import DB, User, Call, LocationPoint, NewsArticle, SensorReading, DangerZone, DangerZoneVertex, Hospital, ExtractedEntity
 
-__all__ = ["DB", "User", "Call", "LocationPoint", "NewsArticle", "SensorReading", "DangerZone", "Hospital", "ExtractedEntity"]
+__all__ = ["DB", "User", "Call", "LocationPoint", "NewsArticle", "SensorReading", "DangerZone", "DangerZoneVertex", "Hospital", "ExtractedEntity"]

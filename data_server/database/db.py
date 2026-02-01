@@ -68,14 +68,20 @@ class SensorReading:
 
 
 @dataclass
+class DangerZoneVertex:
+    lat: float
+    lon: float
+
+
+@dataclass
 class DangerZone:
     zone_id: str
     category: Literal["natural", "people", "infrastructure"]
     disaster_type: str  # flood, fire, shooting, etc.
     severity: int  # 1-5 scale
-    lat: float
-    lon: float
-    radius: float  # meters
+    lat: float  # center latitude
+    lon: float  # center longitude
+    vertices: List[DangerZoneVertex]  # 6-7 vertices forming polygon boundary
     is_active: bool
     detected_at: float
     expires_at: Optional[float] = None
@@ -109,6 +115,7 @@ class ExtractedEntity:
     entity_type: Literal["person_status", "movement", "danger_zone", "medical"]
     urgency: int  # 1-5 scale
     status: str  # extracted status (needs_help, safe, etc.)
+    zone_id: Optional[str] = None  # Links to danger_zones.zone_id if entity relates to a danger zone
     needs: List[str] = field(default_factory=list)  # medical, evacuation, translation, shelter
     location_mentioned: str = ""
     medical_keywords: List[str] = field(default_factory=list)

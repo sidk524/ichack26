@@ -419,7 +419,14 @@ async def get_all_danger_zones(request):
             "severity": 4,
             "lat": 51.5074,
             "lon": -0.1278,
-            "radius": 500,
+            "vertices": [
+                {"lat": 51.5119, "lon": -0.1278},
+                {"lat": 51.5097, "lon": -0.1200},
+                {"lat": 51.5052, "lon": -0.1200},
+                {"lat": 51.5029, "lon": -0.1278},
+                {"lat": 51.5052, "lon": -0.1356},
+                {"lat": 51.5097, "lon": -0.1356}
+            ],
             "is_active": true,
             "detected_at": 1234567890.123,
             "expires_at": 1234571490.123,
