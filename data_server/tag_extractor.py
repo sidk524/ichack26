@@ -114,13 +114,14 @@ def extract_tags(transcript: str, language: str = "en", num_tags: int = 3) -> Li
     ]
 
     # If English, use POS tagging to prioritize nouns and verbs
+    # But always keep priority keywords regardless of POS tag
     if language == 'en' and meaningful_words:
         try:
             pos_tagged = pos_tag(meaningful_words)
-            # Keep only nouns (NN*) and verbs (VB*)
+            # Keep nouns (NN*), verbs (VB*), and priority keywords
             meaningful_words = [
                 word for word, pos in pos_tagged
-                if pos.startswith('NN') or pos.startswith('VB')
+                if pos.startswith('NN') or pos.startswith('VB') or word in PRIORITY_KEYWORDS
             ]
         except:
             pass  # If POS tagging fails, use all meaningful words
@@ -176,7 +177,8 @@ def extract_bilingual_tags(transcript: str, num_tags: int = 3) -> List[str]:
     turkish_word_count = sum(1 for word in turkish_word_indicators if word in transcript.lower())
 
     # Determine language (simple heuristic)
-    if turkish_char_count > 2 or turkish_word_count > 3:
+    # >= 1 Turkish char or >= 2 Turkish indicator words suggests Turkish
+    if turkish_char_count >= 1 or turkish_word_count >= 2:
         language = 'tr'
     else:
         language = 'en'
