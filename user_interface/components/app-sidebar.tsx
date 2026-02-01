@@ -33,13 +33,13 @@ const data = {
   },
   navMain: [
     {
-      title: "Switch Board",
+      title: "Switchboard",
       url: "/dashboard",
       icon: IconHeadset,
     },
     {
-      title: "First Responders",
-      url: "/dashboard",
+      title: "Field View",
+      url: "/dashboard/firstresponders",
       icon: IconAlertTriangle,
     },
     {

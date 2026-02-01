@@ -17,7 +17,7 @@ export default function HeroSection() {
                                 <p className="text-muted-foreground mb-6 text-sm">I am a...</p>
                                 <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
                                     <Link
-                                        href="/dashboard"
+                                        href="/dashboard/firstresponders"
                                         className="group relative flex flex-col items-center justify-center gap-3 rounded-xl border bg-card p-6 text-center shadow-sm transition-all hover:shadow-md hover:border-red-500/50 hover:bg-red-500/5"
                                     >
                                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-600 group-hover:bg-red-500/20">
