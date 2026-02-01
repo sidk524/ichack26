@@ -155,6 +155,21 @@ export function EmergencyCall() {
   const callStatus = getCallStatus(conversationStatus, hasEnded)
   const personaState = getPersonaState(callStatus, mode)
 
+  // Start location tracking and WebSocket connection on component mount
+  // This ensures location is broadcasting as soon as emergency page opens
+  useEffect(() => {
+    console.log("[EmergencyCall] Component mounted - starting location tracking and WebSocket")
+    connectWebSocket()
+    startLocationTracking()
+
+    // Cleanup on unmount
+    return () => {
+      console.log("[EmergencyCall] Component unmounting - stopping location tracking")
+      stopLocationTracking()
+      disconnectWebSocket()
+    }
+  }, []) // Empty deps = run once on mount
+
   // Send transcript updates to server when messages change
   // Send as partial (is_final=false) during the call
   // Server will save all partials when connection closes
@@ -194,19 +209,15 @@ export function EmergencyCall() {
   const handleStartCall = useCallback(async () => {
     setCallDuration(0)
     setHasEnded(false)
-    // Connect to server WebSocket
-    connectWebSocket()
-    // Start location tracking when call begins
-    startLocationTracking()
+    // WebSocket and location tracking already started on mount
+    // Just start the voice conversation
     await startConversation()
-  }, [startConversation, startLocationTracking, connectWebSocket])
+  }, [startConversation])
 
   const handleEndCall = useCallback(async () => {
     await endConversation()
-    // Stop location tracking when call ends
-    stopLocationTracking()
-    // Disconnect from server WebSocket
-    disconnectWebSocket()
+    // Keep location tracking and WebSocket active
+    // They will be cleaned up when component unmounts
     setHasEnded(true)
     setCurrentInstruction("")
 
@@ -214,7 +225,7 @@ export function EmergencyCall() {
     setTimeout(() => {
       setHasEnded(false)
     }, 3000)
-  }, [endConversation, stopLocationTracking, disconnectWebSocket])
+  }, [endConversation])
 
   const toggleMute = useCallback(() => {
     const newMuted = !isMuted
@@ -230,36 +241,81 @@ export function EmergencyCall() {
           <IconShieldCheck className="size-5 text-primary" />
           <span className="font-semibold text-sm">Emergency Response</span>
         </div>
-        {callStatus === "connected" && (
-          <div className="flex items-center gap-3 text-sm">
-            {/* WebSocket status indicator */}
-            <div className="flex items-center gap-1">
-              <span
-                className={cn(
-                  "size-2 rounded-full",
-                  wsStatus === "connected" && "bg-green-500",
-                  wsStatus === "connecting" && "bg-yellow-500 animate-pulse",
-                  wsStatus === "error" && "bg-red-500",
-                  wsStatus === "disconnected" && "bg-gray-400"
-                )}
-              />
-              <span className="text-xs text-muted-foreground">
-                {wsStatus === "connected" ? "Server" : wsStatus}
-              </span>
-            </div>
-            <span className="relative flex size-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full size-2 bg-red-500"></span>
-            </span>
-            <span className="font-mono text-muted-foreground">
-              {formatDuration(callDuration)}
+        <div className="flex items-center gap-3 text-sm">
+          {/* Location status indicator */}
+          <div className="flex items-center gap-1">
+            <span
+              className={cn(
+                "size-2 rounded-full",
+                isTrackingLocation && position && "bg-green-500",
+                isTrackingLocation && !position && "bg-yellow-500 animate-pulse",
+                locationError && "bg-red-500",
+                !isTrackingLocation && "bg-gray-400"
+              )}
+            />
+            <span className="text-xs text-muted-foreground">
+              {locationError ? "Location Error" :
+               isTrackingLocation && position ? "GPS Active" :
+               isTrackingLocation ? "Getting GPS..." : "GPS Off"}
             </span>
           </div>
-        )}
+
+          {/* WebSocket status indicator */}
+          <div className="flex items-center gap-1">
+            <span
+              className={cn(
+                "size-2 rounded-full",
+                wsStatus === "connected" && "bg-green-500",
+                wsStatus === "connecting" && "bg-yellow-500 animate-pulse",
+                wsStatus === "error" && "bg-red-500",
+                wsStatus === "disconnected" && "bg-gray-400"
+              )}
+            />
+            <span className="text-xs text-muted-foreground">
+              {wsStatus === "connected" ? "Server" : wsStatus}
+            </span>
+          </div>
+
+          {callStatus === "connected" && (
+            <>
+              <span className="relative flex size-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full size-2 bg-red-500"></span>
+              </span>
+              <span className="font-mono text-muted-foreground">
+                {formatDuration(callDuration)}
+              </span>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center p-6 gap-6">
+        {/* Location Permission Warning */}
+        {locationError && (
+          <div className="w-full max-w-sm px-4 py-3 rounded-lg bg-destructive/10 border border-destructive/20">
+            <p className="text-sm text-destructive font-medium">
+              ⚠️ Location access is required for emergency response
+            </p>
+            <p className="text-xs text-destructive/80 mt-1">
+              {locationError.message}
+            </p>
+          </div>
+        )}
+
+        {/* Permission State Info */}
+        {permissionState === "denied" && !locationError && (
+          <div className="w-full max-w-sm px-4 py-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+            <p className="text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+              Location permission denied
+            </p>
+            <p className="text-xs text-yellow-600/80 dark:text-yellow-400/80 mt-1">
+              Please enable location in your browser settings for accurate emergency response.
+            </p>
+          </div>
+        )}
+
         {/* Persona Visual */}
         <div className="relative">
           <div
