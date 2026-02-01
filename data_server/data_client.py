@@ -29,6 +29,7 @@ from status_inference import calculate_priority_score
 import aiosqlite
 from database.postgres import db
 from database.db import LocationPoint, Call, Hospital, DangerZone
+from route_service import route_service
 
 
 def register_data_routes(app: web.Application):
@@ -69,6 +70,10 @@ def register_data_routes(app: web.Application):
 
     # Priority scores
     app.router.add_get("/api/priorities", get_priority_scores_handler)
+
+    # Route calculation
+    app.router.add_post("/api/route/calculate", calculate_route_handler)
+    app.router.add_get("/api/danger-zones/geojson", get_danger_zones_geojson_handler)
 
 
 # === User Endpoints ===
@@ -356,6 +361,68 @@ async def get_priority_scores_handler(request: web.Request) -> web.Response:
             "ok": True,
             "count": len(priorities),
             "priorities": priorities
+        })
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+# === Route Calculation Endpoints ===
+
+async def calculate_route_handler(request: web.Request) -> web.Response:
+    """
+    POST /api/route/calculate - Calculate a route optionally avoiding danger zones.
+
+    Request body:
+    {
+        "start_lat": 37.0662,
+        "start_lon": 37.3833,
+        "end_lat": 37.5847,
+        "end_lon": 36.9371,
+        "profile": "driving-car",  // optional, defaults to driving-car
+        "avoid_polygons": true      // optional, defaults to true
+    }
+    """
+    try:
+        data = await request.json()
+
+        # Validate required fields
+        required_fields = ['start_lat', 'start_lon', 'end_lat', 'end_lon']
+        for field in required_fields:
+            if field not in data:
+                return web.json_response({
+                    "ok": False,
+                    "error": f"Missing required field: {field}"
+                }, status=400)
+
+        # Calculate route
+        result = await route_service.calculate_route(
+            start_lat=float(data['start_lat']),
+            start_lon=float(data['start_lon']),
+            end_lat=float(data['end_lat']),
+            end_lon=float(data['end_lon']),
+            profile=data.get('profile'),
+            avoid_polygons=data.get('avoid_polygons', True)
+        )
+
+        return web.json_response(result)
+    except ValueError as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=400)
+    except Exception as e:
+        return web.json_response({"ok": False, "error": str(e)}, status=500)
+
+
+async def get_danger_zones_geojson_handler(request: web.Request) -> web.Response:
+    """
+    GET /api/danger-zones/geojson - Get all danger zones as GeoJSON FeatureCollection.
+
+    Returns danger zones formatted for map display and route avoidance.
+    """
+    try:
+        geojson = await route_service.get_danger_zones_as_geojson()
+        return web.json_response({
+            "ok": True,
+            "geojson": geojson,
+            "count": len(geojson.get('features', []))
         })
     except Exception as e:
         return web.json_response({"ok": False, "error": str(e)}, status=500)

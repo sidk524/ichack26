@@ -326,14 +326,17 @@ async def create_danger_zone_data():
 
     for zone_info in SAMPLE_DANGER_ZONES:
         # Generate polygon vertices from center and radius
-        vertices_dicts = generate_polygon_vertices(
+        vertex_dicts = generate_polygon_vertices(
             zone_info["lat"],
             zone_info["lon"],
-            zone_info["radius"],
+            0.004 * zone_info["radius"],
             num_vertices=6
         )
         # Convert dicts to DangerZoneVertex objects
-        vertices = [DangerZoneVertex(lat=v["lat"], lon=v["lon"]) for v in vertices_dicts]
+        vertices = [DangerZoneVertex(lat=v["lat"], lon=v["lon"]) for v in vertex_dicts]
+
+        # Convert dict vertices to DangerZoneVertex objects
+        vertices = [DangerZoneVertex(lat=v["lat"], lon=v["lon"]) for v in vertex_dicts]
 
         zone = DangerZone(
             zone_id=str(uuid.uuid4()),

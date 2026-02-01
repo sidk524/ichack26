@@ -694,6 +694,161 @@ curl -X GET http://localhost:8080/api/data/all | jq .
 
 ---
 
+## Route Calculation Endpoints
+
+### Calculate Route (With Optional Danger Zone Avoidance)
+**Endpoint:** `POST /api/route/calculate`
+
+**Description:** Calculates an optimal route from start to end coordinates. By default, the route will avoid all active danger zones for safety. You can disable this behavior to get the fastest direct route.
+
+**Usage:**
+```bash
+# Route avoiding danger zones (default)
+curl -X POST http://localhost:8080/api/route/calculate \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "start_lat": 37.0662,
+    "start_lon": 37.3833,
+    "end_lat": 37.5847,
+    "end_lon": 36.9371,
+    "profile": "driving-car"
+  }'
+
+# Direct route without avoiding danger zones
+curl -X POST http://localhost:8080/api/route/calculate \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "start_lat": 37.0662,
+    "start_lon": 37.3833,
+    "end_lat": 37.5847,
+    "end_lon": 36.9371,
+    "profile": "driving-car",
+    "avoid_polygons": false
+  }'
+```
+
+**Request Body:**
+```json
+{
+  "start_lat": 37.0662,
+  "start_lon": 37.3833,
+  "end_lat": 37.5847,
+  "end_lon": 36.9371,
+  "profile": "driving-car",
+  "avoid_polygons": true
+}
+```
+
+**Field Descriptions:**
+- `start_lat`: Starting point latitude (required)
+- `start_lon`: Starting point longitude (required)
+- `end_lat`: Destination latitude (required)
+- `end_lon`: Destination longitude (required)
+- `profile`: Routing profile (optional, defaults to "driving-car")
+  - Options: "driving-car", "driving-hgv", "foot-walking", "foot-hiking", "cycling-regular", "cycling-road", "cycling-mountain", "cycling-electric"
+- `avoid_polygons`: Whether to avoid danger zone polygons (optional, defaults to true)
+  - `true`: Route will avoid all active danger zones (safer but potentially longer)
+  - `false`: Direct route ignoring danger zones (faster but potentially unsafe)
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "route": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "summary": {
+            "distance": 45678.2,
+            "duration": 2847.3
+          },
+          "avoided_zones": 3,
+          "profile": "driving-car",
+          "avoidance_enabled": true
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [37.3833, 37.0662],
+            [37.3840, 37.0670],
+            ...
+          ]
+        }
+      }
+    ]
+  },
+  "avoided_zones_count": 3,
+  "avoidance_enabled": true
+}
+```
+
+**Error Response:**
+```json
+{
+  "ok": false,
+  "error": "ORS_API_KEY environment variable is not set"
+}
+```
+
+---
+
+### Get Danger Zones as GeoJSON
+**Endpoint:** `GET /api/danger-zones/geojson`
+
+**Description:** Retrieves all active danger zones formatted as a GeoJSON FeatureCollection. This format is compatible with mapping libraries and the OpenRouteService avoidance API.
+
+**Usage:**
+```bash
+curl http://localhost:8080/api/danger-zones/geojson
+```
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "geojson": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "zone_id": "zone_gaziantep_001",
+          "category": "natural",
+          "disaster_type": "earthquake",
+          "severity": 5,
+          "description": "7.8 magnitude earthquake epicenter",
+          "recommended_action": "evacuate"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[
+            [37.3833, 37.1112],
+            [37.4222, 37.0887],
+            [37.4222, 37.0437],
+            [37.3833, 37.0212],
+            [37.3444, 37.0437],
+            [37.3444, 37.0887],
+            [37.3833, 37.1112]
+          ]]
+        }
+      }
+    ]
+  },
+  "count": 5
+}
+```
+
+**Field Descriptions:**
+- `geojson`: Standard GeoJSON FeatureCollection containing all active danger zones
+- `count`: Total number of active danger zones included
+- Each feature contains:
+  - `properties`: Zone metadata (id, category, type, severity, description, action)
+  - `geometry`: Polygon coordinates defining the danger zone boundary
+
+---
+
 ## Related Documentation
 
 - **Server Setup:** See `data_server/CLAUDE.md` for server architecture details
