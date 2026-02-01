@@ -30,6 +30,7 @@ curl http://localhost:8080/api/users
     {
       "user_id": "user_123",
       "role": "civilian",
+      "status": "normal",
       "location_history": [
         {
           "lat": 51.5074,
@@ -54,6 +55,9 @@ curl http://localhost:8080/api/users
 **Field Descriptions:**
 - `user_id`: Unique identifier for the user
 - `role`: Either "civilian" or "first_responder"
+- `status`: Current user status
+  - For civilians: "normal", "needs_help", "help_coming", "at_incident", "in_transport", "at_hospital"
+  - For responders: "roaming", "docked", "en_route_to_civ", "on_scene", "en_route_to_hospital"
 - `location_history`: Array of GPS coordinates with timestamps
 - `calls`: Array of emergency call transcripts
 - `timestamp`: Unix timestamp (seconds since epoch)
@@ -78,6 +82,7 @@ curl http://localhost:8080/api/users/user_123
   "user": {
     "user_id": "user_123",
     "role": "civilian",
+    "status": "normal",
     "location_history": [...],
     "calls": [...]
   }
@@ -350,6 +355,157 @@ curl http://localhost:8080/api/sensors
 
 ---
 
+## Hospital Data Endpoints
+
+### Get All Hospitals
+**Endpoint:** `GET /api/hospitals`
+
+**Description:** Retrieves all hospitals with current capacity information including general beds, ICU, ER, and pediatric units.
+
+**Usage:**
+```bash
+curl http://localhost:8080/api/hospitals
+```
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "hospitals": [
+    {
+      "hospital_id": "h1a2b3c4",
+      "name": "Acıbadem Maslak Hastanesi",
+      "lat": 41.1086,
+      "lon": 29.0219,
+      "total_beds": 500,
+      "available_beds": 120,
+      "icu_beds": 50,
+      "available_icu": 8,
+      "er_beds": 75,
+      "available_er": 15,
+      "pediatric_beds": 100,
+      "available_pediatric": 25,
+      "contact_phone": "+90 212 304 4444",
+      "last_updated": 1234567890.123
+    }
+  ]
+}
+```
+
+**Field Descriptions:**
+- `hospital_id`: Unique identifier for the hospital
+- `name`: Hospital name
+- `lat`/`lon`: GPS coordinates of the hospital
+- `total_beds`: Total general bed capacity
+- `available_beds`: Currently available general beds
+- `icu_beds`: Total ICU capacity
+- `available_icu`: Currently available ICU beds
+- `er_beds`: Total emergency room capacity
+- `available_er`: Currently available ER beds
+- `pediatric_beds`: Total pediatric unit capacity
+- `available_pediatric`: Currently available pediatric beds
+- `contact_phone`: Hospital contact number
+- `last_updated`: When capacity was last updated (Unix timestamp)
+
+---
+
+## Danger Zone Endpoints
+
+### Get All Danger Zones
+**Endpoint:** `GET /api/danger-zones`
+
+**Description:** Retrieves all active danger zones including natural disasters, infrastructure failures, and civil incidents.
+
+**Usage:**
+```bash
+curl http://localhost:8080/api/danger-zones
+```
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "danger_zones": [
+    {
+      "zone_id": "z1a2b3c4",
+      "category": "natural",
+      "disaster_type": "earthquake",
+      "severity": 5,
+      "lat": 37.0662,
+      "lon": 37.3833,
+      "radius": 5000,
+      "is_active": true,
+      "detected_at": 1234567890.123,
+      "expires_at": 1234571490.123,
+      "description": "7.8 magnitude earthquake in Gaziantep region, major structural damage",
+      "recommended_action": "evacuate"
+    }
+  ]
+}
+```
+
+**Field Descriptions:**
+- `zone_id`: Unique identifier for the danger zone
+- `category`: Type of danger ("natural", "people", "infrastructure")
+- `disaster_type`: Specific disaster type (e.g., "earthquake", "fire", "flood", "building_collapse")
+- `severity`: Severity level from 1 (minimal) to 5 (critical)
+- `lat`/`lon`: Center coordinates of the danger zone
+- `radius`: Affected radius in meters
+- `is_active`: Whether the danger zone is currently active
+- `detected_at`: When the danger was first detected (Unix timestamp)
+- `expires_at`: When the danger is expected to expire (Unix timestamp, may be null)
+- `description`: Detailed description of the danger
+- `recommended_action`: Recommended action ("evacuate", "shelter_in_place", "avoid_area")
+
+---
+
+## AI-Extracted Entity Endpoints
+
+### Get All Extracted Entities
+**Endpoint:** `GET /api/entities`
+
+**Description:** Retrieves all entities extracted by Claude AI from emergency calls, news articles, and sensor data.
+
+**Usage:**
+```bash
+curl http://localhost:8080/api/entities
+```
+
+**Response Format:**
+```json
+{
+  "ok": true,
+  "entities": [
+    {
+      "entity_id": "e1a2b3c4",
+      "source_type": "call",
+      "source_id": "call_gaziantep_001",
+      "entity_type": "person_status",
+      "urgency": 5,
+      "status": "needs_help",
+      "needs": ["medical", "evacuation", "search_and_rescue"],
+      "location_mentioned": "Şahinbey ilçesi, çökmüş bina",
+      "medical_keywords": ["trapped", "building_collapse", "unconscious", "bleeding"],
+      "extracted_at": 1234567890.123
+    }
+  ]
+}
+```
+
+**Field Descriptions:**
+- `entity_id`: Unique identifier for the extracted entity
+- `source_type`: Source of the entity ("call", "news", "sensor")
+- `source_id`: ID of the source record (call_id, article_id, or reading_id)
+- `entity_type`: Type of entity ("person_status", "movement", "danger_zone", "medical")
+- `urgency`: Urgency level from 1 (low) to 5 (critical)
+- `status`: Current status (e.g., "needs_help", "help_coming", "monitoring", "active_incident")
+- `needs`: Array of identified needs (e.g., ["medical", "evacuation", "ambulance"])
+- `location_mentioned`: Location extracted from the source text
+- `medical_keywords`: Medical terms identified in the source
+- `extracted_at`: When the entity was extracted (Unix timestamp)
+
+---
+
 ## Complete Data Dump
 
 ### Get All Data
@@ -371,6 +527,7 @@ curl http://localhost:8080/api/data/all
       {
         "user_id": "user_123",
         "role": "civilian",
+        "status": "normal",
         "location_history": [...],
         "calls": [...]
       }
@@ -391,6 +548,33 @@ curl http://localhost:8080/api/data/all
         ...
       }
     ],
+    "hospitals": [
+      {
+        "hospital_id": "h1a2b3c4",
+        "name": "Acıbadem Maslak Hastanesi",
+        "total_beds": 500,
+        "available_beds": 120,
+        ...
+      }
+    ],
+    "danger_zones": [
+      {
+        "zone_id": "z1a2b3c4",
+        "category": "natural",
+        "disaster_type": "earthquake",
+        "severity": 5,
+        ...
+      }
+    ],
+    "entities": [
+      {
+        "entity_id": "e1a2b3c4",
+        "source_type": "call",
+        "entity_type": "person_status",
+        "urgency": 5,
+        ...
+      }
+    ],
     "timestamp": 1234567890.123
   }
 }
@@ -400,6 +584,9 @@ curl http://localhost:8080/api/data/all
 - `users`: Complete array of all users with embedded location and call data
 - `news`: Complete array of all news articles
 - `sensors`: Complete array of all sensor readings
+- `hospitals`: Complete array of all hospitals with capacity data
+- `danger_zones`: Complete array of all active danger zones
+- `entities`: Complete array of all AI-extracted entities
 - `timestamp`: When this snapshot was generated (Unix timestamp)
 
 ---
