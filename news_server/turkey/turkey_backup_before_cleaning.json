@@ -25,10 +25,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Man, Turkey",
+        "name": "##ir, ##isa, ##kes, ##kh, ##r, Bali, Istanbul, Man, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -40,10 +40,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##i, ##mir, ##rk, ##ye, ##z, ##ü, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -70,10 +70,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -131,10 +131,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##mara, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -169,10 +169,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul",
+        "name": "##i, ##ir, ##kes, ##mir, ##rk, ##ye, ##z, ##ü, Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -230,10 +230,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##ati, ##sta",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.136353,
+        "lng": 29.8598901
       }
     },
     {
@@ -260,10 +260,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Nature",
+        "name": "##hra, ##i, ##man, ##maraş, ##rk, ##ye, ##ü, Nature",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -275,10 +275,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##man, ##ş",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -290,10 +290,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -358,10 +358,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Cyprus",
+        "name": "##os, ##ph, Cyprus",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8946471,
-        "lng": 32.8715626
+        "lat": 38.5004915,
+        "lng": -95.7895503
       }
     },
     {
@@ -381,10 +381,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Turkey",
+        "name": "##ir, ##kes, Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -404,10 +404,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##ir, ##kes, ##l, ##ı, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -472,10 +472,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Western Turkey",
+        "name": "##ti, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": 38.2012693,
+        "lng": 42.5181949
       }
     },
     {
@@ -487,10 +487,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü, ##ürk",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -593,10 +593,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##s, ##zen, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 37.1339974,
+        "lng": 39.1062055
       }
     },
     {
@@ -608,10 +608,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Phil, Turkey",
+        "name": "##eb, ##ene, ##ws, ##ze, Phil, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 39.8719699,
+        "lng": 32.7495758
       }
     },
     {
@@ -623,10 +623,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "His, Turkey",
+        "name": "##ato, ##lia, ##pan, His, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.009729,
-        "lng": 28.9559802
+        "lat": 36.7200372,
+        "lng": 31.5566173
       }
     },
     {
@@ -788,10 +788,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul",
+        "name": "##i, ##ir, ##kes, ##mir, ##rk, ##ye, ##z, ##ü, Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -893,10 +893,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Man, Western Turkey",
+        "name": "##a, ##isa, ##mir, ##urs, ##z, Istanbul, Man, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -908,10 +908,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Republic, Western Turkey",
+        "name": "##ir Province, ##kes, Bali, Republic, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 39.7612686,
+        "lng": 44.6264434
       }
     },
     {
@@ -1068,8 +1068,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -1081,10 +1081,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Sin, Turkey",
+        "name": "##dir, ##gi, ##har, Sin, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0735677,
-        "lng": 29.006452
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1111,10 +1111,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Turkey",
+        "name": "##ir, ##kes, ##mir, ##z, ##ان, Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1126,10 +1126,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Türk",
+        "name": "##i, ##ye, ##ürk, Istanbul, Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1186,10 +1186,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##an Islands, ##ege, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 45.7231045,
+        "lng": -80.0329285
       }
     },
     {
@@ -1201,10 +1201,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Turkey",
+        "name": "##lap, ##ses, Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 40.7337753,
+        "lng": 35.78676
       }
     },
     {
@@ -1216,10 +1216,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Ukraine",
+        "name": "##C, Ukraine",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8511029,
-        "lng": 32.8275226
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1246,10 +1246,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1261,10 +1261,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Sin, Turkey",
+        "name": "##dir, Sin, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0735677,
-        "lng": 29.006452
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1396,10 +1396,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##bul, ##mir, ##stan, ##z, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.9842952,
+        "lng": 32.890851
       }
     },
     {
@@ -1413,8 +1413,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -1426,10 +1426,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Türk",
+        "name": "##i, ##ye, Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1456,10 +1456,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##ir, ##kes, ##l, ##rk, ##ye, ##ü, ##ı",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1471,10 +1471,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##ir, ##kes, ##l, ##ye, ##ı",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1501,10 +1501,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Sin",
+        "name": "##dir, ##gi, ##ir, ##kes, Bali, Sin",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1516,10 +1516,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Turkey",
+        "name": "##ir, ##kes, ##mir, ##z, Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1531,10 +1531,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1600,10 +1600,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##a, ##i, ##mir, ##rk, ##tah, ##urs, ##ya, ##ye, ##z, ##ü, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1653,10 +1653,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1698,10 +1698,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##hra, ##man, ##maraş, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -1796,10 +1796,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Has, Turkey",
+        "name": "##ht, ##nar, Has, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.4700589,
-        "lng": 40.7009983
+        "lat": 38.9165235,
+        "lng": -77.0560464
       }
     },
     {
@@ -1834,10 +1834,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul, Turkey",
+        "name": "##a, ##ir, ##kes, ##mir, ##urs, ##z, Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1849,10 +1849,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Sin",
+        "name": "##a, ##dir, ##gi, ##i, ##mir, ##rk, ##urs, ##ye, ##z, ##ü, Istanbul, Sin",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1879,10 +1879,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali",
+        "name": "##i, ##ir, ##kes, ##rk, ##ye, ##ü, Bali",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1955,10 +1955,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali",
+        "name": "##dis, ##i, ##ir Province, ##kes, ##ly, ##rk, ##tan, ##ur, ##ye, ##ü, Bali",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.2931953,
+        "lng": 27.149315
       }
     },
     {
@@ -1970,10 +1970,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1987,8 +1987,8 @@
       "location": {
         "name": "First, Israel, Middle East, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 34.3931396,
-        "lng": -100.8911169
+        "lat": 34.3945504,
+        "lng": -100.8978967
       }
     },
     {
@@ -2045,10 +2045,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##ir Province, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2135,10 +2135,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2180,10 +2180,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2210,10 +2210,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##ye, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -2225,10 +2225,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##ir, ##kes, ##l, ##ı, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2240,10 +2240,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2270,10 +2270,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Pakistan",
+        "name": "##i, ##ir, ##kes, ##rk, ##ye, ##ü, Bali, Pakistan",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2285,10 +2285,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2315,10 +2315,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2345,10 +2345,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Istanbul",
+        "name": "##i, ##ir, ##kes, ##rk, ##ye, ##ü, Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2375,10 +2375,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, India, Turkey",
+        "name": "##ir, ##ir Province, ##kes, Bali, India, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2390,10 +2390,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Balikes, Turkey",
+        "name": "##ir, ##s, ##s Balikesir, Balikes, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2435,10 +2435,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "India, Istanbul, Times, Turkey",
+        "name": "##mir, ##z, India, Istanbul, Times, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 11.6095349,
-        "lng": 76.0802368
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2467,8 +2467,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -2480,10 +2480,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Western Turkey",
+        "name": "##mir, ##z, Istanbul, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2578,10 +2578,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2608,10 +2608,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Western Turkey",
+        "name": "##mir, ##z, Istanbul, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2676,10 +2676,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2691,10 +2691,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2796,10 +2796,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2826,10 +2826,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##RT World, ##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -2841,10 +2841,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Turkey",
+        "name": "##ir, ##kes, Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2946,10 +2946,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bali, Toronto, Turkey",
+        "name": "##ir, ##kes, Bali, Toronto, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -3036,10 +3036,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##ir, ##kes, ##l, ##nd, ##rg, ##ı, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -3083,8 +3083,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -3111,10 +3111,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Türk",
+        "name": "##i, ##ye, Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3299,10 +3299,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Pacific Ring of Fire",
+        "name": "##i, ##rk, ##ye, ##ü, Pacific Ring of Fire",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3330,10 +3330,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Konya",
-        "extraction_method": "regex_fallback",
-        "lat": 37.872734,
-        "lng": 32.4924376
+        "name": "##i, ##nya, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3406,10 +3406,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3602,10 +3602,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3632,10 +3632,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3722,10 +3722,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3850,10 +3850,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -4333,10 +4333,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##NA, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.8729222,
+        "lng": 32.763482
       }
     },
     {
@@ -4562,10 +4562,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Los Angeles, Mar, Turkey",
+        "name": "##is, ##mar, Los Angeles, Mar, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 34.4391297,
-        "lng": -117.7757272
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -4592,10 +4592,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -4607,10 +4607,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##eat, ##her, ##u, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 40.9794258,
+        "lng": 29.1138191
       }
     },
     {
@@ -4825,10 +4825,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Mar, Rhodes",
+        "name": "##A, ##Y, ##is, ##mar, ##our, ##rea, Mar, Rhodes",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -4945,10 +4945,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Mar, Turkey",
+        "name": "##is, ##mar, Mar, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -5005,10 +5005,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Mar, Rhodes, Turkey",
+        "name": "##is, ##mar, Mar, Rhodes, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -5088,10 +5088,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Crete, Greece",
+        "name": "##sun, Crete, Greece",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 38.6724063,
+        "lng": 38.9898463
       }
     },
     {
@@ -5247,10 +5247,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Greece, His, Mediterranean, Turkey",
+        "name": "##ato, ##lia, ##pan, Greece, His, Mediterranean, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.4363032,
-        "lng": 27.1410447
+        "lat": 36.7200372,
+        "lng": 31.5566173
       }
     },
     {
@@ -5315,10 +5315,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Egypt, Greece, Israel",
+        "name": "##lt, ##s Island, ##so, Egypt, Greece, Israel",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 32.459593,
-        "lng": -81.4332984
+        "lat": 54.6771511,
+        "lng": 25.2875252
       }
     },
     {
@@ -5353,10 +5353,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Mar",
+        "name": "##mara, Istanbul, Mar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -5399,10 +5399,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Mar, PA Turkey, Turkey",
+        "name": "##mara, Mar, PA Turkey, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -5414,10 +5414,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##i, ##rk, ##ye, ##ü, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5655,10 +5655,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##i, ##rk, ##ye, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5685,10 +5685,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##i, ##rk, ##ye, ##ü, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5805,10 +5805,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul, Mar",
+        "name": "##lor, ##mara, ##mb, Istanbul, Mar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 35.1828125,
+        "lng": 33.3594349
       }
     },
     {
@@ -5835,10 +5835,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "İstanbul",
-        "extraction_method": "regex_fallback",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "name": "##bul, ##stan",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 39.9842952,
+        "lng": 32.890851
       }
     },
     {
@@ -5903,10 +5903,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
+        "name": "##i, ##rk, ##ye, ##ü, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5986,10 +5986,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Nature",
+        "name": "##i, ##rk, ##ye, Nature",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6009,10 +6009,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -6024,10 +6024,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6077,10 +6077,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Frontier",
+        "name": "##i, ##n, ##rk, ##s, ##yama, ##ye, ##ü, ##ı, Frontier",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6297,10 +6297,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bangkok, Col, Myanmar",
+        "name": "##co, ##it, Bangkok, Col, Myanmar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 13.7880246,
-        "lng": 100.5867658
+        "lat": 34.3939184,
+        "lng": -100.894078
       }
     },
     {
@@ -6342,10 +6342,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "UNESCO",
+        "name": "##i, ##rk, ##ye, ##ü, UNESCO",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.4603339,
-        "lng": 27.191892
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6357,10 +6357,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6403,10 +6403,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##az, ##hra, ##man, ##mara, ##ğ",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 38.8535641,
+        "lng": 40.4436186
       }
     },
     {
@@ -6433,10 +6433,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Santo",
+        "name": "##i, ##rini, Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6463,10 +6463,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -6494,10 +6494,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6517,10 +6517,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Santo",
+        "name": "##rini, Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6532,10 +6532,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Bodrum",
+        "name": "##drum, Bodrum",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.0343987,
-        "lng": 27.430651
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6600,10 +6600,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6615,10 +6615,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Santo",
+        "name": "##rini, Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6676,10 +6676,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6691,10 +6691,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##an Sea, ##ege",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 36.2638939,
+        "lng": 32.2882991
       }
     },
     {
@@ -6836,10 +6836,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6851,10 +6851,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6866,10 +6866,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6881,10 +6881,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6896,10 +6896,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##man, ##mara, ##ş",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -6926,10 +6926,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6964,10 +6964,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6979,10 +6979,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Azerbaijan",
+        "name": "##i, ##rk, ##ye, ##ü, Azerbaijan",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8518379,
-        "lng": 32.8290226
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7002,10 +7002,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##man, ##maraş",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -7017,10 +7017,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Santo",
+        "name": "##rini, Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -7032,10 +7032,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##i, ##man, ##maraş, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -7070,10 +7070,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##man, ##maraş",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -7085,10 +7085,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##an, ##ege, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -7115,10 +7115,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7191,10 +7191,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Earth",
+        "name": "##hra, ##i, ##man, ##mara, ##rk, ##ye, ##ü, Earth",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0300343,
-        "lng": 28.9792479
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -7254,10 +7254,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Istanbul",
-        "extraction_method": "regex_fallback",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "name": "##rsa Istanbul",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 40.9822331,
+        "lng": 29.1118602
       }
     },
     {
@@ -7347,8 +7347,8 @@
       "location": {
         "name": "Earth, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0300343,
-        "lng": 28.9792479
+        "lat": 40.9833833,
+        "lng": 29.0233672
       }
     },
     {
@@ -7413,8 +7413,8 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
+        "name": "##rk, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
         "lat": 39.294076,
         "lng": 35.2316631
       }
@@ -7503,10 +7503,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Antakya",
-        "extraction_method": "regex_fallback",
-        "lat": 36.2025574,
-        "lng": 36.1640991
+        "name": "##a, ##ky, ##ta",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -7556,8 +7556,8 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
+        "name": "##rk, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
         "lat": 39.294076,
         "lng": 35.2316631
       }
@@ -7639,7 +7639,7 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "East Anatolian, East Anatolian Fault Zone, Syria",
+        "name": "##ault, ##ye, East Anatolian, East Anatolian Fault Zone, Syria",
         "extraction_method": "distilbert_ner_full_text",
         "lat": 39.0,
         "lng": 35.0
@@ -7737,10 +7737,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7790,10 +7790,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7881,10 +7881,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7904,10 +7904,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7934,10 +7934,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8047,10 +8047,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8137,10 +8137,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Eastern",
+        "name": "##gement, ##i, ##lar, ##rk, ##ye, ##ü, Eastern",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.2815889,
-        "lng": 41.2384438
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -8152,10 +8152,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##hra, ##i, ##man, ##mara, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -8167,10 +8167,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##lor, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8258,10 +8258,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8304,10 +8304,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Nature, UNESCO",
+        "name": "##ba, ##i, ##k, ##r City Walls, ##rk, ##yar, ##ye, ##ü, ##ı, Nature, UNESCO",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 37.4397828,
+        "lng": -98.7061182
       }
     },
     {
@@ -8402,10 +8402,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8462,10 +8462,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8612,10 +8612,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "TURKEY",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##A, ##RI, ##Y",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -8642,10 +8642,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##a, ##ky, ##ta",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -8710,10 +8710,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8770,10 +8770,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##rdo, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -9118,10 +9118,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Relief",
+        "name": "##W, ##eb, ##i, ##rk, ##ye, ##ü, Relief",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.2718155,
-        "lng": 35.6317051
+        "lat": 36.8538434,
+        "lng": 30.6265338
       }
     },
     {
@@ -9156,10 +9156,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9224,10 +9224,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9428,10 +9428,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9623,10 +9623,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9661,10 +9661,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##ke",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 34.3939184,
+        "lng": -100.894078
       }
     },
     {
@@ -9676,10 +9676,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Ana",
+        "name": "##do, ##i, ##lu A, ##rk, ##ye, ##ü, Ana",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.9207759,
-        "lng": 32.8540497
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -9714,10 +9714,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##abi, ##n",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 40.1502638,
+        "lng": 29.0996364
       }
     },
     {
@@ -9782,10 +9782,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9820,10 +9820,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##et, ##i, ##ian, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 9.3118228,
+        "lng": 42.1284342
       }
     },
     {
@@ -9850,10 +9850,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9925,10 +9925,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10120,10 +10120,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Prevention",
+        "name": "##i, ##rk, ##ye, ##ü, Prevention",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10143,10 +10143,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10188,10 +10188,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##F, ##i, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 40.9698558,
+        "lng": 28.6037598
       }
     },
     {
@@ -10211,10 +10211,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10226,10 +10226,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10309,10 +10309,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Hat, Turkey",
+        "name": "##ay Province, Hat, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.01005,
-        "lng": 28.9631808
+        "lat": 40.6836224,
+        "lng": 29.9169852
       }
     },
     {
@@ -10460,10 +10460,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Hong Kong",
+        "name": "##i, ##nh, ##rk, ##ua, ##ye, ##ü, Hong Kong",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 40.9837352,
-        "lng": 29.0288563
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10520,10 +10520,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Italy, Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Italy, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.9040785,
-        "lng": 32.857569
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10589,10 +10589,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -10672,10 +10672,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Tehran",
+        "name": "##on, Tehran",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.6691342,
-        "lng": 38.1468259
+        "lat": 42.7037389,
+        "lng": -80.3336969
       }
     },
     {
@@ -10845,10 +10845,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10860,10 +10860,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11041,10 +11041,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##V, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 40.9901693,
+        "lng": 29.0269229
       }
     },
     {
@@ -11087,10 +11087,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##EM, ##G, ##M, ##MD, ##N, ##Z, ##j, ##l, ##wa, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -11148,10 +11148,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11163,10 +11163,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##hra, ##man, ##ş, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -11193,10 +11193,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##ira, ##ti, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.777386,
+        "lng": -93.1956929
       }
     },
     {
@@ -11426,10 +11426,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "TURKEY",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##A, ##H, ##RI, ##Y",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -11471,10 +11471,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11576,10 +11576,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11599,10 +11599,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11668,10 +11668,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11828,8 +11828,8 @@
       "location": {
         "name": "Australia, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -27.5366321,
-        "lng": 151.9863528
+        "lat": -27.5400191,
+        "lng": 151.9836451
       }
     },
     {
@@ -12091,10 +12091,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -12204,10 +12204,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Whole of Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Whole of Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -12385,10 +12385,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##kushima, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -12492,10 +12492,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -12997,10 +12997,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria, Turkey",
+        "name": "##der, ##ken, ##un, Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 38.1440363,
+        "lng": 44.2075973
       }
     },
     {
@@ -13042,10 +13042,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##s Frontières, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -13087,10 +13087,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##ye, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -13117,10 +13117,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -13140,10 +13140,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##i, ##rk, ##ye, ##ü",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -13705,10 +13705,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##ante, ##azi, ##p, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -13855,10 +13855,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Hat, Turkey",
+        "name": "##ay, Hat, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.01005,
-        "lng": 28.9631808
+        "lat": 38.6210785,
+        "lng": 36.4308357
       }
     },
     {
@@ -13900,10 +13900,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##rk, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -14081,10 +14081,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Syria",
+        "name": "##i, ##nh, ##rk, ##ua, ##ye, ##ü, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -14314,10 +14314,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##da, ##hra, ##i, ##man, ##mara, ##maraş, ##rk, ##ur, ##ye, ##ü, ##ğ, ##ı, ##ş, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 29.6823125,
+        "lng": -81.8955907
       }
     },
     {
@@ -14487,10 +14487,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##ante, ##azi, ##p, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -14532,10 +14532,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Mara",
+        "name": "##ş, Mara",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7231112,
-        "lng": 33.8682857
+        "lat": -34.568193,
+        "lng": -58.4556669
       }
     },
     {
@@ -14713,10 +14713,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "BBC, Turkey",
+        "name": "##ce, ##z, BBC, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 3.894469,
+        "lng": 11.5146826
       }
     },
     {
@@ -14743,10 +14743,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
+        "name": "##ada, ##s, ##ı, ##ş",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 36.9824714,
+        "lng": 35.2878779
       }
     },
     {
@@ -14849,10 +14849,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##mit, ##z",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 37.5121068,
+        "lng": 42.4700804
       }
     },
     {
@@ -14879,10 +14879,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "İzmir",
-        "extraction_method": "regex_fallback",
-        "lat": 38.4192537,
-        "lng": 27.128469
+        "name": "##mir, ##z",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -14954,10 +14954,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##an, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -15070,8 +15070,8 @@
       "location": {
         "name": "Iran",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.7626017,
-        "lng": 44.6249253
+        "lat": 39.7612686,
+        "lng": 44.6264434
       }
     },
     {
@@ -15128,10 +15128,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "name": "##ica, ##mit, ##nn, ##rita, ##z",
+        "extraction_method": "distilbert_ner_full_text",
+        "lat": 41.1248419,
+        "lng": 29.288281
       }
     },
     {
@@ -15166,10 +15166,10 @@
       "source": "https://news.google.com",
       "disaster": true,
       "location": {
-        "name": "Turkey",
+        "name": "##az, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.8535641,
+        "lng": 40.4436186
       }
     },
     {

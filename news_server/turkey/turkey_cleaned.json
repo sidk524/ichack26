@@ -27,8 +27,8 @@
       "location": {
         "name": "Bali, Istanbul, Man, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -42,8 +42,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -72,8 +72,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -133,8 +133,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -171,8 +171,8 @@
       "location": {
         "name": "Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -228,13 +228,7 @@
       "pubDate": "Fri, 28 Nov 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxNV1JSaW5CYmJZakR3OXVmbkZCUVItRE5lZlhieU9VUXRTM2hMNExabHRBcWM5UjhDSmhIbTlYMFVjbUdoUFJKMFZtdTQ1MVhLdk1UalpoZUN1YzVaYlJBRGpldC12VlhFSjI0bnB2dUF4MmlJNlRISGR0Z2ZISEktRw?oc=5\" target=\"_blank\">Death toll in great earthquakes 1900-2024</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Statista</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google admit say dia earthquake alert system no warn millions of pipo for Turkey - TRT Afrika",
@@ -262,8 +256,8 @@
       "location": {
         "name": "Nature",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -273,13 +267,7 @@
       "pubDate": "Tue, 25 Nov 2025 12:54:02 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxOczMzOWxRYlR1WFEyQ0tJUXNsbVNaQURJZnM3QWk1YjJTSnk3dWh5X1J3RmJKZXhGY2JnTk5IV3g4V2NCLTdtMXVJdGlqcjk0S19PQldpYy1FT3ZSOFR3TGhCYmYtZjMzeENfcWlCd1pyMzd1UzlJdUxHdTRERU1QMlpBM0RHM2Z1Mm8ydXQ2OFdaQQ?oc=5\" target=\"_blank\">Psychological distress, resilience, and well-being among survivors of the 2023 Kahramanmaraş earthquakes: a multi-site cross-sectional study</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Frontiers</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Building collapses without disasters spark security fears in Türkiye’s cities - Türkiye Today",
@@ -288,13 +276,7 @@
       "pubDate": "Wed, 19 Nov 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMixwFBVV95cUxOd0thSFp4cDVPUk1OQmJ2M2JjM2diSmFUckJrdVZVU1JqWHN5ek1PTGtFd1pHVUltRUdoRXFMMVp2cWxLWHhVczQ0Ukt4UXRfYjBiUzdWekFqY0RQNTJjVkFCS3NkVkxMUGRpRFZ6YlBJYXB1VUZaeFVzSWhDbXdhcEdiLXVrcEtFanU2TXdxSWRId0JrSVdCSEhSQkVYeWtybnN0QU9fLTZKVE0zVjZ6TnctX01ydWlrbThmd0ZZcDVCeGItNF84?oc=5\" target=\"_blank\">Building collapses without disasters spark security fears in Türkiye’s cities</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Conflict in Syria | Global Conflict Tracker - Council on Foreign Relations",
@@ -360,8 +342,8 @@
       "location": {
         "name": "Cyprus",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8946471,
-        "lng": 32.8715626
+        "lat": 38.5004915,
+        "lng": -95.7895503
       }
     },
     {
@@ -383,8 +365,8 @@
       "location": {
         "name": "Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -406,8 +388,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -474,8 +456,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": 38.2012693,
+        "lng": 42.5181949
       }
     },
     {
@@ -485,13 +467,7 @@
       "pubDate": "Mon, 03 Nov 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMikwFBVV95cUxOb2p6dHZISHZ3a1A4MDgyMmp0dHg5S3V5RlFKUDYzOWVYYWZJTXVUU3haTmdIanhYX1pEcWdNY256dnBvbHRZQ05fY1hORjR0ZnZFNHMzRlFUTFVHWWJ4dDIxV2JraEhqNjBxak90S1V3OVdhMzl5UUZBWm8tZzBsRTk3NUNQaDZrRWIzS0VJTGRQUkHSAZgBQVVfeXFMTk5WT0JmWG1WQ25Fc01KMEp4cTNCcEpOeEt0M1hlVnBYTXhsQXZLUDBjR1NMMGdEYXBLcVJvZkhlMGZoRU1XcDRzSWZ5em5FWjJucnRmcjNtczdCNXNTcDltZ0UzX1pqS01rcC1INjU4bHkxcUpkYnBibGFaZ0ZkWDdxSWZhd0ZUcDFxd1JQcmNoWXVoX1BCS1Y?oc=5\" target=\"_blank\">4.9 magnitude earthquake strikes western Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Hürriyet Daily News</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Strong quake jolts Türkiye’s Marmara region, felt in Istanbul - Türkiye Today",
@@ -595,8 +571,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 37.1339974,
+        "lng": 39.1062055
       }
     },
     {
@@ -610,8 +586,8 @@
       "location": {
         "name": "Phil, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 39.8719699,
+        "lng": 32.7495758
       }
     },
     {
@@ -625,8 +601,8 @@
       "location": {
         "name": "His, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.009729,
-        "lng": 28.9559802
+        "lat": 36.7200372,
+        "lng": 31.5566173
       }
     },
     {
@@ -790,8 +766,8 @@
       "location": {
         "name": "Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -895,8 +871,8 @@
       "location": {
         "name": "Istanbul, Man, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -910,8 +886,8 @@
       "location": {
         "name": "Bali, Republic, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 39.7612686,
+        "lng": 44.6264434
       }
     },
     {
@@ -1068,8 +1044,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -1083,8 +1059,8 @@
       "location": {
         "name": "Sin, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0735677,
-        "lng": 29.006452
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1113,8 +1089,8 @@
       "location": {
         "name": "Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1128,8 +1104,8 @@
       "location": {
         "name": "Istanbul, Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1188,8 +1164,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 45.7231045,
+        "lng": -80.0329285
       }
     },
     {
@@ -1203,8 +1179,8 @@
       "location": {
         "name": "Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 40.7337753,
+        "lng": 35.78676
       }
     },
     {
@@ -1218,8 +1194,8 @@
       "location": {
         "name": "Ukraine",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8511029,
-        "lng": 32.8275226
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1248,8 +1224,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1263,8 +1239,8 @@
       "location": {
         "name": "Sin, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0735677,
-        "lng": 29.006452
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1398,8 +1374,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.9842952,
+        "lng": 32.890851
       }
     },
     {
@@ -1413,8 +1389,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -1428,8 +1404,8 @@
       "location": {
         "name": "Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1454,13 +1430,7 @@
       "pubDate": "Mon, 27 Oct 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxQeU5PUlhTSExwUGE5dWhSSlNpckZwdGUwWE9uUWVUdG8zZktsek1Wd2ltRl9sdWNBSU00LVd2ZzB0cVVhcFpWUm0wdVhXUWl0ZG9OemxVTUlFbUVkTDZVTVhIRERnWV9GbHpTQnpNN3VWVXBsb3M1MWU2R3E1cEtEZ3cxTndCYjMwVm1MOEhPU2w3TGhfRDlUcU1mMzlORnNi?oc=5\" target=\"_blank\">6.1 magnitude earthquake strikes western Türkiye's Balıkesir province</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Yeni Safak English</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Powerful 6.1-magnitude earthquake strikes Türkiye’s Balıkesir province - İlke Haber Ajansı",
@@ -1469,13 +1439,7 @@
       "pubDate": "Mon, 27 Oct 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMirgFBVV95cUxQcXZlUFM1YS00akJMb0VPaUFqVllxVHJPMzViVUY0c3BSazlOeUJHWEt2V3JxWnU2ME9qQXVGWlZnTldqSWNwckhLa29jWm14LS1YSGJ1Nnk4bmZqOHUwdnVDWUMweDl0ZVVNNDQ5bFVKNC1KeU9oa3UzWXd0bFR6NEQxeFNIV01ONmNOaGUydGFIWXNJdm92STR3NnRYaWppd1FnX3JtQmw1c01XMkE?oc=5\" target=\"_blank\">Powerful 6.1-magnitude earthquake strikes Türkiye’s Balıkesir province</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">İlke Haber Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Earthquake of magnitude 6.1 strikes Turkey – Felt on Aegean islands - ProtoThema English",
@@ -1503,8 +1467,8 @@
       "location": {
         "name": "Bali, Sin",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 36.622417,
+        "lng": 29.1090661
       }
     },
     {
@@ -1518,8 +1482,8 @@
       "location": {
         "name": "Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -1533,8 +1497,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1602,8 +1566,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1651,13 +1615,7 @@
       "pubDate": "Wed, 17 Sep 2025 02:35:37 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTE5ydmVOS29KWHZQenpCREJNc3lBTVh1VXBRNzlqa3kzZVVMc1Rial9ZQWtuWGhUQk9Xa1JTQW5vUUlnQ0g1SWFBclRERjFDbDBqM1ZV0gFYQVVfeXFMTkZpZncwWXBnWl9UTlFROGJaSlBQZVNIV3lqOU4yNlBJV2RxV3RkZV9YSThXUnRBdjFxSXpVQTVMbUlCQ2sxck5EdUFyclZ0WXFCYkFiZlJ3Xw?oc=5\" target=\"_blank\">Timeline: Major earthquakes that hit Türkiye in recent decades</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TRT World</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "April 2025 magnitude 6.2 earthquake near Istanbul highlights strengths and weaknesses in seismic mitigation - Temblor.net",
@@ -1700,8 +1658,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -1798,8 +1756,8 @@
       "location": {
         "name": "Has, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.4700589,
-        "lng": 40.7009983
+        "lat": 38.9165235,
+        "lng": -77.0560464
       }
     },
     {
@@ -1836,8 +1794,8 @@
       "location": {
         "name": "Bali, Istanbul, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1851,8 +1809,8 @@
       "location": {
         "name": "Istanbul, Sin",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -1881,8 +1839,8 @@
       "location": {
         "name": "Bali",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -1957,8 +1915,8 @@
       "location": {
         "name": "Bali",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.2931953,
+        "lng": 27.149315
       }
     },
     {
@@ -1968,13 +1926,7 @@
       "pubDate": "Tue, 12 Aug 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMisgFBVV95cUxOcHdvcU5TY1laTXg3OGpHNnVReVZUZ3dfUWlfT1RaNklTWEdtajhZaTJWZGRaZXl1OGRVVjk4cUx6c0xEZDlqRkx0V0QtQVFEeDZVV1lYSG9vTVY0Uk5meFg3MkVseE8tQ2dDVGVlUlpsSEN0XzNVOEd5a3Y0VklaUkhVNC1wekNRZl9ZVkkxdU4zTk5wTnpVWlY1YnBsLW9kZ1lqZXZfRHF2NXFpZ3I1cEZR?oc=5\" target=\"_blank\">Nearly 900 aftershocks recorded following western Türkiye earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "West Asia News Live: Israel’s heat wave, Turkey’s earthquake defines a turbulent day in Middle East - Firstpost",
@@ -1987,8 +1939,8 @@
       "location": {
         "name": "First, Israel, Middle East, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 34.3931396,
-        "lng": -100.8911169
+        "lat": 34.3945504,
+        "lng": -100.8978967
       }
     },
     {
@@ -2047,8 +1999,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2133,13 +2085,7 @@
       "pubDate": "Mon, 11 Aug 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxQeU43OERtdnM2TDJYRlBfbmhzcUhXNXZJR1Bmbk9OUlQ5Z3djcnNUMWZvbndiZURuaHlnYW04SGpSeDFoOURLT1VZNzc0MDRiaFZkMXB0SmJudkwwVVVhZnhRVTdIcFVtbXV3M3VqV1N4S1hNbVpLaFdUVmJHTlptNmJyYkgzUmFsTUlIX1lIbjlYYmdnVVJudDNGcHpIdEIy0gGmAUFVX3lxTE1OTmlmV2pkRHhndElxME9xWktlMThjNVN2SUJfcTllaW05OG5wY25fNjRRTUNsajVFRWplbm1UZl96YXpnNEs2M044bG9IdjNYakF5a3RhVkRrZDJvMzM1UnZhNlBDaEd2NFkwVXk3a29BYVhDNnlrQWdjTUdhWC0yMF9ha25jWGlTakd5M2taRHVDNDA1bDEyajZJQXZTbmJ2emh6QUE?oc=5\" target=\"_blank\">Magnitude 6.1 earthquake hits western Turkiye, killing one</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Al Jazeera</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Turkey earthquake RECAP: Huge magnitude 6.1 tremor hits holiday hotspot in horror scenes - Daily Express",
@@ -2182,8 +2128,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2212,8 +2158,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -2227,8 +2173,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2242,8 +2188,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2272,8 +2218,8 @@
       "location": {
         "name": "Bali, Pakistan",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2283,13 +2229,7 @@
       "pubDate": "Mon, 11 Aug 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMipwFBVV95cUxPb0lRZW56bTYtRWJ5azZBUXJWVnM0OGZKbDAxZzhVa0tELXNTVlVqaFRhbXg3bEhialRCSUxEcVJxX2hCazdZWkZKT1NEcENPUVh2ZGM5c193SWkwdlBnaXNDclQ5dW5ZX0JLbFl6c01EUllMYldBYnZOM0s2QXBvT0hqZ1JjOWpWdWpyZl9qcFZVWlNsS0xRX2U5Rkt0akdIQ19xNldHQQ?oc=5\" target=\"_blank\">WHO chief offers support following deadly Türkiye earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Woman Killed As Buildings Collapse In Turkey Earthquake - The Weather Channel",
@@ -2317,8 +2257,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2347,8 +2287,8 @@
       "location": {
         "name": "Bali, Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -2377,8 +2317,8 @@
       "location": {
         "name": "Bali, India, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2392,8 +2332,8 @@
       "location": {
         "name": "Balikes, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2437,8 +2377,8 @@
       "location": {
         "name": "India, Istanbul, Times, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 11.6095349,
-        "lng": 76.0802368
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2467,8 +2407,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -2482,8 +2422,8 @@
       "location": {
         "name": "Istanbul, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2580,8 +2520,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2610,8 +2550,8 @@
       "location": {
         "name": "Istanbul, Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 37.8841597,
+        "lng": 40.8834002
       }
     },
     {
@@ -2678,8 +2618,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2693,8 +2633,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2798,8 +2738,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2824,13 +2764,7 @@
       "pubDate": "Sun, 10 Aug 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiWEFVX3lxTFB6YjFRVGtnYlZXc19HdEhCbjJiVUZBLXB5b2h0VC1xa2p4SzNpWm1HcTZvN1BCYnBvelFDZTZoTHdobEI5SEF0ZjZmNXZ3Q1g5akFqT0NQYkrSAV5BVV95cUxPbmxZUnUxTzdGcTVVckZoZmhpUU56T2E4ZTRzUUdLSm5ycUxUOHA5b1RjQzlSaXZwSmRlbHJMLXBPUzYzUl8wWl9oR1BnQkNqZVN1Sk13cWJrU0JpbVJR?oc=5\" target=\"_blank\">6.1 magnitude earthquake hits western Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TRT World</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "6.1 earthquake hits Turkey's Balikesir province, killing 1 and collapsing buildings - Yahoo",
@@ -2843,8 +2777,8 @@
       "location": {
         "name": "Bali, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -2948,8 +2882,8 @@
       "location": {
         "name": "Bali, Toronto, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.6776154,
-        "lng": 37.9855895
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -3038,8 +2972,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 38.103497,
+        "lng": 42.7370143
       }
     },
     {
@@ -3083,8 +3017,8 @@
       "location": {
         "name": "Western Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -16.9652534,
-        "lng": 128.2644275
+        "lat": -16.9638814,
+        "lng": 128.267782
       }
     },
     {
@@ -3113,8 +3047,8 @@
       "location": {
         "name": "Türk",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3301,8 +3235,8 @@
       "location": {
         "name": "Pacific Ring of Fire",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -3328,13 +3262,7 @@
       "pubDate": "Wed, 30 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMirgFBVV95cUxQSVhPcGdTVjNiNlV4RnRyRUMzRlN5TlhrSjZJajhaQW1hRGxJMVlvUXdUYllrNk5kdjB0b3FybnpqaVpyS3A0eF95UGNseVRJUUVlZ0x0SGo3N3VkNlgydXRWaTRabEl3V1dfWWY4LXcwd2VYLTBIakR5M1h5Ni04ZktOek9ZS0JTVEtlUktVOGw4SVRZTThNV3RqMmZFUFQ5ellISE9hY3hEQ20ySGc?oc=5\" target=\"_blank\">4.3 magnitude earthquake strikes Konya province in central Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Konya",
-        "extraction_method": "regex_fallback",
-        "lat": 37.872734,
-        "lng": 32.4924376
-      }
+      "disaster": true
     },
     {
       "title": "How your phone could warn you seconds before an earthquake hits - VnExpress International",
@@ -3404,13 +3332,7 @@
       "pubDate": "Tue, 29 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMizwFBVV95cUxQNUdYajFfdlBtbVVhYnZjOS1Idlc0dHVuMlRLXzZ5S054VGh2S2I2a3NUWGpTdlgxYVdjemRSYjgwazJWcUd4ZTctOWM5cHZpcEhZTzZON3ROTmlpMllGaEdTSUhOQ1hzSEdqVzM5Ui1XOGd6V1c4Q04wNjczc0RHY1pqNHA4bWRKXzFERm82YVpYb25Sb25KZzdtYTFqMW83Yml4RlMzZjdZNnBjci1FODBNZ0RDNkViUnhrM3JycUFhODc2X25rdDZsWnQzZjA?oc=5\" target=\"_blank\">Google admits it failed to alert 10M in Türkiye about severity of 2023 earthquakes</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Anadolu Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google early warning app in 2023 failed to notify 10mn of Turkey earthquake severity - IntelliNews",
@@ -3600,13 +3522,7 @@
       "pubDate": "Mon, 28 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMikwFBVV95cUxQNzllNjdKVWN3bFBCb0pmX096T2k5VE80YWRCM2RIVTY4V1FJNEJDT20tamhZb2xISHZqWEh2bEdpQXFMN21fZzlQcmVXVS1HRExMMkFnZEpfY0pMWjFoZEVQWnVuRTBjclpaU3Bfc180dkRWTXdST2lXWlRsU2NTc1doVlRsamlMRkd2Z1BWS0FibVk?oc=5\" target=\"_blank\">Google failed to alert millions during Türkiye earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">geographical.co.uk</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google apologises after earthquake alert failure left 10 million in Turkey without warning - EasternEye",
@@ -3630,13 +3546,7 @@
       "pubDate": "Mon, 28 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiWEFVX3lxTE5seTlYcjNBUnBPNnZ4YUZaR3NoUG5udG1ydjBKa2c4ZUpNVm1HOGQ3bnR3V0ZILXR2M0kyYlNBQzlRWXJ1M3NST1RmckhuelFaTjNPYmlUSmLSAV5BVV95cUxOQ21sdmo4VGNJc2stVzhqNHlxSjJMY0txYVR2TEpjUlAtM1I1YWhOeklVZE1pZ2taZXVHa2M5VnRZekhDUlVBRmFNU0R1MUQ4T2tvYzNOZVZjb3RMcEdR?oc=5\" target=\"_blank\">Google admits its earthquake alert system failed to warn millions in 2023 Türkiye disaster</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TRT World</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google admits 10 million people failed to receive 'take action' alert warning of Turkey earthquake severity - lbc.co.uk",
@@ -3720,13 +3630,7 @@
       "pubDate": "Mon, 28 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiqAFBVV95cUxOVVZTWUVfTXNxdVVNM0VRczhQRUEyZTZDa3VLQ0tPV09RM2RkWjhtQ1M3ZEVES2NLWUxVc0w3d0d2ek9hdjNjSXQwLUk2MXRLWFMweDRqdE1IOU9sVlpKLTd3UHZZR21qa1ZaMzFva1pMSHliTHFZOGEzaC0zcE44TWl3VnVubVMyYWFWRnNuYUlGY0V4VXQyTm9SNGtvZjhtRnRXNVNfWmE?oc=5\" target=\"_blank\">Google admits Türkiye earthquake alert failed to reach millions</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">AnewZ</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google admits its alert system failed millions during Turkey’s 2023 earthquakes: report - Turkish Minute",
@@ -3848,13 +3752,7 @@
       "pubDate": "Mon, 28 Jul 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiXkFVX3lxTE1xS2RWRDAyaUR5UGh4bmtIYmxKM1ZOMUlzb25xeElURnpzdXowRlN0WnM2QlFMVWNVc1AyMldmZ1FBRWtObEo1RTR3bjVjeGRuMk1yVkZteTV5N1U1ZWc?oc=5\" target=\"_blank\">Google admits failures over Turkiye earthquake phone warnings</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Arab News</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google's Android Earthquake Alerts System Failed to Warn Millions - Android Headlines",
@@ -4335,8 +4233,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.8729222,
+        "lng": 32.763482
       }
     },
     {
@@ -4564,8 +4462,8 @@
       "location": {
         "name": "Los Angeles, Mar, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 34.4391297,
-        "lng": -117.7757272
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -4590,13 +4488,7 @@
       "pubDate": "Tue, 03 Jun 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiqgFBVV95cUxQclNXbGJqVmdlczlpM18wZW9BcXdpd0F1NlJHaEZ3RzBtZ3hDVkNKR1RxREVrcnVNTWNfcGVGY3RaaW5KRUZ3YzNTZ3p3aGxralJuZW04WU1PaE14WmNXR0R4YXRwUkpnV2NLZGNCakp4QWNyUFRYRnU2SUhmdlQtTE1HSXNmVlN6QU91Qm1veTZHc0hsUnlnTW1pak9kR29zLWlIeGJFb1pqdw?oc=5\" target=\"_blank\">1 dead, dozens injured in Türkiye earthquake due to panic and fear</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Anadolu Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Magnitude 5.8 earthquake rattles Turkey, causes panic and injuries - AccuWeather",
@@ -4609,8 +4501,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 40.9794258,
+        "lng": 29.1138191
       }
     },
     {
@@ -4827,8 +4719,8 @@
       "location": {
         "name": "Mar, Rhodes",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -4947,8 +4839,8 @@
       "location": {
         "name": "Mar, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -5007,8 +4899,8 @@
       "location": {
         "name": "Mar, Rhodes, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 41.0061246,
+        "lng": 28.9601406
       }
     },
     {
@@ -5090,8 +4982,8 @@
       "location": {
         "name": "Crete, Greece",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 38.6724063,
+        "lng": 38.9898463
       }
     },
     {
@@ -5249,8 +5141,8 @@
       "location": {
         "name": "Greece, His, Mediterranean, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.4363032,
-        "lng": 27.1410447
+        "lat": 36.7200372,
+        "lng": 31.5566173
       }
     },
     {
@@ -5317,8 +5209,8 @@
       "location": {
         "name": "Egypt, Greece, Israel",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 32.459593,
-        "lng": -81.4332984
+        "lat": 54.6771511,
+        "lng": 25.2875252
       }
     },
     {
@@ -5355,8 +5247,8 @@
       "location": {
         "name": "Istanbul, Mar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -5401,8 +5293,8 @@
       "location": {
         "name": "Mar, PA Turkey, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.3822709,
-        "lng": 33.7807082
+        "lat": 36.7231112,
+        "lng": 33.8682857
       }
     },
     {
@@ -5416,8 +5308,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5657,8 +5549,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5687,8 +5579,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5807,8 +5699,8 @@
       "location": {
         "name": "Istanbul, Mar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 35.1828125,
+        "lng": 33.3594349
       }
     },
     {
@@ -5833,13 +5725,7 @@
       "pubDate": "Wed, 23 Apr 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiywFBVV95cUxQYzNVZlkyQWU4dTVCOVhlUGJSdmZURkhLQ1Ztdlp3UDItUi15MUVjZkFQcjBRNENDOEk4ZGp3Nmp1Q2xjMEUtNjJPeHloZXN5UHBQV3hYQ0lfRW9CM3VXRFp1TzZMaExNRWZzZTg0bllzSkt6MWt2cXV0aDlEalVvN1hHRm1qUnJwYWdzd1FOQjRXQ1ZpZV8wUGJlOGdHZVN3QVBHVTB6bXRGMGNCTG5oYmxPRHFIMlVIaVYxT1lnYlB1M2l4OWpOV1ozTdIB0AFBVV95cUxNSllzVkVCVUJwaUFYdUJ0SS1VRlNCR2REWHFPXzBYcGxjUWdTS25HcVRTMGp6ZlBRLUVCZXZ2WTNNcDV5NWFFODlsUUFaQVBhZFkzNEFtdnRKOFZjN3Ntcmx1bjdJYS0yVXROel93UlZ4RnJsNklKVnlNczZMbXBBUXNvZ2Vsdjg3MzV0bm1FR3dLaVhDX0x4N2lTMUpmLXdxSXZ0ZHQ5RlA4d294eDFPazcySXhUWjB6N3NpSENzcWhWMVlyLTE5bmNHeTNGWkZ3?oc=5\" target=\"_blank\">Mobile networks collapse after İstanbul earthquake, echoing failures seen in 2023 disaster</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Turkish Minute</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "İstanbul",
-        "extraction_method": "regex_fallback",
-        "lat": 41.006381,
-        "lng": 28.9758715
-      }
+      "disaster": true
     },
     {
       "title": "UK Foreign Office urgently changes Turkey travel advice for all British tourists - Birmingham Live",
@@ -5905,8 +5791,8 @@
       "location": {
         "name": "Istanbul",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.006381,
-        "lng": 28.9758715
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -5988,8 +5874,8 @@
       "location": {
         "name": "Nature",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6011,8 +5897,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -6022,13 +5908,7 @@
       "pubDate": "Mon, 14 Apr 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1XS0hMdHB6ODVHNS1SaTE3MUxkbUhLc3lrc1h1UHlsZ1c5MUU3Ry03UzhpSFpYaWRBUkozZ2MzTmktYkE5Ql9RQmp4ekNDWnZNSWNjMHBVcDFnX2VpaTU0?oc=5\" target=\"_blank\">Distinct triggering mechanisms of the 2023 Türkiye earthquake doublet</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Turkish NGOs extend aid to Myanmar after devastating earthquakes | Daily Sabah - Daily Sabah",
@@ -6079,8 +5959,8 @@
       "location": {
         "name": "Frontier",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6299,8 +6179,8 @@
       "location": {
         "name": "Bangkok, Col, Myanmar",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 13.7880246,
-        "lng": 100.5867658
+        "lat": 34.3939184,
+        "lng": -100.894078
       }
     },
     {
@@ -6344,8 +6224,8 @@
       "location": {
         "name": "UNESCO",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.4603339,
-        "lng": 27.191892
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6355,13 +6235,7 @@
       "pubDate": "Sun, 23 Mar 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE01cHNZaDBCc0JEcHBiTzUwaVNLT2lzQmk4bHhNNjhPazV4aDhuOFdESlZCR0lORHotVnpWcnIzSjk2cjZadFo2LTFvZG5YMHdKVmpUOEpicV9FbHFCRldJ?oc=5\" target=\"_blank\">Rupture dynamics and velocity structure effects on ground motion during the 2023 Türkiye earthquake doublet</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "WFP Türkiye Country Brief, January 2025 - ReliefWeb",
@@ -6401,13 +6275,7 @@
       "pubDate": "Mon, 10 Mar 2025 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMieEFVX3lxTE51Sk5DbDhEd0VxQW8wVnRrVkRqcnpGWUo2VUF5Uy0yNDJKcGJoUC1wamZYd2djUXNaOHg4azQxMWpaaHM3eDNSUVZCWDBVVjh0djZqUml5emNHZnZqanFDdlZ0bzllaDlOU2x4el9ubjUxdmlyOFBEbg?oc=5\" target=\"_blank\">Shear Strain Evolution Spanning the 2020 Mw6.8 Elazığ and 2023 Mw7.8/Mw7.6 Kahramanmaraş Earthquake Sequence Along the East Anatolian Fault Zone</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">AGU Publications</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "News - Face of Defense: C-17 Crew Gives Aid to Earthquake Victims - DVIDS",
@@ -6435,8 +6303,8 @@
       "location": {
         "name": "Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6465,8 +6333,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -6492,13 +6360,7 @@
       "pubDate": "Fri, 21 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFBCMGhvWG5ybDBNOGRFLVhHcmwwY1JMUWR3QlhzaDJyNzAwU1UtM3lCbGFYWFIyMFJJZXJmME11TlNFTEtDbHI0dUVwQ2lxODc0dmNwU1hQa2o4Q05xNUJN?oc=5\" target=\"_blank\">7.8 Türkiye earthquake linked to cement quarrying</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Oxford medic's humanitarian work to be recognised by King - BBC",
@@ -6519,8 +6381,8 @@
       "location": {
         "name": "Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6534,8 +6396,8 @@
       "location": {
         "name": "Bodrum",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.0343987,
-        "lng": 27.430651
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6598,13 +6460,7 @@
       "pubDate": "Wed, 12 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMixAFBVV95cUxPTFVHdkdPY2JaclVDc042WUVMWnVydzFyR2RlZjJIX1ExVkJPM2hFclRuR3A5eUFybTd2R1k0NDdnVWFQSE4tbjNxUDBnblVESEZhaUtuSF9jV2xXTGh3dV91XzMxNHFEZkNsNXpyS1pyWEI2ckJ4VDRpQTRrM1IyTHJxMGN6ODZVNHBCMWZlZHlpWGdsYmtzQ0xxNWRKNUFUeGRIYWp6VmF3N0V4bG5YYXFmOW9MMGU3bzlTNE1IUUU1WFpz?oc=5\" target=\"_blank\">44.3% of families in Türkiye’s earthquake zone lack food as housing crisis continues</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Santorini earthquakes: Will I get a refund if I cancel my holiday? - Euronews.com",
@@ -6617,8 +6473,8 @@
       "location": {
         "name": "Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -6674,13 +6530,7 @@
       "pubDate": "Fri, 07 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMitgFBVV95cUxQY3pScFh0SDRhSHZ6T1NEZVlTN2pvcjZXNmVxcndHdnM5UVh1dHZlVWlIZzd5UW11VkVUY3ppLWxlSV9pcmhVT0cwNkpuLWhNR2ZZZkJ4VXhleDRaZ2dRak5sUFdISmFEeldxYU5UQVdpaE00b25ITkNmTEp6SnhmaXA1WXZUdEpPWlB1cjktWUUyc29vNFJUamQ3WHM5ZDRvbUZMYWd6OWlJM2NBeHNJT2ZObmNvdw?oc=5\" target=\"_blank\">How the world united to help Türkiye after devastating 2023 earthquakes</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Turkish agency warns that earthquakes in Aegean Sea may trigger volcanic activity - Anadolu Ajansı",
@@ -6689,13 +6539,7 @@
       "pubDate": "Thu, 06 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMivwFBVV95cUxOdmN2eTVidHgzMUhVdWtWak9sdmlTeHpsdDA1NWZEa1Y4X0hvMnFyMTZ2emk4ODVCWFM2TVFCY0ZIeVV0bWxIVTgtWHZfanFHdEVPaHNLZThrbTNEQW5OamlTYjFWTTNFaEFvRFJXMzkxd1VrcnpjZTJEOEJZbGprQnExeFQ2WXN1aXEyek9rcFhjNE4yZXhYWEU1LXRSSGRuRmZrZzlGSFhiU0NxSmw3MTlVNENUY3FNYXBlVGRxTQ?oc=5\" target=\"_blank\">Turkish agency warns that earthquakes in Aegean Sea may trigger volcanic activity</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Anadolu Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "Two years on, Turkey earthquake survivors continue to live in limbo - Global Voices",
@@ -6834,13 +6678,7 @@
       "pubDate": "Thu, 06 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMi_gFBVV95cUxPZ0lSeWFacXhlWnFMV0pOeFVvM2R6RkJybHkwaUlhVlZ2TWM3cTdQT1Q5aDBIRnRjMGYxVjZiLW80Zi00VlpUM2UyVk43cnRhalY1cm5NMmtXQk1TRjZUT0N1UkotVjFjb3NKNHZXdzN0Z2xqTk9Pa0RhV202X0NjZzFZOHNQY0I1S3JxZW0zR05MZE9aV0pnMFQ3cGpmZUdBWUNma0UyYk1hQ1FJZ2xKRnBUSnZrMHhpM1Bock1TSlh4ZHIydVVBOW9ybldtdTRsc1gxY3pld0FLYkNtSFlGUUNBSHNwV2tLZGgtd0s3UzhwLTBUNDM3N0FDZTR5dw?oc=5\" target=\"_blank\">2 years after the devastating earthquakes in Türkiye: survivors still struggle to rebuild their lives</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">European Civil Protection and Humanitarian Aid Operations</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Help Earthquake Survivors in Türkiye & Syria - unfoundation.org",
@@ -6853,8 +6691,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6864,13 +6702,7 @@
       "pubDate": "Wed, 05 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMilAFBVV95cUxQUVBQSkx1TjNxX3VBMHBVWDdOazQ3UVhrVHBraGJuVlFyU1RtMGRkZEd2aUcwNjRDTjJSSWJqcHhCR2NqdGV4ZE53eWR0b0RlN1hOenBUVFo0RURFaFN0b0VkMGJxSk5Nc1I3N0VPeGRnNnVseEZsRUViTkVGdDR1YmttZi1ZS3dlb3RIQ1ZvQUE4MFhU?oc=5\" target=\"_blank\">Two years on: A look at UNDP’s earthquake recovery efforts in Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">United Nations Development Programme</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Turkish experts discuss Aegean earthquake risks: Are Türkiye's coastlines safe? - Türkiye Today",
@@ -6879,13 +6711,7 @@
       "pubDate": "Wed, 05 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxNYnVmNEhEMTdyWUNNMXVBTzFlSnFpLWM0YzVCT3hROVRzRkRiM3gxY1JBQWtmYm1ndWJ5X29nNUdYYWwtanNvTGNtX1VaUmw3aHhHbE9iYlpWSmV3Z2FMSHpaR0Z3VHpYakpFTG5xYUNmNWp6Z3k4UjVDcjNSVE9UbFRObjNQeXl1STl5Z1k0dkcyWmlQdE12UXB4bDZKQVh3NURPdjFITU5CSjlfSkxQUEE3UUEyd0lpRnpz?oc=5\" target=\"_blank\">Turkish experts discuss Aegean earthquake risks: Are Türkiye's coastlines safe?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Türkiye Today</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "7.8–7.7 Kahramanmaraş earthquakes were loosely slip-predictable - Nature",
@@ -6894,13 +6720,7 @@
       "pubDate": "Wed, 05 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE5mUGZhUjNQLS10eXVCRTJOc2VkZGp3QTdmaHZTLTV0WTlVU0ZqQm41YmFGZDNJa0w3MUFzNGk3QUJLc2cxQ3Z6cnJPcExoanJUZ3FpMTdDZzFLNjRrRE8w?oc=5\" target=\"_blank\">7.8–7.7 Kahramanmaraş earthquakes were loosely slip-predictable</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Left without a trace: Families search for missing children of Turkey's earthquake - BBC",
@@ -6924,13 +6744,7 @@
       "pubDate": "Wed, 05 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMi7AFBVV95cUxNTzVtYWxMclM1UGFiZ3NWMDBONWhnZ0xHUGtuRG9NaXp2bGlxWVRKQ3NpVDAxN053My1PelllMXlmQ2d1N3FhVkM5d1FIcHlfNWswd3lqa3VUcWJSWE9vQUpZbE8tWExDVS1QTGptbzlzNzQxQ0pabG5SVjlpOFhyT0g4SFdUUEF0NDcwOExNWFRaa0Etc2ZkaVF1QWtuX0FMRy1lTl90cUtjN2lMZTVjRS1nMFNoV0dRZTVKb1pud0ZWVFl4VVQ4REdCcjhSdmJIR19JdFRVWFItZF9lZFIxUkoySlY1eGtwbDVoYQ?oc=5\" target=\"_blank\">UNHCR Emergency Cash Assistance to Earthquake Affected Individuals in Türkiye | Good Practices and Lessons Learnt | February 2025</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ReliefWeb</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Turkey’s earthquake reconstruction efforts must balance speed with fairness - The Conversation",
@@ -6966,8 +6780,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -6981,8 +6795,8 @@
       "location": {
         "name": "Azerbaijan",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.8518379,
-        "lng": 32.8290226
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7000,13 +6814,7 @@
       "pubDate": "Mon, 03 Feb 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE95Snh2enFUZWFmRHhFdE0wSmZoVFJsYm56allVaXBkN3d2NUZ6ZFBZckM4c1JiZTVJc1BQanlyRVY5YXRwLWVtc2tIVFpWQmpBTzZuY3E3SkNIRUZCTmx3?oc=5\" target=\"_blank\">Extensive off-fault damage around the 2023 Kahramanmaraş earthquake surface ruptures</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Greek officials on high alert as tourist hotspot Santorini rattled by 200 earthquakes - New York Post",
@@ -7019,8 +6827,8 @@
       "location": {
         "name": "Santo",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 18.4487524,
-        "lng": -69.9454813
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -7030,13 +6838,7 @@
       "pubDate": "Tue, 28 Jan 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFAtc2oxRmVHUXFyeXFDbEpfbUlDYUo1X0pCSXJ1dzNheGtqRkZpeEVvSHp2eXpaVDNMTkhQZTAzYmF0MjV3cDFoT0JwVFZBbnlLalRWb2M3UkJrdTlVUDlB?oc=5\" target=\"_blank\">Geometric barriers impacted rupture processes and stress releases of the 2023 Kahramanmaraş, Türkiye, earthquake doublet</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Seismologist warns about possible major earthquake in Middle East by February 2025 - The Watchers - Watching the world evolve and transform",
@@ -7068,13 +6870,7 @@
       "pubDate": "Wed, 22 Jan 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE53YUJmcGgwajFwOGpHMC1aTWMyajd2WGl2c3duTlVNdjFXazdXSms0OERtTHZ1SGRfVEZsa2U1eTBRZGpPU2hJTkc0XzFiblJVc2lqRlNYN3J2b3JTT3JZ?oc=5\" target=\"_blank\">Seismic versus aseismic slip for the 2023 Kahramanmaraş earthquake doublet</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "5.2-magnitude earthquake strikes Turkey's Aegean region, no damage reported - Arab Times Kuwait News",
@@ -7087,8 +6883,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -7113,13 +6909,7 @@
       "pubDate": "Thu, 16 Jan 2025 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxON09KTUNkQzBnZUJHblVpX0pBUGk2MHpFMzJoYU1rZXVZVmFQa0VybVotM19zbHhKYllRX2JWdVZhU3hSbFZXejlQQ25mUEtMZnNkSXhnS1FjN1RoeU94VkVIWDBZOGo0S2M3SFFjUTRacjdmQ2NQYUF6eDJYTFg1ejltYnU1VkpmY3JPNE5FQWl2a09zYUdXNVVnYU04TXM0aEs2UTRIalJwV3Bx?oc=5\" target=\"_blank\">World Bank to finance extra $1B to Türkiye’s earthquake zone in 2025</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Anadolu Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Old and unrelated photos and videos are falsely shared as those from the recent Tibet Earthquake - FACTLY",
@@ -7193,8 +6983,8 @@
       "location": {
         "name": "Earth",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0300343,
-        "lng": 28.9792479
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -7252,13 +7042,7 @@
       "pubDate": "Tue, 26 Nov 2024 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE45ZWRmRzZDSkJTOWhWUlpHSmZRVTJLSmxwNk5tNWRwMm1xWHVyXzdIOHFrMGhXTVRZRm9PcXVjb0pib1hhZTdBdXNUQzZKNXU0Z01yMUpObkN3b2Z4OFdN?oc=5\" target=\"_blank\">Seismic shocks and financial systems: a topological perspective on Borsa Istanbul after the earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Istanbul",
-        "extraction_method": "regex_fallback",
-        "lat": 41.006381,
-        "lng": 28.9758715
-      }
+      "disaster": true
     },
     {
       "title": "Study explains why earthquakes in Turkey not felt in Israel - Ynetnews",
@@ -7347,8 +7131,8 @@
       "location": {
         "name": "Earth, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.0300343,
-        "lng": 28.9792479
+        "lat": 40.9833833,
+        "lng": 29.0233672
       }
     },
     {
@@ -7411,13 +7195,7 @@
       "pubDate": "Sat, 21 Sep 2024 06:35:49 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMipAFBVV95cUxNS2ItaGk3aUc4bTRYUTFFcFIxUDQ3WGE4aUxPZURiRmxUV2hLM3l6U0g1NVNjWVp3dVFfak5BWHNCcHk5eUlYeDhuSWRBZW9zOURRRjJMVXVNWTl0ZGJIRGc1N3lTM0NzN1NtT1NHQ2dvMFd3ZXBhamxDTFd4RHZHN2diWDEycjFXT0FER1dxdXhOd3NvOURoVWN3b0k2VU9HMXhNdQ?oc=5\" target=\"_blank\">IFC Invests $530 Million to Support Smaller Businesses, Bolster Recovery in Türkiye’s Earthquake-Hit Region</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">International Finance Corporation (IFC)</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Lebanon, Palestine, Israel: Is the Middle East doomed to a major earthquake? - Middle East Eye",
@@ -7501,13 +7279,7 @@
       "pubDate": "Wed, 31 Jul 2024 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMijwFBVV95cUxQbHRScFFXQXdOUndxd2VvODQzZlJXTjJuQlZtaUhkWXdtWUtZV1dCVGVjNmtPUGt2QkI5dG5pUTJtV1JzbFVVbjZxTHRIU3JmNDNHR3BXaXY4bnhqcUhXclpsUXdNMURNdzI3a1ZHYTZ2eURETVlTU1VhMC16ZlFXRURLSms4NjJsSy1CR0tsaw?oc=5\" target=\"_blank\">Foster + Partners unveils masterplan for rebuilding Antakya post-earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Dezeen</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Antakya",
-        "extraction_method": "regex_fallback",
-        "lat": 36.2025574,
-        "lng": 36.1640991
-      }
+      "disaster": true
     },
     {
       "title": "How to Activate Earthquake Alerts on Android, iOS Phones - United News of Bangladesh",
@@ -7554,13 +7326,7 @@
       "pubDate": "Wed, 17 Jul 2024 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMirAFBVV95cUxQRS12a2gyWjQ1alNWaTU1UkhDRTJqaEEyeWlRTTV1QVN1ZmNncXcyN2JHaS1TMURlTmVESFZIeWZiYnB0cGkzV0FQbU5SeEpaVTZMaXBSRVRQa3U0b0NfQXRvRVpqQlNHUFA1VFpja3VFNW5YSURyTGdvUC1WWVo4cS0wc05Hd2ZOMGszLU8xWURsa013MjE4Zk4tZjZEZmlyUHdYcWYwUkhrZi1R?oc=5\" target=\"_blank\">ILO and IOM Unveil Key Findings to Strengthen Labour Market Recovery in Türkiye’s Earthquake-Hit Regions</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">International Labour Organization</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Türkiye Assistance Overview, July 2024 - ReliefWeb",
@@ -7735,13 +7501,7 @@
       "pubDate": "Wed, 28 Feb 2024 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1iWWdGQ3JMbHBpMXdMTUNUZ3diTmw1cE9BOVZSYThtczFLUzlfS0FubGRqdmRfSUthbzdIWmtGNkhqNjB5WjdZT3dyamZrWjhjbE4zM01GYXhIY05JOGpN?oc=5\" target=\"_blank\">Smartphones enabled up to 58 s strong-shaking warning in the M7.8 Türkiye earthquake | Scientific Reports</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Nature</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Insights into the Dead Sea Transform Activity through the study of fracture-induced electromagnetic radiation (FEMR) signals before the Syrian-Turkey earthquake (Mw-6.3) on 20.2.2023 | Scientific Reports - Nature",
@@ -7792,8 +7552,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7883,8 +7643,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -7902,13 +7662,7 @@
       "pubDate": "Tue, 06 Feb 2024 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMisgFBVV95cUxOLW1mQ3pTMWdrYkpXRlMxV3E4WGRVLU1ZdC11ZkN0LVE3bl8wM0QzTnpFUFJFWUowTHlublg2Y2hRRExqeEZkZkZNMWlnT01rODl5RUFiVDBRLTJBQi1TUGtTU0M1U2dxRU4wZHdqZmJ6aU1QN2gxMFloWkpjRDBua3FGM0NaUEhucnJuVlpfYkR1N1ZLa09hVWtkcVgwTFYyYVlKb3NkY21UYVZ1eUZOMUhR?oc=5\" target=\"_blank\">From Earthquake Devastation to Resilient Revival in Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">World Bank</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "One Year after the Earthquake: Our Partners Keep Providing Relief to Victims in Syria and Turkey - Cordaid International",
@@ -7936,8 +7690,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8049,8 +7803,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8139,8 +7893,8 @@
       "location": {
         "name": "Eastern",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.2815889,
-        "lng": 41.2384438
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -8150,13 +7904,7 @@
       "pubDate": "Thu, 18 Jan 2024 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiYEFVX3lxTE41LUVsd010clpoYkFBeVBuWFJuOVJmcC1kU25MMDdjVHFQa3NxZDZUUHItT3NLbGo3MExMTVc0X0ZyUkdiN3lzOWhWYkVJWGNiWUVjcXJEMXVpSElaMlRYNQ?oc=5\" target=\"_blank\">Supershear triggering and cascading fault ruptures of the 2023 Kahramanmaraş, Türkiye, earthquake doublet</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Science | AAAS</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "After the earthquakes: Experts discuss building codes in Türkiye and the U.S. - Temblor.net",
@@ -8165,13 +7913,7 @@
       "pubDate": "Wed, 17 Jan 2024 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxNaE12MTB4NTZoRHo5dDhuem1xSzFBT1V5X1pBWEZFQjV1X1lmS3B4UFc1NWZ3U3VuenVCWmVyYlVodU9oUGxnck1GVG5IUE85eTc4ajF0aU8zWE5vNWNwdGVMdXpNNDdLaDB0YjM1Tmg4bkNtVW9nbEl2NGRvZXNaZNIBhgFBVV95cUxPTGY0UjdMS2NtLWZkcW5UR19CT3Qwa0Q0Mi1tWE5waGo2VmZBdjF0bTR6TlRocmpRdnFyVjJCUExzVTBqWVl1WnhYLW5BeFc0SzhzUUJieF9IcVlyV3pELVRjLTA5SjE1eDVsYk9FRjR2ZjI5QXpBYjVPTG1tbmZKZEdmS2RBUQ?oc=5\" target=\"_blank\">After the earthquakes: Experts discuss building codes in Türkiye and the U.S.</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Temblor.net</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "2023 Turkey and Syria earthquake: Facts, FAQs, how to help - World Vision",
@@ -8260,8 +8002,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8306,8 +8048,8 @@
       "location": {
         "name": "Nature, UNESCO",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7726668,
-        "lng": 34.4788393
+        "lat": 37.4397828,
+        "lng": -98.7061182
       }
     },
     {
@@ -8404,8 +8146,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8460,13 +8202,7 @@
       "pubDate": "Tue, 01 Aug 2023 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiswFBVV95cUxOVDF4UEgtMjFobjBjLVJtN2s1N2FIb1dMVFNiaTkyTWkzM2QxY3VRRXBUTEo0d1NJRnlfV1lFUlNWQW9VOXdFbUY5RlluTEZTaDV0RHhSZ2lFM3Z3SFNXMllCZGJXT0taV29IemZjT1FaZkZzbjNxdzhHSFVqc2tvUG5yd0RkbU02bUJNWGJGeWl5NUtKbDFUTV93emVEOTVjYzdHckliWDlDLXlVMVozV0FkTQ?oc=5\" target=\"_blank\">Türkiye earthquakes: six months of resilient response and support</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">World Health Organization (WHO)</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google alert failed to warn people of earthquake - Hürriyet Daily News",
@@ -8610,13 +8346,7 @@
       "pubDate": "Sat, 15 Jul 2023 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMieEFVX3lxTE9JY1ByRE9DaVNVaVNtWmFzMXl5V25JcVlJRkkyTWRaaFgwdUM1S1BhMGNCSHFQeUFhS2RHZXNzMElVLXV5S3VlU1pnRGZPV0hra3ZFWFpuWnVsV19pREFnSGgydWRER3NSaTNlcFpxd0NiTy1yMTliUw?oc=5\" target=\"_blank\">TURKEY AND SYRIA EARTHQUAKE</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ArcGIS StoryMaps</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "TURKEY",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Financing the post-Earthquake Recovery in Turkey - Politics Today",
@@ -8640,13 +8370,7 @@
       "pubDate": "Tue, 11 Jul 2023 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxOTUVCQXE0dFZqYmt0UzdoYTViNEp2ZkJURFVHVEJrbnpFdjFxa0Q3MG1oRDMxSzk3U1N0X21JZVQ1cVJOWWdfOFhiRG1vaTdMZ3RoZURPTzVGV1hpUk9tRmd1T2RoTGU3ektZWVhtdUJfcXJsV19ubW03dlYwcTRZVDFOM28tQ29fX2cyWHQ4NGxpZw?oc=5\" target=\"_blank\">Earthquake aid slowing for Turkish Christians in Antakya</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Mission Network News</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "Türki̇ye Earthquake 2023 Humanitarian Response Overview, 30 June 2023 [EN/TR] - Türkiye - ReliefWeb",
@@ -8712,8 +8436,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -8772,8 +8496,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -9120,8 +8844,8 @@
       "location": {
         "name": "Relief",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 38.2718155,
-        "lng": 35.6317051
+        "lat": 36.8538434,
+        "lng": 30.6265338
       }
     },
     {
@@ -9154,13 +8878,7 @@
       "pubDate": "Mon, 27 Mar 2023 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiwAFBVV95cUxOQzV1OWNNTFFOWU5OODhHWldHdFVoU1c3bXRBMFl5OUlpQklGdURIVTM5UVRIX0hfdTRfazJLWXVmU3lVUEFxemhjNGRONVgydS1pUEZ0ZS11VDBFNzlmbWNfZ3VRMHZ6M0ZudFVadjI1cU1EQUF2d3lMTUgzZmNWeVFTdlRoS21ZbmRiRU1QNEswcEJpSTJ1RGx5N0d3VWg4WmgweUdWdmZGNjBIM3ZIR0tpVTBTQy1sZG01VTAxakk?oc=5\" target=\"_blank\">Recovery and Reconstruction after the 2023 Earthquakes in Turkiye UNDP Project Catalogue</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">United Nations Development Programme</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkiye",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "UNDP seeks $550 million for recovery, reconstruction projects after earthquakes in Turkey - Stockholm Center for Freedom",
@@ -9226,8 +8944,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9426,13 +9144,7 @@
       "pubDate": "Thu, 09 Mar 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMisAFBVV95cUxQaWJqcnFUQTVWc3Zfcjc0YmFxRnF4dHdGd0V0UHFjdGVSY3ZJQlRnRUtwdjNSc0plaHZhTThYUlAyZ0tta1BhYXhMR2phMEk2VS15cllGMnZTNGd2VEs4c2I3dkNEX0NfRzZvdlUzRVNuemdJZHkxem8zRDJJTGdtMUx5SnptVFVIRnFway1wanZUNWxQN3c1SEVuSFBhZkg3cVlZaXl4ZkJHdG9uZXo0dg?oc=5\" target=\"_blank\">What is the likely impact of the earthquakes on economic growth in Türkiye?</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Economics Observatory</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "EBRD to invest up to €1.5 billion in Türkiye’s earthquake-hit region - EBRD",
@@ -9625,8 +9337,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9659,13 +9371,7 @@
       "pubDate": "Fri, 03 Mar 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMifkFVX3lxTE91N0ZMakliV2JqQTgtT2M1UGgwaV8yb3NrODlBUnIwajRVT3dBZkxnX2tsWDcyOFRndGdBcGZvczE3elJLbWRLMjRkMWlCTHVKMVdVdmlrcTdXdmllX0ZZZnU1dlp0bC1uTEQzQkNJZmsxRk55RURjcFNTdFZZd9IBhgFBVV95cUxPd3phUnFTWHZZbkY4cUNnUWxOaWRfTGdMZjMzRDlCMlRBWjlwV3hQbkVZUDg5NGszYWtHQ2l0WERBd1JWaEdyb0pzcmNrTGk1YnRYWGw2WlhEb0VmLXpZS1IxdGVveHZ1Y256Z25aZm93b3lNZGhQUGw5ajZkTE8tbVM4OTNlZw?oc=5\" target=\"_blank\">Saving Lives in the Turkish Earthquake Zone</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">SAP News Center</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "Last 123 years' largest earthquakes in Türkiye - Anadolu Ajansı",
@@ -9678,8 +9384,8 @@
       "location": {
         "name": "Ana",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.9207759,
-        "lng": 32.8540497
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -9712,13 +9418,7 @@
       "pubDate": "Wed, 01 Mar 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMipwFBVV95cUxNUDY5RkUxXzdMQlB6aFJ0Z19JTW5qUWlQRWg4LVFvcjVsSDYwQVUyMjh3bUx6ZkE3dUoxdzBreDlvajMwOHpETlpKRi1uUGpjUHB6eHVENFR4ZGhwLUNVWXBvaUhvZVQ4ZmhTd0JfM3BxQzdHWXBidjFKcWhTMVhKdkFHMXJJQ0VSWnVYaXEweUdiNDFpQ3dHNVNreHg2MTM5clNIaTJjNA?oc=5\" target=\"_blank\">Turkish Airlines Flew 'Heroic' Earthquake Rescue Dogs Home in the Cabin</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Business Insider</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "Anti-Syrian discrimination mars Turkey’s earthquake response - Syria Direct",
@@ -9784,8 +9484,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -9818,13 +9518,7 @@
       "pubDate": "Mon, 27 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiogFBVV95cUxOTWpjMzRubFlrc2JscXZrX2UwM1VNUERIelNacFdLcEF1MTVQaEM3bnNHVm10aVN3eHc1VzFVUzhqZzZDTnJsbnNtRDd2X3JnbHhZOUdyVE1IbDk1WkVrS196Yk5MXy1VRV91ZklibDJINWNOTGdDb2JEMzZMSXgyeG91VWV6UnZHY2FjWnNtY2ZYWHJYWGp3SVFFcHF4SkdGbUE?oc=5\" target=\"_blank\">One killed, 69 injured in magnitude 5.6 earthquake in eastern Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Bianet</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "The economic and operational impacts in Syria-Turkey earthquake zones - S&P Global",
@@ -9848,13 +9542,7 @@
       "pubDate": "Mon, 27 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMi7AFBVV95cUxNQko3QWRSZ2E2YlRKc2ZmczZ1UjhGN195Q1BVOXNpQkJST2g0UEJBSldkNFQ0d09JYnhlOTZpd1hzWWJVSnl1N3N6aVh3eHFxbHo0SVFLZ09OMW1hcDA3c19UanZqcVlFNkpHU2g5M0U4Q0JLNF9vS1RiN1hER2FINExtMUwyMFo3eFBMc3gwREJid2RJb0sycExMa2lJY3JYbGY5Um1iSVhBVGxBcXJadXU5NXQ0VjJYSmpJUkVVal92Rktub1FDWjhpVjFTM3hmVHdtaEtpMHdtMUJrOG5vR2h1NW84OXVmSl9jWQ?oc=5\" target=\"_blank\">Earthquake Damage in Türkiye Estimated to Exceed $34 billion: World Bank Disaster Assessment Report</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">World Bank</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Full scale of damage to Turkish and Syrian heritage emerges after devastating earthquakes - The Art Newspaper",
@@ -9923,13 +9611,7 @@
       "pubDate": "Sun, 26 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMikAFBVV95cUxOalB3WmFac0lRZjl3R0xOSlBkd2NVblgwaG5jVlBtM3VPdWo5Uk5IS1pRdFhGenJoN2xNUVRiV0Zsd3VBRmIwUHlNLVRhUWd2WEo1alRaS3BjTzBCOE9rcWk5NndqSm5ta2hSeHNjakZrOGxoczRRcnJhblJLQ0U5WktIcHlLaW5rUGlKU2VRMEc?oc=5\" target=\"_blank\">The impact of the 2023 earthquakes on Türkiye’s economy: First estimates</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">CEPR</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Earthquakes explained: What you should know about Turkey, Syria disaster - sonna.so",
@@ -10122,8 +9804,8 @@
       "location": {
         "name": "Prevention",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10141,13 +9823,7 @@
       "pubDate": "Fri, 24 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiywFBVV95cUxQZzE0OGJzZVk5RzJ4ZFlmWUw1RmNBQldXOWV6ZXNYc09lSzRPZnhaYjEyQm1vNUxGcHJKR0xhUEtMTVM4eERfTzFRd3Z3WUVBVllGejV0NzR6QWdNQlNWZjYtaGpscEY3a0dqQ2x0ZWU4d0xRaUQwQzJrZ2FlaDNhc29Pc3RCTGo3OUxxcENwYVdiYVJfUk1tTDJhdmdwTTFtZnc0MXlMVE81QklJU3UwVHR2SWl2VlRXUFlqN1JFOGNLY3Mwb3k3LV9EQQ?oc=5\" target=\"_blank\">Proposed Areas of UNDP Assistance for Recovery and Reconstruction after the 2023 Earthquakes in Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">United Nations Development Programme</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Scots family devastated as relatives killed in Turkey earthquake with others left homeless - Daily Record",
@@ -10190,8 +9866,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 40.9698558,
+        "lng": 28.6037598
       }
     },
     {
@@ -10213,8 +9889,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10228,8 +9904,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10311,8 +9987,8 @@
       "location": {
         "name": "Hat, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.01005,
-        "lng": 28.9631808
+        "lat": 40.6836224,
+        "lng": 29.9169852
       }
     },
     {
@@ -10462,8 +10138,8 @@
       "location": {
         "name": "Hong Kong",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 40.9837352,
-        "lng": 29.0288563
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10522,8 +10198,8 @@
       "location": {
         "name": "Italy, Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.9040785,
-        "lng": 32.857569
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10591,8 +10267,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -10674,8 +10350,8 @@
       "location": {
         "name": "Tehran",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.6691342,
-        "lng": 38.1468259
+        "lat": 42.7037389,
+        "lng": -80.3336969
       }
     },
     {
@@ -10847,8 +10523,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -10862,8 +10538,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11043,8 +10719,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 40.9901693,
+        "lng": 29.0269229
       }
     },
     {
@@ -11089,8 +10765,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -11150,8 +10826,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -11165,8 +10841,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.0113615,
+        "lng": 28.9747077
       }
     },
     {
@@ -11195,8 +10871,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.777386,
+        "lng": -93.1956929
       }
     },
     {
@@ -11424,13 +11100,7 @@
       "pubDate": "Mon, 13 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMifEFVX3lxTE92SzNqNHM3OWdXdHFEanJSODFhUDhJLTg4T3FLa1Fjb05rdkZwT3VYd3hQX3Z2QkJOM3VSSXFaOTRqTjAwVTB2eFNMOTNsenFfVzdyTTdVX05yRExxaFhxbkRNQlFoUzhIdF9ZLUQzV0t2N1c2WWVYYnFjclc?oc=5\" target=\"_blank\">News - GEOSCIENTISTS ON THE EARTHQUAKE IN TURKEY AND SYRIA</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">sav.sk</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "TURKEY",
-        "extraction_method": "regex_fallback",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Brave rescue dog dies while searching for survivors in deadly Turkey earthquake rubble - UNILAD",
@@ -11469,13 +11139,7 @@
       "pubDate": "Mon, 13 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMi4wFBVV95cUxOeS1UczJSb01Bd2pDSldTN3pwckV4RG1KTHJyR3FzTTcyQkdKbGlnOUZGdS1IQ1p2SUR3UlN3bk9JS2ktQzc2Rkd1NjZza0xCMXZJSmxfM1BYTUM5Yl9fLXBBa2ZlaFJXbEs3OGJuS01VZEhxYk5XYkdldnoyWlhmNmplOTdUOFl4VFRENndySE5pVGhOOU8xeVpIZDNyODlEMnEyOVhXTXBaMjlWWGZqS05VS0o0cWRwSHBKQVdDMmxBNGZCWmlaTVNqU1M2NTktTXVYRGFSYlFkdnk5QXRDaG85NA?oc=5\" target=\"_blank\">Gift of the Givers volunteers say it was a proud moment to rescue pensioner from quake rubble in Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">thestar.co.za</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Why earthquakes are deadlier depending on where you live - vox.com",
@@ -11574,13 +11238,7 @@
       "pubDate": "Mon, 13 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxNRlZpamRjVVNrZF9JWmhyNWw0ME1vdkNKc3ByT0d0ZWF6YXNKMWp2NTRFTVRicW93QTVTVUgtbXNzR1BQY09JRHM0eGN4TUdjRDc5YUJKN3FCd2kwVnF2OW9GLXlkTnRLT0c2T1lfeUYySFVwcUZ2am0zb3VLN2V0czNMUFhzYTAwamhqQUljdndZUnp1b2ZJU2h5Vm53bWd2S0JGNEtaMW0yYmx0cFBPaFBkS1BwNndxRHhZ?oc=5\" target=\"_blank\">728th AMS, 39th OSS support Türkiye earthquake relief deliveries > Air Force > Article Display</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">af.mil</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Shortages of Shelter and Medical Supplies Pose Dangers to Quake Survivors (Published 2023) - The New York Times",
@@ -11597,13 +11255,7 @@
       "pubDate": "Mon, 13 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiwwFBVV95cUxOZ2JaZWNkMVVodnMtZFM2NDN5YXdwLUNnMUNxcmM4TENFaXlnUWZ6RHRQYXMwMGtvamtkcm5CWXRUa0huWDFjZlNOTTFoRFRtN19MM1pOZDFmeFNvUHNramNucTRvUHAzRmNPNU5oMW94WTZpTF8wOUZnTkdaZDZlWkdpX3V2ZzVvVlpPRkR5eGhKR3FuTU5HSW5oNEM1ZWR3SFBiR1M2Z244a2xjZnlJbUpqTHZiYURsRWRBM2poNG1YeG8?oc=5\" target=\"_blank\">728th AMS, 39th OSS support Türkiye earthquake relief deliveries</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">usafe.af.mil</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Trauma Support, Maternal Care, and More Receive Funds During Earthquake Response - Direct Relief",
@@ -11666,13 +11318,7 @@
       "pubDate": "Sun, 12 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxNdVRWMldZOEJWRlRQQWVBbm9xWUEzYlZZc2FkUllmYjhlMXRNM2xVZDVucjhyOHpYcXZqNEh2ejVTYWZMSE4xSmJWZmlqeUlnRHE1cmdfSVIyV29udUxDWVVOZHF4am8wLUxENVZRVlVyOWtuaVhOYjY4eUp1dG90WkhlakNKakIxTWZ1WXpnZWNMS0JGeGpHVkg0Nk5ENlF5d1haaDl4TXo0UnRvczhmX0VIQ0g?oc=5\" target=\"_blank\">Teams save more quake survivors in Türkiye in miraculous rescues on day 7</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Anadolu Ajansı</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Malaysian SMART Squad Rescues Family Of 5 Trapped Under Turkey Earthquake Rubble - TRP | The Rakyat Post",
@@ -11828,8 +11474,8 @@
       "location": {
         "name": "Australia, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": -27.5366321,
-        "lng": 151.9863528
+        "lat": -27.5400191,
+        "lng": 151.9836451
       }
     },
     {
@@ -12093,8 +11739,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -12206,8 +11852,8 @@
       "location": {
         "name": "Whole of Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -12387,8 +12033,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -12490,13 +12136,7 @@
       "pubDate": "Thu, 09 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiYkFVX3lxTE04ZUFYOVR5WlFHZWlKY05mZTF6aDFYeEJieHlxWnduRnJOYTBrNDhacXhXNGNUZUZpb1JTTHJveUx1Qm5WS3VSRkVoWkc2OFAzaUZIOHplLVZsWGV1NlljOFhR?oc=5\" target=\"_blank\">\"Nameless heroes\" sniffer dogs help search for survivors in earthquake-hit Türkiye</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Global Times</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "The world's deadliest earthquakes in the past 25 years, at a glance - NPR",
@@ -12999,8 +12639,8 @@
       "location": {
         "name": "Syria, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 38.1440363,
+        "lng": 44.2075973
       }
     },
     {
@@ -13044,8 +12684,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -13089,8 +12729,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 15.326969,
+        "lng": 44.193894
       }
     },
     {
@@ -13119,8 +12759,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -13138,13 +12778,7 @@
       "pubDate": "Wed, 08 Feb 2023 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiZEFVX3lxTE00U0liN0NkeEdlYTlqU0pzU01jODVyczBJcFpzaThHVzVSQWRtWDVZeEU5eDBiSE1HT1ZsWk1RN3k1a25zNXJtdXVTY3A5NXBueHE5czhCWWZic1JpRWZiR3Z2SFA?oc=5\" target=\"_blank\">Chinese rescue teams set off for quake-hit Türkiye with rescue equipment, relief materials</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">People's Daily Online</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Pegasus Airlines Operates Free Relief Flights To Assist Turkey's Earthquake-Affected Zones - Simple Flying",
@@ -13707,8 +13341,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -13857,8 +13491,8 @@
       "location": {
         "name": "Hat, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 41.01005,
-        "lng": 28.9631808
+        "lat": 38.6210785,
+        "lng": 36.4308357
       }
     },
     {
@@ -13902,8 +13536,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -14083,8 +13717,8 @@
       "location": {
         "name": "Syria",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 37.8359254,
-        "lng": 29.1093705
+        "lat": 41.6683456,
+        "lng": 26.5854939
       }
     },
     {
@@ -14316,8 +13950,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 29.6823125,
+        "lng": -81.8955907
       }
     },
     {
@@ -14489,8 +14123,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 39.0,
+        "lng": 35.0
       }
     },
     {
@@ -14534,8 +14168,8 @@
       "location": {
         "name": "Mara",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 36.7231112,
-        "lng": 33.8682857
+        "lat": -34.568193,
+        "lng": -58.4556669
       }
     },
     {
@@ -14715,8 +14349,8 @@
       "location": {
         "name": "BBC, Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.0,
-        "lng": 35.0
+        "lat": 3.894469,
+        "lng": 11.5146826
       }
     },
     {
@@ -14741,13 +14375,7 @@
       "pubDate": "Sun, 14 Aug 2022 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMioAFBVV95cUxOUVBra3hoWmJFUnZsSjJhbXVyYXVLSGpEUThhdVlEMW1hWlZ1bXFwX3BXSjZlZWVKYVdpdWphVW4yeDdaN2h4NTZKemJxYm82ckpVYVo3T01LSklITS1QMzlUcXB3RmExRVN4ZGFpVjBQdldsY2RscFVWZUZ0cGxPZnl5V1ZLdFRFaDVDa1VzSlc1RGN2NlNnU0g2ZFJVemd30gGmAUFVX3lxTFB0U3dGZnVJNmREUFdhWE00Z2lnOTlCSGlUWGNoZWJpeWhWSHFDWXh3YVRsOXpkczRxcngwX05mMXM3WGV1REJVSmpmWGJsRFBIYVkwZzM5Rkl2a2Jmai1mQzVLQU1UZGYxVzF4YzJIdDRBejJ5NDhkWDRqOG1KNGZINk12WmhYbUpwa3JZaGpuUkRMNlVZS3BaeENRTjNTb3A1di1CNkE?oc=5\" target=\"_blank\">Earthquake rocks western Turkish town Kuşadası, no casualties | Daily Sabah</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Daily Sabah</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkish",
-        "extraction_method": "regex_fallback",
-        "lat": 36.8892949,
-        "lng": 30.6908774
-      }
+      "disaster": true
     },
     {
       "title": "Türkiye - UN World Food Programme",
@@ -14847,13 +14475,7 @@
       "pubDate": "Tue, 03 Aug 2021 07:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMie0FVX3lxTE15X2tqMkhlbE1pQW9Kcmd0SXV6MTU3SkFHZGYwZElHTDZMMTN4NlpmT2g3SjVsUWNlVmRKd2tjZjlzS2JBdFdWWXpHODhudS1ocHFNU1VmYjMwcklVQzBCWHlWVXd3eHgyeHV4dElmajVhYjl3N1gxU19Ncw?oc=5\" target=\"_blank\">Türkiye: Izmit earthquake 1999</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">PreventionWeb.net</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "Google Adds Encryption To Messages App, Expands Earthquake Detection - Silicon UK",
@@ -14877,13 +14499,7 @@
       "pubDate": "Sat, 14 Nov 2020 08:00:00 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMi4AFBVV95cUxQU2V1MWRFdmtoVGNUd0JpT0RNaGNSTEZhcHpIMXppTlAtYlBrWnZEY1UyNFI4eThPQlBadmVZcFBsRWJrVjVxYkhYdUFiWHlvOTNsU29UX2VJVFdQWmptbGxlTjhkdDQ1R2dGRVhQQ1VVYk5vSTNLUDRldjZSclVnOTlQakJNSjdZRmJFRzlYNURDYXRmYmU2RWx3N2ZIRGZTUEhzRExDSE1XR2M5andXZWs3bnRzRkE3VXZaZXgteUl3Q2lnMElvRHFjWVJTXzNXSGhlTUItOU5aX0Y4VENwZNIB5gFBVV95cUxPR2pOSXg0V0xUOEx4NWwxeGtRMFVMUWliYVZIRnlSREwyQjlXcnVVdkkyUGNEMkNmamNrSlBiT2JHTW9nT2JMTjlXUmRma2JWd21sTTdjdHRRaWdRSnBnVXFyUm4wMkIydmMwekZGVXV2T0Q4LURzR1lacHd4RjFHd3JYbmt3R3M0MG1YODd4SV9Ja21BMWdmRGcyTzM3aGtaeWg2U1BBRF9kNmdhQmVSR0pFSHRrRUNnb2ZPWThOYkRWdTRDSEdaekIyV3pHTDRwNXRXSl9ScEZVVXhmMTluSW1VUzQwQQ?oc=5\" target=\"_blank\">Forensic analysis reveals the causes of building damage in İzmir in the Oct. 30 Aegean Sea earthquake</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Temblor.net</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "İzmir",
-        "extraction_method": "regex_fallback",
-        "lat": 38.4192537,
-        "lng": 27.128469
-      }
+      "disaster": true
     },
     {
       "title": "Turkish man with dwarfism is using his small size to rescue earthquake victims trapped beneath rubble - Times Now",
@@ -14956,8 +14572,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 34.9923888,
+        "lng": -78.183049
       }
     },
     {
@@ -15070,8 +14686,8 @@
       "location": {
         "name": "Iran",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.7626017,
-        "lng": 44.6249253
+        "lat": 39.7612686,
+        "lng": 44.6264434
       }
     },
     {
@@ -15126,13 +14742,7 @@
       "pubDate": "Thu, 17 Sep 2015 11:47:56 GMT",
       "description": "<a href=\"https://news.google.com/rss/articles/CBMiaEFVX3lxTE5iM2d0am96OEhpX1pWa0hFT1ZGVmc0ZnFFbHJIb0xNSmpnOGhlbklScGllVXlIaDJycEw2bW1VWlNUWFlNSkxFQzgxcXFPbE9jSEZTYWFvVVQ2U0FiUVhiMklKaG9aUmlX?oc=5\" target=\"_blank\">İzmit earthquake of 1999</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Britannica</font>",
       "source": "https://news.google.com",
-      "disaster": true,
-      "location": {
-        "name": "Turkey",
-        "extraction_method": "default_country",
-        "lat": 39.294076,
-        "lng": 35.2316631
-      }
+      "disaster": true
     },
     {
       "title": "In Turkey, the older the fault, the bigger the quake: Good news for Istanbul? - earthmagazine.org",
@@ -15168,8 +14778,8 @@
       "location": {
         "name": "Turkey",
         "extraction_method": "distilbert_ner_full_text",
-        "lat": 39.294076,
-        "lng": 35.2316631
+        "lat": 38.8535641,
+        "lng": 40.4436186
       }
     },
     {

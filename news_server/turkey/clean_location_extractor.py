@@ -46,6 +46,7 @@ def geocode(location_name: str, country_hint: str = "Turkey") -> dict:
     """Convert location name to GPS coordinates using OpenStreetMap Nominatim.
     Falls back to Turkey default coordinates if location not found."""
     url = "https://nominatim.openstreetmap.org/search"
+    location_name = location_name.split(',')[0]
     params = {
         "q": f"{location_name}, {country_hint}",
         "format": "json",
@@ -104,7 +105,7 @@ class NERLocationExtractor:
             self.ner_pipeline = pipeline(
                 "token-classification",
                 model=model_name,
-                aggregation_strategy="simple",
+                aggregation_strategy="simple",  # This should handle token merging
                 device=self.device
             )
             print("✓ Model loaded successfully.")
@@ -181,6 +182,10 @@ class NERLocationExtractor:
             entity_lower = entity_text.lower()
 
             # 2. Validation Checks
+
+            # Skip subword tokens (BERT tokenization artifacts)
+            if '##' in entity_text:
+                continue
 
             # Skip short garbage (e.g., "A", "The")
             if len(entity_text) < 3:
